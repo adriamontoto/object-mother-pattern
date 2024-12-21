@@ -78,7 +78,6 @@ class IntegerMother(BaseMother[int]):
             max (int, optional): Maximum positive integer value. Defaults to 100.
 
         Raises:
-            TypeError: If max is not an integer.
             ValueError: If max is less than 1.
 
         Returns:
@@ -93,12 +92,6 @@ class IntegerMother(BaseMother[int]):
         # >>> 2
         ```
         """
-        if type(max) is not int:
-            raise TypeError('IntegerMother max value must be an integer.')
-
-        if max < 1:
-            raise ValueError('IntegerMother max value must be greater than 0.')
-
         return cls.create(min=1, max=max)
 
     @classmethod
@@ -125,10 +118,4 @@ class IntegerMother(BaseMother[int]):
         # >>> -45
         ```
         """
-        if type(min) is not int:
-            raise TypeError('IntegerMother min value must be an integer.')
-
-        if min > -1:
-            raise ValueError('IntegerMother min value must be less than 0.')
-
         return cls.create(min=min, max=-1)

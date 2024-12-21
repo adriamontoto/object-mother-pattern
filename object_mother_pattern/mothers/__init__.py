@@ -1,5 +1,4 @@
-from .bool_mother import BoolMother
-from .integer_mother import IntegerMother
+from .primitives import BoolMother, IntegerMother
 
 __all__ = (
     'BoolMother',

@@ -87,9 +87,6 @@ class BaseMother(ABC, Generic[T]):
         if dict not in remove_types:
             types.append(faker.pydict())
 
-        if type(None) not in remove_types:
-            types.append(None)
-
         if datetime not in remove_types:
             types.append(faker.date_time())
 

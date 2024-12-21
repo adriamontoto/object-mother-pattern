@@ -50,7 +50,7 @@ def test_integer_mother_invalid_value_type() -> None:
         expected_exception=TypeError,
         match='IntegerMother value must be an integer.',
     ):
-        IntegerMother.create(value='invalid')  # type: ignore[arg-type]
+        IntegerMother.create(value=IntegerMother.invalid_type())
 
 
 def test_integer_mother_invalid_min_type() -> None:
@@ -61,7 +61,7 @@ def test_integer_mother_invalid_min_type() -> None:
         expected_exception=TypeError,
         match='IntegerMother min value must be an integer.',
     ):
-        IntegerMother.create(min='invalid')  # type: ignore[arg-type]
+        IntegerMother.create(min=IntegerMother.invalid_type())
 
 
 def test_integer_mother_invalid_max_type() -> None:
@@ -72,7 +72,7 @@ def test_integer_mother_invalid_max_type() -> None:
         expected_exception=TypeError,
         match='IntegerMother max value must be an integer.',
     ):
-        IntegerMother.create(max='invalid')  # type: ignore[arg-type]
+        IntegerMother.create(max=IntegerMother.invalid_type())  # type: ignore[arg-type]
 
 
 def test_integer_mother_min_greater_than_max() -> None:
@@ -107,7 +107,7 @@ def test_integer_mother_positive_invalid_max_type() -> None:
         expected_exception=TypeError,
         match='IntegerMother max value must be an integer.',
     ):
-        IntegerMother.positive(max='invalid')  # type: ignore[arg-type]
+        IntegerMother.positive(max=IntegerMother.invalid_type())
 
 
 def test_integer_mother_positive_max_less_than_one() -> None:
@@ -141,7 +141,7 @@ def test_integer_mother_negative_invalid_min_type() -> None:
         expected_exception=TypeError,
         match='IntegerMother min value must be an integer.',
     ):
-        IntegerMother.negative(min='invalid')  # type: ignore[arg-type]
+        IntegerMother.negative(min=IntegerMother.invalid_type())
 
 
 def test_integer_mother_negative_min_greater_than_zero() -> None:

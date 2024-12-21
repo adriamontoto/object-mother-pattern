@@ -72,7 +72,7 @@ def test_integer_mother_invalid_max_type() -> None:
         expected_exception=TypeError,
         match='IntegerMother max value must be an integer.',
     ):
-        IntegerMother.create(max=IntegerMother.invalid_type())  # type: ignore[arg-type]
+        IntegerMother.create(max=IntegerMother.invalid_type())
 
 
 def test_integer_mother_min_greater_than_max() -> None:

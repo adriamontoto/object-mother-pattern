@@ -1,6 +1,6 @@
 #################### Files to exclude ####################
 # Lintting files
-.coverage
+.coverage**
 index.txt
 
 ################### Folders to exclude ###################

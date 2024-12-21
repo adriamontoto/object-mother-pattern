@@ -4,7 +4,7 @@ IntegerMother module.
 
 from typing import override
 
-from .base_mother import BaseMother
+from ..base_mother import BaseMother
 
 
 class IntegerMother(BaseMother[int]):

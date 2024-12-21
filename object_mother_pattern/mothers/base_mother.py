@@ -91,7 +91,7 @@ class BaseMother(ABC, Generic[T]):
             types.append(faker.date_time())
 
         if date not in remove_types:
-            types.append(date.fromisoformat(faker.date()))
+            types.append(faker.date_object())
 
         if UUID not in remove_types:
             types.append(uuid4())

@@ -118,7 +118,7 @@ def test_integer_mother_positive_max_less_than_one() -> None:
 
     with assert_raises(
         expected_exception=ValueError,
-        match='IntegerMother max value must be greater than 0.',
+        match='IntegerMother min value must be less than or equal to max value.',
     ):
         IntegerMother.positive(max=max_value)
 
@@ -152,6 +152,6 @@ def test_integer_mother_negative_min_greater_than_zero() -> None:
 
     with assert_raises(
         expected_exception=ValueError,
-        match='IntegerMother min value must be less than 0.',
+        match='IntegerMother min value must be less than or equal to max value.',
     ):
         IntegerMother.negative(min=min_value)

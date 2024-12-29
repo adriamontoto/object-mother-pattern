@@ -4,8 +4,6 @@
 -r requirements.txt
 
 pytest>=8.0.0,<9.0.0  # https://docs.pytest.org
-pytest-asyncio>=0.0.0,<1.0.0  # https://pytest-asyncio.readthedocs.io
-pytest-xdist[psutil]>=3.6.1,<4.0.0  # https://pytest-xdist.readthedocs.io/en
 pytest-randomly>=3.0.0,<4.0.0  # https://github.com/pytest-dev/pytest-randomly
 coverage[toml]>=7.0.0,<8.0.0  # https://coverage.readthedocs.io
 ruff>=0.0.0,<1.0.0  # https://docs.astral.sh/ruff

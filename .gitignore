@@ -1,6 +1,6 @@
 #################### Files to exclude ####################
 # Lintting files
-.coverage**
+.coverage
 index.txt
 
 ################### Folders to exclude ###################
@@ -10,6 +10,9 @@ index.txt
 
 # all cache folders
 **cache**
+
+# all environment folders
+**env**
 
 ################## Files not to exclude ##################
 

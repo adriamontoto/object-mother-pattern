@@ -28,7 +28,9 @@ Easy to install and integrate, the **Object Mother Pattern** is a must-have for 
 ## Table of Contents
 
 - [📥 Installation](#installation)
+- [🤝 Contributing](#contributing)
 - [🔑 License](#license)
+
 <p align="right">
     <a href="#readme-top">🔼 Back to top</a>
 </p><br><br>
@@ -47,11 +49,81 @@ pip install object-mother-pattern
     <a href="#readme-top">🔼 Back to top</a>
 </p><br><br>
 
+<a name="contributing"></a>
+
+## 🤝 Contributing
+
+We welcome contributions to **Object Mother Pattern**! To ensure a smooth collaboration process, please follow the guidelines below.
+
+### How to Contribute
+
+**1. Fork the Repository:** Click the "Fork" button at the top right of the repository page.
+
+**2. Clone Your Fork:**
+
+```bash
+git clone git+ssh://git@github.com/<your-username>/object-mother-pattern
+```
+
+**3. Create a Branch:**
+
+```bash
+git checkout -b feature/your-feature-name
+```
+
+**4. Make Your Changes:** Implement your new feature or fix a bug.
+
+**5. Run Tests:** Ensure all the following tests pass before submitting your changes.
+
+- Run tests:
+
+```bash
+make test
+```
+
+- Run tests with coverage:
+
+```bash
+make coverage
+```
+
+- Run linter:
+
+```bash
+make lint
+```
+
+- Run formatter:
+
+```bash
+make format
+```
+
+**6. Commit Your Changes:**
+
+```bash
+git commit -m "✨ feature: your feature description"
+```
+
+**7. Push to Your Fork:**
+
+```bash
+git push origin feature/your-feature-name
+```
+
+**8. Create a Pull Request:** Navigate to the original repository and create a pull request from your fork.
+
+**9. Wait for Review:** Your pull request will be reviewed by the maintainers. Make any necessary changes based on their feedback.
+
+<p align="right">
+    <a href="#readme-top">🔼 Back to top</a>
+</p><br><br>
+
 <a name="license"></a>
 
 ## 🔑 License
 
-This project is licensed under the terms of the [`MIT license`](LICENSE.md).
+This project is licensed under the terms of the [`MIT license`](https://github.com/adriamontoto/object-mother-pattern/blob/master/LICENSE.md).
 
 <p align="right">
     <a href="#readme-top">🔼 Back to top</a>

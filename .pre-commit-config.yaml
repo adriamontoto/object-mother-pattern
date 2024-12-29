@@ -31,12 +31,6 @@ repos:
         stages:
           - pre-commit
 
-      - id: check-json
-        name: 📄 JSON Files Checker
-        files: '.*\.json'
-        stages:
-          - pre-commit
-
       - id: check-toml
         name: 📄 TOML Files Checker
         files: '.*\.toml'

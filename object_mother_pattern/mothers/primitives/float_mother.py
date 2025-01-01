@@ -2,6 +2,7 @@
 FloatMother module.
 """
 
+from random import randint
 from sys import version_info
 
 if version_info >= (3, 12):
@@ -36,7 +37,7 @@ class FloatMother(BaseMother[float]):
         value: int | float | None = None,
         min: int | float = -1.0,
         max: int | float = 1.0,
-        decimals: int = 2,
+        decimals: int | None = None,
     ) -> float:
         """
         Create a random float within the provided range. If a value is provided, it will be returned.
@@ -45,7 +46,8 @@ class FloatMother(BaseMother[float]):
             value (int | float | None, optional): Float value. Defaults to None.
             min (int | float, optional): Minimum float value. Defaults to -1.0.
             max (int | float, optional): Maximum float value. Defaults to 1.0.
-            decimals (int, optional): Number of decimal places. Defaults to 2.
+            decimals (int, optional): Number of decimal places, if None, a random number of decimal places will be used.
+            Defaults to None.
 
         Raises:
             TypeError: If value is not an int or a float.
@@ -80,8 +82,11 @@ class FloatMother(BaseMother[float]):
         if min > max:
             raise ValueError('FloatMother min value must be less than or equal to max value.')
 
-        if type(decimals) is not int:
+        if value is not None and type(decimals) is not int:
             raise TypeError('FloatMother decimals value must be an int.')
+
+        if decimals is None:
+            decimals = randint(a=0, b=10)
 
         if decimals < 0:
             raise ValueError('FloatMother decimals value must be greater than or equal to 0.')

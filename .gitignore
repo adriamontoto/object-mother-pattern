@@ -1,5 +1,5 @@
 #################### Files to exclude ####################
-# lintting files
+# linting files
 .coverage
 index.txt
 

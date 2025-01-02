@@ -53,10 +53,10 @@ class StringUUIDMother(BaseMother[str]):
         # >>> 3e9e0f3a-64a3-474f-9127-368e723f389f
         ```
         """
-        if value is not None and type(value) is not str:
-            raise TypeError('StringUUIDMother value must be a string.')
-
         if value is not None:
+            if type(value) is not str:
+                raise TypeError('StringUUIDMother value must be a string.')
+
             return value
 
         return str(object=cls._random().uuid4())

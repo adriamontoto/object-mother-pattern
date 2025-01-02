@@ -53,10 +53,10 @@ class UUIDMother(BaseMother[UUID]):
         # >>> 3e9e0f3a-64a3-474f-9127-368e723f389f
         ```
         """
-        if value is not None and type(value) is not UUID:
-            raise TypeError('UUIDMother value must be a UUID.')
-
         if value is not None:
+            if type(value) is not UUID:
+                raise TypeError('UUIDMother value must be a UUID.')
+
             return value
 
         return cls._random().uuid4(cast_to=None)  # type: ignore[return-value]

@@ -58,8 +58,11 @@ class StringMother(BaseMother[str]):
         # >>> 'zFUmlsODZqzwyGjrOOqBtYzNwlJdOETalkXbuSegoQpgEnYQTCDeoifWrTQXMmAHxFzzDbhXjzwglAmllTrmBYRqVwEXswZxNcaWmy'
         ```
         """
-        if value is not None and type(value) is not str:
-            raise TypeError('StringMother value must be a string.')
+        if value is not None:
+            if type(value) is not str:
+                raise TypeError('StringMother value must be a string.')
+
+            return value
 
         if type(min_length) is not int:
             raise TypeError('StringMother min_length must be an integer.')
@@ -75,9 +78,6 @@ class StringMother(BaseMother[str]):
 
         if min_length > max_length:
             raise ValueError('StringMother min_length must be less than or equal to max_length.')
-
-        if value is not None:
-            return value
 
         return cls._random().pystr(min_chars=min_length, max_chars=max_length)
 

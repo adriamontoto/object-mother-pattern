@@ -41,4 +41,4 @@ body:
       label: Python, Object Mother Pattern & OS Version
       render: Text
       description: |
-        Which version of Python & CObject Mother Pattern are you using, and which Operating System?
+        Which version of Python & Object Mother Pattern are you using, and which Operating System?

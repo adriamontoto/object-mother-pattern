@@ -38,7 +38,7 @@ keywords = [
     'validation',
 ]
 requires-python = '>=3.11'
-dependencies = ['Faker>=28.0.0,<34.0.0']
+dependencies = ['Faker>=28.0.0,<34.0.0', 'python-dateutil>=1.17.0,<2.0.0']
 dynamic = ['version']
 
 [project.optional-dependencies]
@@ -49,6 +49,7 @@ tests = [
     'ruff>=0.0.0,<1.0.0',
     'mypy[reports]>=1.0.0,<2.0.0',
     'pre-commit>=3.0.0,<5.0.0',
+    'types-python-dateutil>=2.9.0.20241206,<3.0.0',
 ]
 
 
@@ -65,13 +66,7 @@ addopts = [
     '--strict-markers', # fail if an unregistered marker is used
     '--color=yes',      # color the output
 ]
-markers = [
-    'unit_testing: Check a unique funtionality',
-    'integration_testing: Check the integration between two or more functions',
-    'e2e_testing: Check the end to end functionality of the application',
-    'performance_testing: Check the performance of the application',
-    'security_testing: Check the security of the application',
-]
+markers = ['unit_testing: Check a unique functionality']
 xfail_strict = true
 
 

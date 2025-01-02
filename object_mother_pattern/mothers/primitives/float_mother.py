@@ -31,7 +31,7 @@ class FloatMother(BaseMother[float]):
 
     @classmethod
     @override
-    def create(
+    def create(  # noqa: C901
         cls,
         *,
         value: int | float | None = None,
@@ -46,8 +46,8 @@ class FloatMother(BaseMother[float]):
             value (int | float | None, optional): Float value. Defaults to None.
             min (int | float, optional): Minimum float value. Defaults to -1.0.
             max (int | float, optional): Maximum float value. Defaults to 1.0.
-            decimals (int, optional): Number of decimal places, if None, a random number of decimal places will be used.
-            Defaults to None.
+            decimals (int | None, optional): Number of decimal places, if None, a random number of decimal places will
+            be used. Defaults to None.
 
         Raises:
             TypeError: If value is not an int or a float.
@@ -71,19 +71,19 @@ class FloatMother(BaseMother[float]):
         ```
         """
         if value is not None and type(value) is not int and type(value) is not float:
-            raise TypeError('FloatMother value must be an int or a float.')
+            raise TypeError('FloatMother value must be an integer or a float.')
 
         if type(min) is not int and type(min) is not float:
-            raise TypeError('FloatMother min value must be an int or a float.')
+            raise TypeError('FloatMother min value must be an integer or a float.')
 
         if type(max) is not int and type(max) is not float:
-            raise TypeError('FloatMother max value must be an int or a float.')
+            raise TypeError('FloatMother max value must be an integer or a float.')
 
         if min > max:
             raise ValueError('FloatMother min value must be less than or equal to max value.')
 
-        if value is not None and type(decimals) is not int:
-            raise TypeError('FloatMother decimals value must be an int.')
+        if decimals is not None and type(decimals) is not int:
+            raise TypeError('FloatMother decimals value must be an integer.')
 
         if decimals is None:
             decimals = randint(a=0, b=10)
@@ -97,16 +97,26 @@ class FloatMother(BaseMother[float]):
         if value is not None:
             return value
 
+        if min == 0:
+            min = 0.0000000001  # pragma: no cover
+
+        if max == 0:
+            max = 0.0000000001  # pragma: no cover
+
+        if min == max:
+            return min
+
         return cls._random().pyfloat(min_value=min, max_value=max, right_digits=decimals)
 
     @classmethod
-    def positive(cls, *, max: int | float = 1.0, decimals: int = 2) -> float:
+    def positive(cls, *, max: int | float = 1.0, decimals: int | None = None) -> float:
         """
         Create a random positive float, greater than 0.
 
         Args:
             max (int | float, optional): Maximum positive float value. Defaults to 1.0.
-            decimals (int, optional): Number of decimal places. Defaults to 2.
+            decimals (int | None, optional): Number of decimal places, if None, a random number of decimal places will
+            be used. Defaults to None.
 
         Raises:
             TypeError: If max is not an int or a float.
@@ -126,16 +136,17 @@ class FloatMother(BaseMother[float]):
         # >>> 8.71
         ```
         """
-        return cls.create(min=1, max=max, decimals=decimals)
+        return cls.create(min=0.0000000001, max=max, decimals=decimals)
 
     @classmethod
-    def negative(cls, *, min: int | float = -1.0, decimals: int = 2) -> float:
+    def negative(cls, *, min: int | float = -1.0, decimals: int | None = None) -> float:
         """
         Create a random negative float, less than 0.
 
         Args:
             min (int | float, optional): Minimum negative float value. Defaults to -1.0.
-            decimals (int, optional): Number of decimal places. Defaults to 2.
+            decimals (int | None, optional): Number of decimal places, if None, a random number of decimal places will
+            be used. Defaults to None.
 
         Raises:
             TypeError: If min is not a float.
@@ -155,4 +166,4 @@ class FloatMother(BaseMother[float]):
         # >>> -13.93
         ```
         """
-        return cls.create(min=min, max=-1, decimals=decimals)
+        return cls.create(min=min, max=-0.0000000001, decimals=decimals)

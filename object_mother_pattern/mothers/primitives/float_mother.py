@@ -70,8 +70,11 @@ class FloatMother(BaseMother[float]):
         # >>> 0.83396
         ```
         """
-        if value is not None and type(value) is not int and type(value) is not float:
-            raise TypeError('FloatMother value must be an integer or a float.')
+        if value is not None:
+            if type(value) is not int and type(value) is not float:
+                raise TypeError('FloatMother value must be an integer or a float.')
+
+            return value
 
         if type(min) is not int and type(min) is not float:
             raise TypeError('FloatMother min value must be an integer or a float.')
@@ -82,20 +85,17 @@ class FloatMother(BaseMother[float]):
         if min > max:
             raise ValueError('FloatMother min value must be less than or equal to max value.')
 
-        if decimals is not None and type(decimals) is not int:
-            raise TypeError('FloatMother decimals value must be an integer.')
-
         if decimals is None:
             decimals = randint(a=0, b=10)
+
+        if type(decimals) is not int:
+            raise TypeError('FloatMother decimals value must be an integer.')
 
         if decimals < 0:
             raise ValueError('FloatMother decimals value must be greater than or equal to 0.')
 
         if decimals > 10:
             raise ValueError('FloatMother decimals value must be less than or equal to 10.')
-
-        if value is not None:
-            return value
 
         if min == 0:
             min = 0.0000000001  # pragma: no cover

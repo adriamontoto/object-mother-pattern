@@ -57,8 +57,11 @@ class BytesMother(BaseMother[bytes]):
         # >>> b'zFUmlsODZqzwyGjrOOqBtYzNwlJdOETalkXbuSegoQpgEnYQTCDeoifWrTQXMmAHxFzzDbhXjzwglAmllTrmBYRqVwEXswZxNcaWmy'
         ```
         """
-        if value is not None and type(value) is not bytes:
-            raise TypeError('BytesMother value must be bytes.')
+        if value is not None:
+            if type(value) is not bytes:
+                raise TypeError('BytesMother value must be bytes.')
+
+            return value
 
         if type(min_length) is not int:
             raise TypeError('BytesMother min_length must be an integer.')
@@ -74,9 +77,6 @@ class BytesMother(BaseMother[bytes]):
 
         if min_length > max_length:
             raise ValueError('BytesMother min_length must be less than or equal to max_length.')
-
-        if value is not None:
-            return value
 
         return cls._random().pystr(min_chars=min_length, max_chars=max_length).encode()
 

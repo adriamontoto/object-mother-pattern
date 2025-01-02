@@ -52,10 +52,10 @@ class BoolMother(BaseMother[bool]):
         # >>> True
         ```
         """
-        if value is not None and type(value) is not bool:
-            raise TypeError('BoolMother value must be a boolean.')
-
         if value is not None:
+            if type(value) is not bool:
+                raise TypeError('BoolMother value must be a boolean.')
+
             return value
 
         return cls._random().pybool()

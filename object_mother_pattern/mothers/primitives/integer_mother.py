@@ -57,8 +57,11 @@ class IntegerMother(BaseMother[int]):
         # >>> 8
         ```
         """
-        if value is not None and type(value) is not int:
-            raise TypeError('IntegerMother value must be an integer.')
+        if value is not None:
+            if type(value) is not int:
+                raise TypeError('IntegerMother value must be an integer.')
+
+            return value
 
         if type(min) is not int:
             raise TypeError('IntegerMother min value must be an integer.')
@@ -68,9 +71,6 @@ class IntegerMother(BaseMother[int]):
 
         if min > max:
             raise ValueError('IntegerMother min value must be less than or equal to max value.')
-
-        if value is not None:
-            return value
 
         return cls._random().pyint(min_value=min, max_value=max)
 

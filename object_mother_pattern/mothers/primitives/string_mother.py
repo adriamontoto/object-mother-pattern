@@ -10,7 +10,7 @@ if version_info >= (3, 12):
 else:
     from typing_extensions import override  # pragma: no cover
 
-from ..base_mother import BaseMother
+from object_mother_pattern.mothers.base_mother import BaseMother
 
 
 class StringMother(BaseMother[str]):
@@ -36,7 +36,7 @@ class StringMother(BaseMother[str]):
         Create a random string value.
 
         Args:
-            value (str | None, optional): str value. Defaults to None.
+            value (str | None, optional): String value. Defaults to None.
 
         Raises:
             TypeError: If value is not a string.

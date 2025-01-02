@@ -9,7 +9,7 @@ if version_info >= (3, 12):
 else:
     from typing_extensions import override  # pragma: no cover
 
-from ..base_mother import BaseMother
+from object_mother_pattern.mothers.base_mother import BaseMother
 
 
 class BoolMother(BaseMother[bool]):

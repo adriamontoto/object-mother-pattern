@@ -76,16 +76,16 @@ class BaseMother(ABC, Generic[T]):
             types.append(faker.pystr().encode())
 
         if list not in remove_types:
-            types.append(faker.pylist())
+            types.append(faker.pylist())  #  pragma: no cover
 
         if set not in remove_types:
-            types.append(faker.pyset())
+            types.append(faker.pyset())  #  pragma: no cover
 
         if tuple not in remove_types:
-            types.append(faker.pytuple())
+            types.append(faker.pytuple())  #  pragma: no cover
 
         if dict not in remove_types:
-            types.append(faker.pydict())
+            types.append(faker.pydict())  #  pragma: no cover
 
         if datetime not in remove_types:
             types.append(faker.date_time())
@@ -96,4 +96,4 @@ class BaseMother(ABC, Generic[T]):
         if UUID not in remove_types:
             types.append(uuid4())
 
-        return choice(seq=types)  # nosec
+        return choice(seq=types)

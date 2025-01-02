@@ -1,4 +1,4 @@
 # Remember to add the package, its single version and the documentation page
 
 Faker>=29.0.0,<34.0.0  # https://faker.readthedocs.io/en/master
-python-dateutil>=1.17.0,<2.0.0  # https://dateutil.readthedocs.io/en/stable
+python-dateutil>=2.9.0,<3.0.0  # https://dateutil.readthedocs.io/en/stable

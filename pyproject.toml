@@ -15,7 +15,7 @@ name = 'object-mother-pattern'
 description = 'The Object Mother Pattern is a Python package that simplifies and standardizes the creation of test objects.'
 readme = './README.md'
 authors = [{ name = 'Adria Montoto' }]
-license = './LICENSE.md'
+license = 'MIT'
 classifiers = [
     'License :: OSI Approved :: MIT License',
     'Intended Audience :: Developers',

@@ -68,6 +68,6 @@ class NameMother(StringMother):
 
         name = name[:length]
         if name != name.strip():
-            name = name[:-1] + cls._random().lexify(text='?')
+            name = name[:-1] + cls._random().lexify(text='?')  # pragma: no cover
 
         return choice(seq=(name.lower(), name.upper(), name.title()))

@@ -76,7 +76,7 @@ class TextMother(StringMother):
 
         # Remove spaces at the end of the text due to the string cut
         if text[-2] == ' ':
-            text = text[:-2] + cls._random().lexify(text='?') + text[-1]
+            text = text[:-2] + cls._random().lexify(text='?') + text[-1]  # pragma: no cover
 
         text = text[:-1] + '.'
 

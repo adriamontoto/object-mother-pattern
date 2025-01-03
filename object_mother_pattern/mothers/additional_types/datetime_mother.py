@@ -182,6 +182,6 @@ class DatetimeMother(BaseMother[datetime]):
             datetime: Timezone-aware datetime.
         """
         if date.tzinfo is None:
-            date = date.replace(tzinfo=UTC)
+            date = date.replace(tzinfo=UTC)  # pragma: no cover
 
         return date

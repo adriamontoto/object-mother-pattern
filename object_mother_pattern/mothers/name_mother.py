@@ -64,7 +64,7 @@ class NameMother(StringMother):
 
         name = cls._random().name()
         while len(name) < length:
-            name += cls._random().name()
+            name += cls._random().name()  # pragma: no cover
 
         name = name[:length]
         if name != name.strip():

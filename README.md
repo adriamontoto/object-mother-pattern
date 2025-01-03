@@ -85,7 +85,7 @@ print(boolean)
 # Generate a random string
 string = StringMother.create()
 print(string)
-# >>> 'zFUmlsODZqzwyGjrOOqBtYzNwlJdOETalkXbuSegoQpgEnYQTCDeoifWrTQXMmAHxFzzDbhXjzwglAmllTrmBYRqVwEXswZxNcaWmy'
+# >>> 'zFUmlsODZqzwyGjrOOqBtYzNwlJdOETalkXbuSegoQpgEnYQTCDeoifWrTQXMm'
 
 # Generate a random string of specific length
 string = StringMother.of_length(length=10)
@@ -111,7 +111,7 @@ print(date)
 
 ### 🎄 Real-Life Case: Christmas Detector Service
 
-Below is an example of a real-life scenario where Object Mother can help simplify test date creation. We have a `ChristmasDetectorService` that checks if a given date falls within a specific Christmas holiday range. Using the [`DateMother`](https://github.com/adriamontoto/object-mother-pattern/blob/master/object_mother_pattern/mothers/additional_types/date_mother.py) class, we can easily generate dates both within and outside of this range for our tests, this ensuring that every possible scenario is covered.
+Below is an example of a real-life scenario where **Object Mother Pattern** can help simplify test date creation. We have a `ChristmasDetectorService` that checks if a given date falls within a specific Christmas holiday range. Using the [`DateMother`](https://github.com/adriamontoto/object-mother-pattern/blob/master/object_mother_pattern/mothers/additional_types/date_mother.py) class, we can easily generate dates both within and outside of this range for our tests, this ensuring that every possible scenario is covered.
 
 ```python
 from datetime import date

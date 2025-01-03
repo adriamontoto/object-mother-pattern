@@ -47,12 +47,6 @@ def test_string_datetime_mother_invalid_value_type() -> None:
         StringDatetimeMother.create(value=StringDatetimeMother.invalid_type())
 
 
-# E       AssertionError: Regex pattern did not match.
-# E        Regex: 'DatetimeMother end_datetime must be a date.'
-# E        Input: "can't compare offset-naive and offset-aware datetimes"
-
-
-# tests/mothers/additional_types/test_string_datetime_mother.py:123: AssertionError
 def test_string_datetime_mother_invalid_start_datetime_type() -> None:
     """
     Test StringDatetimeMother create method with invalid start_datetime type.
@@ -111,12 +105,6 @@ def test_string_datetime_mother_out_of_range_method_happy_path() -> None:
     )
 
 
-# E       AssertionError: Regex pattern did not match.
-# E        Regex: 'DatetimeMother end_datetime must be a date.'
-# E        Input: "can't compare offset-naive and offset-aware datetimes"
-
-
-# tests/mothers/additional_types/test_string_datetime_mother.py:123: AssertionError
 def test_string_datetime_mother_out_of_range_method_invalid_start_datetime_type() -> None:
     """
     Test StringDatetimeMother create method with invalid start_datetime type.
@@ -128,12 +116,6 @@ def test_string_datetime_mother_out_of_range_method_invalid_start_datetime_type(
         StringDatetimeMother.out_of_range(start_datetime=StringDatetimeMother.invalid_type())
 
 
-# E       AssertionError: Regex pattern did not match.
-# E        Regex: 'DatetimeMother end_datetime must be a date.'
-# E        Input: "can't compare offset-naive and offset-aware datetimes"
-
-
-# tests/mothers/additional_types/test_string_datetime_mother.py:123: AssertionError
 def test_string_datetime_mother_out_of_range_method_invalid_end_datetime_type() -> None:
     """
     Test StringDatetimeMother create method with invalid end_datetime type.

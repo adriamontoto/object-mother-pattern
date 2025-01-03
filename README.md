@@ -28,6 +28,8 @@ Easy to install and integrate, the **Object Mother Pattern** is a must-have for 
 ## Table of Contents
 
 - [📥 Installation](#installation)
+- [💻 Utilization](#utilization)
+  - [🎄 Real-Life Case: Christmas Detector Service](#real-life-case-christmas-detector-service)
 - [🤝 Contributing](#contributing)
 - [🔑 License](#license)
 
@@ -43,6 +45,107 @@ You can install **Object Mother Pattern** using `pip`:
 
 ```bash
 pip install object-mother-pattern
+```
+
+<p align="right">
+    <a href="#readme-top">🔼 Back to top</a>
+</p><br><br>
+
+<a name="utilization"></a>
+
+## 💻 Utilization
+
+Here is how you can utilize the **Object Mother** library to generate various types of test data:
+
+```python
+from object_mother_pattern.mothers import (
+    IntegerMother,
+    FloatMother,
+    BoolMother,
+    StringMother,
+    UUIDMother,
+    StringDateMother,
+)
+
+# Generate a random integer between -4 and 15
+number = IntegerMother.create(min=-4, max=15)
+print(number)
+# >>> 8
+
+# Generate a random float between -4 and 15 with 5 Decimal Places
+number = FloatMother.create(min=-4, max=15, decimals=5)
+print(number)
+# >>> 0.83396
+
+# Generate a random boolean
+boolean = BoolMother.create()
+print(boolean)
+# >>> True
+
+# Generate a random string
+string = StringMother.create()
+print(string)
+# >>> 'zFUmlsODZqzwyGjrOOqBtYzNwlJdOETalkXbuSegoQpgEnYQTCDeoifWrTQXMmAHxFzzDbhXjzwglAmllTrmBYRqVwEXswZxNcaWmy'
+
+# Generate a random string of specific length
+string = StringMother.of_length(length=10)
+print(string)
+# >>> 'TfkrYRxUFT'
+
+# Generate a random UUID
+uuid = UUIDMother.create()
+print(uuid)
+# >>> '3e9e0f3a-64a3-474f-9127-368e723f389f'
+
+# Generate a random date
+date = StringDateMother.create()
+print(date)
+# >>> '2015-09-15'
+```
+
+<p align="right">
+    <a href="#readme-top">🔼 Back to top</a>
+</p>
+
+<a name="real-life-case-christmas-detector-service"></a>
+
+### 🎄 Real-Life Case: Christmas Detector Service
+
+Below is an example of a real-life scenario where Object Mother can help simplify test date creation. We have a `ChristmasDetectorService` that checks if a given date falls within a specific Christmas holiday range. Using the [`DateMother`](https://github.com/adriamontoto/object-mother-pattern/blob/master/object_mother_pattern/mothers/additional_types/date_mother.py) class, we can easily generate dates both within and outside of this range for our tests, this ensuring that every possible scenario is covered.
+
+```python
+from datetime import date
+from object_mother_pattern.mothers import DateMother
+
+
+class ChristmasDetectorService:
+    def __init__(self) -> None:
+        self.christmas_start = date(year=2024, month=12, day=24)
+        self.christmas_end = date(year=2025, month=1, day=6)
+
+    def is_christmas(self, today: date) -> bool:
+        return self.christmas_start <= today <= self.christmas_end
+
+
+christmas_detector_service = ChristmasDetectorService()
+
+
+def test_christmas_detector_is_christmas() -> None:
+    date_mother = DateMother.create(
+        start_date=date(year=2024, month=12, day=25),
+        end_date=date(year=2025, month=1, day=6),
+    )
+
+    assert christmas_detector_service.is_christmas(today=date_mother)
+
+
+def test_christmas_detector_is_not_christmas() -> None:
+    date_mother = DateMother.out_of_range(
+        start_date=date(year=2024, month=12, day=24),
+        end_date=date(year=2025, month=1, day=6),
+    )
+
+    assert not christmas_detector_service.is_christmas(today=date_mother)
 ```
 
 <p align="right">

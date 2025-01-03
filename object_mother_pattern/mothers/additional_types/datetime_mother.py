@@ -88,6 +88,8 @@ class DatetimeMother(BaseMother[datetime]):
         if type(end_datetime) is not datetime:
             raise TypeError('DatetimeMother end_datetime must be a datetime.')
 
+        start_datetime = cls.__force_utc(date=start_datetime)
+        end_datetime = cls.__force_utc(date=end_datetime)
         if start_datetime > end_datetime:
             raise ValueError('DatetimeMother end_datetime must be older than start_datetime.')
 
@@ -142,6 +144,8 @@ class DatetimeMother(BaseMother[datetime]):
         if type(end_datetime) is not datetime:
             raise TypeError('DatetimeMother end_datetime must be a datetime.')
 
+        start_datetime = cls.__force_utc(date=start_datetime)
+        end_datetime = cls.__force_utc(date=end_datetime)
         if start_datetime > end_datetime:
             raise ValueError('DatetimeMother end_datetime must be older than start_datetime.')
 
@@ -165,3 +169,19 @@ class DatetimeMother(BaseMother[datetime]):
                 ),
             ]
         )
+
+    @classmethod
+    def __force_utc(cls, date: datetime) -> datetime:
+        """
+        Force a datetime to be timezone-aware.
+
+        Args:
+            date: Datetime.
+
+        Returns:
+            datetime: Timezone-aware datetime.
+        """
+        if date.tzinfo is None:
+            date = date.replace(tzinfo=UTC)  # pragma: no cover
+
+        return date

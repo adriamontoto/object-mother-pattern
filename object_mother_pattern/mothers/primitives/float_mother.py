@@ -97,14 +97,14 @@ class FloatMother(BaseMother[float]):
         if decimals > 10:
             raise ValueError('FloatMother decimals value must be less than or equal to 10.')
 
+        if min == max:
+            return min
+
         if min == 0:
             min = 0.0000000001  # pragma: no cover
 
         if max == 0:
             max = 0.0000000001  # pragma: no cover
-
-        if min == max:
-            return min
 
         return cls._random().pyfloat(min_value=min, max_value=max, right_digits=decimals)
 

@@ -55,7 +55,7 @@ def test_string_datetime_mother_invalid_start_datetime_type() -> None:
         expected_exception=TypeError,
         match='DatetimeMother start_datetime must be a datetime.',
     ):
-        StringDatetimeMother.create(start_datetime=StringDatetimeMother.invalid_type())
+        StringDatetimeMother.create(start_datetime=DatetimeMother.invalid_type())
 
 
 def test_string_datetime_mother_invalid_end_datetime_type() -> None:
@@ -66,7 +66,7 @@ def test_string_datetime_mother_invalid_end_datetime_type() -> None:
         expected_exception=TypeError,
         match='DatetimeMother end_datetime must be a date.',
     ):
-        StringDatetimeMother.create(end_datetime=StringDatetimeMother.invalid_type())
+        StringDatetimeMother.create(end_datetime=DatetimeMother.invalid_type())
 
 
 def test_string_datetime_mother_start_datetime_greater_than_end_datetime() -> None:
@@ -113,7 +113,7 @@ def test_string_datetime_mother_out_of_range_method_invalid_start_datetime_type(
         expected_exception=TypeError,
         match='DatetimeMother start_datetime must be a date.',
     ):
-        StringDatetimeMother.out_of_range(start_datetime=StringDatetimeMother.invalid_type())
+        StringDatetimeMother.out_of_range(start_datetime=DatetimeMother.invalid_type())
 
 
 def test_string_datetime_mother_out_of_range_method_invalid_end_datetime_type() -> None:
@@ -124,7 +124,7 @@ def test_string_datetime_mother_out_of_range_method_invalid_end_datetime_type() 
         expected_exception=TypeError,
         match='DatetimeMother end_datetime must be a date.',
     ):
-        StringDatetimeMother.out_of_range(end_datetime=StringDatetimeMother.invalid_type())
+        StringDatetimeMother.out_of_range(end_datetime=DatetimeMother.invalid_type())
 
 
 def test_string_datetime_mother_out_of_range_method_invalid_range_type() -> None:

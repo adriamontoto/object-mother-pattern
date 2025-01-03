@@ -22,7 +22,7 @@ class BytesMother(BaseMother[bytes]):
 
     bytes = BytesMother.create()
     print(bytes)
-    # >>> 'zFUmlsODZqzwyGjrOOqBtYzNwlJdOETalkXbuSegoQpgEnYQTCDeoifWrTQXMmAHxFzzDbhXjzwglAmllTrmBYRqVwEXswZxNcaWmy'
+    # >>> 'zFUmlsODZqzwyGjrOOqBtYzNwlJdOETalkXbuSegoQpgEnYQTCDeoifWrTQXMm'
     ```
     """
 
@@ -54,7 +54,7 @@ class BytesMother(BaseMother[bytes]):
 
         bytes = BytesMother.create()
         print(bytes)
-        # >>> b'zFUmlsODZqzwyGjrOOqBtYzNwlJdOETalkXbuSegoQpgEnYQTCDeoifWrTQXMmAHxFzzDbhXjzwglAmllTrmBYRqVwEXswZxNcaWmy'
+        # >>> b'zFUmlsODZqzwyGjrOOqBtYzNwlJdOETalkXbuSegoQpgEnYQTCDeoifWrTQXMm'
         ```
         """
         if value is not None:

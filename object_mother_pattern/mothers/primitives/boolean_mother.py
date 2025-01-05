@@ -1,5 +1,5 @@
 """
-BoolMother module.
+BooleanMother module.
 """
 
 from sys import version_info
@@ -12,15 +12,15 @@ else:
 from object_mother_pattern.mothers.base_mother import BaseMother
 
 
-class BoolMother(BaseMother[bool]):
+class BooleanMother(BaseMother[bool]):
     """
-    BoolMother class.
+    BooleanMother class.
 
     Example:
     ```python
-    from object_mother_pattern.mothers import BoolMother
+    from object_mother_pattern.mothers import BooleanMother
 
-    boolean = BoolMother.create()
+    boolean = BooleanMother.create()
     print(boolean)
     # >>> True
     ```
@@ -45,16 +45,16 @@ class BoolMother(BaseMother[bool]):
 
         Example:
         ```python
-        from object_mother_pattern.mothers import BoolMother
+        from object_mother_pattern.mothers import BooleanMother
 
-        boolean = BoolMother.create()
+        boolean = BooleanMother.create()
         print(boolean)
         # >>> True
         ```
         """
         if value is not None:
             if type(value) is not bool:
-                raise TypeError('BoolMother value must be a boolean.')
+                raise TypeError('BooleanMother value must be a boolean.')
 
             return value
 

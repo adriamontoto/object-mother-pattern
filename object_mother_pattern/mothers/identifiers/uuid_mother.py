@@ -1,5 +1,5 @@
 """
-UUIDMother module.
+UuidMother module.
 """
 
 from sys import version_info
@@ -13,15 +13,15 @@ else:
 from object_mother_pattern.mothers.base_mother import BaseMother
 
 
-class UUIDMother(BaseMother[UUID]):
+class UuidMother(BaseMother[UUID]):
     """
-    UUIDMother class.
+    UuidMother class.
 
     Example:
     ```python
-    from object_mother_pattern.mothers import UUIDMother
+    from object_mother_pattern.mothers import UuidMother
 
-    uuid = UUIDMother.create()
+    uuid = UuidMother.create()
     print(uuid)
     # >>> 3e9e0f3a-64a3-474f-9127-368e723f389f
     ```
@@ -46,16 +46,16 @@ class UUIDMother(BaseMother[UUID]):
 
         Example:
         ```python
-        from object_mother_pattern.mothers import UUIDMother
+        from object_mother_pattern.mothers import UuidMother
 
-        uuid = UUIDMother.create()
+        uuid = UuidMother.create()
         print(uuid)
         # >>> 3e9e0f3a-64a3-474f-9127-368e723f389f
         ```
         """
         if value is not None:
             if type(value) is not UUID:
-                raise TypeError('UUIDMother value must be a UUID.')
+                raise TypeError('UuidMother value must be a UUID.')
 
             return value
 

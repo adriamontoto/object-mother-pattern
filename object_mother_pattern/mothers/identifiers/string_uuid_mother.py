@@ -1,5 +1,5 @@
 """
-StringUUIDMother module.
+StringUuidMother module.
 """
 
 from random import choice
@@ -13,15 +13,15 @@ else:
 from object_mother_pattern.mothers.base_mother import BaseMother
 
 
-class StringUUIDMother(BaseMother[str]):
+class StringUuidMother(BaseMother[str]):
     """
-    StringUUIDMother class.
+    StringUuidMother class.
 
     Example:
     ```python
-    from object_mother_pattern.mothers import StringUUIDMother
+    from object_mother_pattern.mothers import StringUuidMother
 
-    uuid = StringUUIDMother.create()
+    uuid = StringUuidMother.create()
     print(uuid)
     # >>> 3e9e0f3a-64a3-474f-9127-368e723f389f
     ```
@@ -46,16 +46,16 @@ class StringUUIDMother(BaseMother[str]):
 
         Example:
         ```python
-        from object_mother_pattern.mothers import StringUUIDMother
+        from object_mother_pattern.mothers import StringUuidMother
 
-        uuid = StringUUIDMother.create()
+        uuid = StringUuidMother.create()
         print(uuid)
         # >>> 3e9e0f3a-64a3-474f-9127-368e723f389f
         ```
         """
         if value is not None:
             if type(value) is not str:
-                raise TypeError('StringUUIDMother value must be a string.')
+                raise TypeError('StringUuidMother value must be a string.')
 
             return value
 

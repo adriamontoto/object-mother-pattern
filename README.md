@@ -63,7 +63,7 @@ from object_mother_pattern.mothers import (
     FloatMother,
     BoolMother,
     StringMother,
-    UUIDMother,
+    UuidMother,
     StringDateMother,
 )
 
@@ -93,7 +93,7 @@ print(string)
 # >>> 'TfkrYRxUFT'
 
 # Generate a random UUID
-uuid = UUIDMother.create()
+uuid = UuidMother.create()
 print(uuid)
 # >>> '3e9e0f3a-64a3-474f-9127-368e723f389f'
 

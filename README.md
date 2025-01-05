@@ -61,7 +61,7 @@ Here is how you can utilize the **Object Mother** library to generate various ty
 from object_mother_pattern.mothers import (
     IntegerMother,
     FloatMother,
-    BoolMother,
+    BooleanMother,
     StringMother,
     UuidMother,
     StringDateMother,
@@ -78,7 +78,7 @@ print(number)
 # >>> 0.83396
 
 # Generate a random boolean
-boolean = BoolMother.create()
+boolean = BooleanMother.create()
 print(boolean)
 # >>> True
 

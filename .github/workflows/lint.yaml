@@ -29,7 +29,7 @@ jobs:
 
       - id: cache
         name: 📦 Create cache
-        uses: actions/cache@v4.2.0
+        uses: actions/cache@v4.2.2
         with:
           path: ${{ env.pythonLocation }}
           key: ${{ matrix.os }}-python-${{ matrix.python-version }}-${{ hashFiles('pyproject.toml', 'requirements*') }}
@@ -43,7 +43,7 @@ jobs:
         run: make lint
 
       - name: 🫙 Store type coverage
-        uses: actions/upload-artifact@v4.6.0
+        uses: actions/upload-artifact@v4.6.1
         if: always()
         with:
           name: type_coverage_report_${{ matrix.os }}_${{ matrix.python-version }}

@@ -59,3 +59,41 @@ class BooleanMother(BaseMother[bool]):
             return value
 
         return cls._random().pybool()
+
+    @classmethod
+    def true(cls) -> bool:
+        """
+        Return True.
+
+        Returns:
+            bool: True.
+
+        Example:
+        ```python
+        from object_mother_pattern.mothers import BooleanMother
+
+        boolean = BooleanMother.true()
+        print(boolean)
+        # >>> True
+        ```
+        """
+        return True
+
+    @classmethod
+    def false(cls) -> bool:
+        """
+        Return False.
+
+        Returns:
+            bool: False.
+
+        Example:
+        ```python
+        from object_mother_pattern.mothers import BooleanMother
+
+        boolean = BooleanMother.false()
+        print(boolean)
+        # >>> False
+        ```
+        """
+        return False

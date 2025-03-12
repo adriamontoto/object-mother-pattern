@@ -9,6 +9,8 @@ if version_info >= (3, 12):
 else:
     from typing_extensions import override  # pragma: no cover
 
+from random import randbytes, randint
+
 from object_mother_pattern.mothers.base_mother import BaseMother
 
 
@@ -78,7 +80,8 @@ class BytesMother(BaseMother[bytes]):
         if min_length > max_length:
             raise ValueError('BytesMother min_length must be less than or equal to max_length.')
 
-        return cls._random().pystr(min_chars=min_length, max_chars=max_length).encode()
+        length = randint(a=min_length, b=max_length)  # noqa: S311
+        return randbytes(n=length)  # noqa: S311
 
     @classmethod
     def of_length(cls, *, length: int) -> bytes:

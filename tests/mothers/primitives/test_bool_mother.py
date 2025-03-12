@@ -25,6 +25,20 @@ def test_bool_mother_value() -> None:
     assert BooleanMother.create(value=value) == value
 
 
+def test_bool_mother_true_method() -> None:
+    """
+    Test BooleanMother true method.
+    """
+    assert BooleanMother.true() is True
+
+
+def test_bool_mother_false_method() -> None:
+    """
+    Test BooleanMother false method.
+    """
+    assert BooleanMother.false() is False
+
+
 def test_bool_mother_invalid_type() -> None:
     """
     Test BooleanMother create method with invalid type.

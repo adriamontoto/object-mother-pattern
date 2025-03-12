@@ -9,6 +9,8 @@ if version_info >= (3, 12):
 else:
     from typing_extensions import override  # pragma: no cover
 
+from random import randint
+
 from object_mother_pattern.mothers.base_mother import BaseMother
 
 
@@ -72,7 +74,7 @@ class IntegerMother(BaseMother[int]):
         if min > max:
             raise ValueError('IntegerMother min value must be less than or equal to max value.')
 
-        return cls._random().pyint(min_value=min, max_value=max)
+        return randint(a=min, b=max)  # noqa: S311
 
     @classmethod
     def positive(cls, *, max: int = 100) -> int:

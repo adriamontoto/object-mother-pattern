@@ -9,6 +9,8 @@ if version_info >= (3, 12):
 else:
     from typing_extensions import override  # pragma: no cover
 
+from random import choice
+
 from object_mother_pattern.mothers.base_mother import BaseMother
 
 
@@ -32,7 +34,7 @@ class BooleanMother(BaseMother[bool]):
     @override
     def create(cls, *, value: bool | None = None) -> bool:
         """
-        Create a random boolean value.
+        Create a random boolean value. If a value is provided, it will be returned.
 
         Args:
             value (bool | None, optional): Bool value. Defaults to None.
@@ -58,7 +60,7 @@ class BooleanMother(BaseMother[bool]):
 
             return value
 
-        return cls._random().pybool()
+        return choice(seq=(True, False))  # noqa: S311
 
     @classmethod
     def true(cls) -> bool:

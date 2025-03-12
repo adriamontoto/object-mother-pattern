@@ -2,7 +2,7 @@
 FloatMother module.
 """
 
-from random import randint
+from random import randint, uniform
 from sys import version_info
 
 if version_info >= (3, 12):
@@ -86,7 +86,7 @@ class FloatMother(BaseMother[float]):
             raise ValueError('FloatMother min value must be less than or equal to max value.')
 
         if decimals is None:
-            decimals = randint(a=0, b=10)
+            decimals = randint(a=0, b=10)  # noqa: S311
 
         if type(decimals) is not int:
             raise TypeError('FloatMother decimals value must be an integer.')
@@ -106,7 +106,7 @@ class FloatMother(BaseMother[float]):
         if max == 0:
             max = 0.0000000001  # pragma: no cover
 
-        return cls._random().pyfloat(min_value=min, max_value=max, right_digits=decimals)
+        return round(number=uniform(a=min, b=max), ndigits=decimals)  # noqa: S311
 
     @classmethod
     def positive(cls, *, max: int | float = 1.0, decimals: int | None = None) -> float:

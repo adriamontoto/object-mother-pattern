@@ -15,7 +15,7 @@ from object_mother_pattern.mothers.base_mother import BaseMother
 
 class FloatMother(BaseMother[float]):
     """
-    FloatMother class.
+    FloatMother class is responsible for creating random float values.
 
     Example:
     ```python
@@ -40,26 +40,29 @@ class FloatMother(BaseMother[float]):
         decimals: int | None = None,
     ) -> float:
         """
-        Create a random float within the provided range. If a value is provided, it will be returned.
+        Create a random float value. If a specific float value is provided via `value`, it is returned after validation.
+        Otherwise, a random float value is generated within the provided range of `min` and `max` (both included) and if
+        provided, rounded to the `decimals` number of decimal places, otherwise a random number of decimal places
+        between 0 and 10.
 
         Args:
-            value (int | float | None, optional): Float value. Defaults to None.
-            min (int | float, optional): Minimum float value. Defaults to -1.0.
-            max (int | float, optional): Maximum float value. Defaults to 1.0.
-            decimals (int | None, optional): Number of decimal places, if None, a random number of decimal places will
-            be used. Defaults to None.
+            value (int | float | None, optional): Specific value to return. Defaults to None.
+            min (int | float, optional): Minimum value of the range. Defaults to -1.0.
+            max (int | float, optional): Maximum value of the range. Must be >= `min`. Defaults to 1.0.
+            decimals (int | None, optional): Number of decimal places for the float. Must be >= 1 and <= 10. Defaults
+            to None.
 
         Raises:
-            TypeError: If value is not an int or a float.
-            TypeError: If min is not an int or a float.
-            TypeError: If max is not an int or a float.
-            ValueError: If min is greater than max.
-            TypeError: If decimals is not an int.
-            ValueError: If decimals is less than 0.
-            ValueError: If decimals is greater than 10.
+            TypeError: If the provided `value` is not an integer or a float.
+            TypeError: If `min` is not an integer or a float.
+            TypeError: If `max` is not an integer or a float.
+            ValueError: If `min` is greater than `max`.
+            TypeError: If `decimals` is not an integer.
+            ValueError: If `decimals` is less than 0.
+            ValueError: If `decimals` is greater than 10.
 
         Returns:
-            float: Random float.
+            float: A randomly float rounded value to the specified number of decimal places.
 
         Example:
         ```python
@@ -111,21 +114,21 @@ class FloatMother(BaseMother[float]):
     @classmethod
     def positive(cls, *, max: int | float = 1.0, decimals: int | None = None) -> float:
         """
-        Create a random positive float, greater than 0.
+        Create a random positive float with an upper bound of `max` and if provided, rounded to the `decimals` number of
+        decimal places, otherwise a random number of decimal places between 0 and 10.
 
         Args:
-            max (int | float, optional): Maximum positive float value. Defaults to 1.0.
-            decimals (int | None, optional): Number of decimal places, if None, a random number of decimal places will
-            be used. Defaults to None.
+            max (int | float, optional): Upper bound for the positive float. Must be >= 0. Defaults to 1.0.
+            decimals (int | None, optional): Number of decimal places. Must be >= 0 and <= 10. Defaults to None.
 
         Raises:
-            TypeError: If max is not an int or a float.
-            ValueError: If max is less than 1.
-            TypeError: If decimals is not an int.
-            ValueError: If decimals is less than 0.
+            TypeError: If `max` is not an integer or a float.
+            ValueError: If `max` is not greater than 0.
+            TypeError: If `decimals` is provided but is not an integer.
+            ValueError: If `decimals` is not between 0 and 10 (inclusive).
 
         Returns:
-            float: Random positive float.
+            float: A randomly positive float value rounded to the specified number of decimal places.
 
         Example:
         ```python
@@ -141,21 +144,21 @@ class FloatMother(BaseMother[float]):
     @classmethod
     def negative(cls, *, min: int | float = -1.0, decimals: int | None = None) -> float:
         """
-        Create a random negative float, less than 0.
+        Create a random negative float with a lower bound of `min` and if provided, rounded to the `decimals` number of
+        decimal places, otherwise a random number of decimal places between 0 and 10.
 
         Args:
-            min (int | float, optional): Minimum negative float value. Defaults to -1.0.
-            decimals (int | None, optional): Number of decimal places, if None, a random number of decimal places will
-            be used. Defaults to None.
+            min (int | float, optional): Lower bound for the negative float. Must be < 0. Defaults to -1.0.
+            decimals (int | None, optional): Number of decimal places. Must be >= 0 and <= 10. Defaults to None.
 
         Raises:
-            TypeError: If min is not a float.
-            ValueError: If min is greater than -1.
-            TypeError: If decimals is not an int.
-            ValueError: If decimals is less than 0.
+            TypeError: If `min` is not an integer or a float.
+            ValueError: If `min` is greater than -1.
+            TypeError: If `decimals` is provided but is not an integer.
+            ValueError: If `decimals` is not between 0 and 10 (inclusive).
 
         Returns:
-            float: Random negative float.
+            float: A randomly negative float value rounded to the specified number of decimal places.
 
         Example:
         ```python

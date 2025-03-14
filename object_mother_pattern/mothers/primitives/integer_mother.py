@@ -16,7 +16,7 @@ from object_mother_pattern.mothers.base_mother import BaseMother
 
 class IntegerMother(BaseMother[int]):
     """
-    IntegerMother class.
+    IntegerMother class is responsible for creating random integer values.
 
     Example:
     ```python
@@ -34,21 +34,23 @@ class IntegerMother(BaseMother[int]):
     @override
     def create(cls, *, value: int | None = None, min: int = -100, max: int = 100) -> int:
         """
-        Create a random integer within the provided range. If a value is provided, it will be returned.
+        Create a random integer value. If a specific integer value is provided via `value`, it is returned after
+        validation. Otherwise, a random integer value is generated within the provided range of `min` and `max` (both
+        included).
 
         Args:
-            value (int | None, optional): Integer value. Defaults to None.
-            min (int, optional): Minimum integer value. Defaults to -100.
-            max (int, optional): Maximum integer value. Defaults to 100.
+            value (int | None, optional): Specific value to return. Defaults to None.
+            min (int, optional): Minimum value of the range. Defaults to -100.
+            max (int, optional): Maximum value of the range. Must be >= `min`. Defaults to 100.
 
         Raises:
-            TypeError: If value is not an integer.
-            TypeError: If min is not an integer.
-            TypeError: If max is not an integer.
-            ValueError: If min is greater than max.
+            TypeError: If the provided `value` is not an integer.
+            TypeError: If `min` is not an integer.
+            TypeError: If `max` is not an integer.
+            ValueError: If `min` is greater than `max`.
 
         Returns:
-            int: Random integer.
+            int: A randomly generated integer value.
 
         Example:
         ```python
@@ -79,16 +81,17 @@ class IntegerMother(BaseMother[int]):
     @classmethod
     def positive(cls, *, max: int = 100) -> int:
         """
-        Create a random positive integer, greater than 0.
+        Create a random positive integer with an upper bound of `max`.
 
         Args:
-            max (int, optional): Maximum positive integer value. Defaults to 100.
+            max (int, optional): Upper bound for the positive integer. Must be >= 0. Defaults to 100.
 
         Raises:
-            ValueError: If max is less than 1.
+            TypeError: If `max` is not an integer.
+            ValueError: If `max` is not greater than 0.
 
         Returns:
-            int: Random positive integer.
+            int: A randomly positive integer value.
 
         Example:
         ```python
@@ -104,17 +107,17 @@ class IntegerMother(BaseMother[int]):
     @classmethod
     def negative(cls, *, min: int = -100) -> int:
         """
-        Create a random negative integer, less than 0.
+        Create a random negative integer with a lower bound of `min`.
 
         Args:
-            min (int, optional): Minimum negative integer value. Defaults to -100.
+            min (int, optional): Lower bound for the negative integer. Must be < 0. Defaults to -100.
 
         Raises:
-            TypeError: If min is not an integer.
-            ValueError: If min is greater than -1.
+            TypeError: If `min` is not an integer.
+            ValueError: If `min` is not less than 0.
 
         Returns:
-            int: Random negative integer.
+            int: A randomly negative integer value.
 
         Example:
         ```python

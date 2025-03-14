@@ -16,7 +16,7 @@ from object_mother_pattern.mothers.base_mother import BaseMother
 
 class BooleanMother(BaseMother[bool]):
     """
-    BooleanMother class.
+    BooleanMother class is responsible for creating random boolean values.
 
     Example:
     ```python
@@ -34,16 +34,17 @@ class BooleanMother(BaseMother[bool]):
     @override
     def create(cls, *, value: bool | None = None) -> bool:
         """
-        Create a random boolean value. If a value is provided, it will be returned.
+        Create a boolean value. If a specific boolean value is provided via `value`, it is returned after validation.
+        Otherwise, a random boolean is generated.
 
         Args:
-            value (bool | None, optional): Bool value. Defaults to None.
+            value (bool | None, optional): A specific boolean value to return. Defaults to None.
 
         Raises:
-            TypeError: If value is not a boolean.
+            TypeError: If the provided `value` is not a boolean.
 
         Returns:
-            bool: Random boolean.
+            bool: A randomly generated boolean value.
 
         Example:
         ```python
@@ -65,10 +66,10 @@ class BooleanMother(BaseMother[bool]):
     @classmethod
     def true(cls) -> bool:
         """
-        Return True.
+        Return a true boolean value.
 
         Returns:
-            bool: True.
+            bool: True boolean value.
 
         Example:
         ```python
@@ -84,10 +85,10 @@ class BooleanMother(BaseMother[bool]):
     @classmethod
     def false(cls) -> bool:
         """
-        Return False.
+        Return a false boolean value.
 
         Returns:
-            bool: False.
+            bool: False boolean value.
 
         Example:
         ```python

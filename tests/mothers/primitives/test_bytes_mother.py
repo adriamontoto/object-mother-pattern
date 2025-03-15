@@ -2,11 +2,12 @@
 Test module for the BytesMother class.
 """
 
-from pytest import raises as assert_raises
+from pytest import mark, raises as assert_raises
 
 from object_mother_pattern.mothers import BytesMother, IntegerMother
 
 
+@mark.unit_testing
 def test_bytes_mother_happy_path() -> None:
     """
     Test BytesMother happy path.
@@ -16,6 +17,7 @@ def test_bytes_mother_happy_path() -> None:
     assert type(value) is bytes
 
 
+@mark.unit_testing
 def test_bytes_mother_value() -> None:
     """
     Test BytesMother create method with value.
@@ -25,6 +27,7 @@ def test_bytes_mother_value() -> None:
     assert BytesMother.create(value=value) == value
 
 
+@mark.unit_testing
 def test_bytes_mother_invalid_type() -> None:
     """
     Test BytesMother create method with invalid type.
@@ -32,6 +35,7 @@ def test_bytes_mother_invalid_type() -> None:
     assert type(BytesMother.invalid_type()) is not bytes
 
 
+@mark.unit_testing
 def test_bytes_mother_invalid_value_type() -> None:
     """
     Test BytesMother create method with invalid value type.
@@ -43,6 +47,7 @@ def test_bytes_mother_invalid_value_type() -> None:
         BytesMother.create(value=BytesMother.invalid_type())
 
 
+@mark.unit_testing
 def test_bytes_mother_invalid_min_length_type() -> None:
     """
     Test BytesMother create method with invalid min_length type.
@@ -54,6 +59,7 @@ def test_bytes_mother_invalid_min_length_type() -> None:
         BytesMother.create(min_length=IntegerMother.invalid_type())
 
 
+@mark.unit_testing
 def test_bytes_mother_invalid_min_length_value() -> None:
     """
     Test BytesMother create method with invalid min_length value.
@@ -65,6 +71,7 @@ def test_bytes_mother_invalid_min_length_value() -> None:
         BytesMother.create(min_length=IntegerMother.negative())
 
 
+@mark.unit_testing
 def test_bytes_mother_invalid_max_length_type() -> None:
     """
     Test BytesMother create method with invalid max_length type.
@@ -76,6 +83,7 @@ def test_bytes_mother_invalid_max_length_type() -> None:
         BytesMother.create(max_length=IntegerMother.invalid_type())
 
 
+@mark.unit_testing
 def test_bytes_mother_invalid_max_length_value() -> None:
     """
     Test BytesMother create method with invalid max_length value.
@@ -87,6 +95,7 @@ def test_bytes_mother_invalid_max_length_value() -> None:
         BytesMother.create(max_length=IntegerMother.negative())
 
 
+@mark.unit_testing
 def test_bytes_mother_min_length_greater_than_max_length() -> None:
     """
     Test BytesMother create method with min_length greater than max_length.
@@ -101,6 +110,7 @@ def test_bytes_mother_min_length_greater_than_max_length() -> None:
         BytesMother.create(min_length=max_value, max_length=min_value)
 
 
+@mark.unit_testing
 def test_bytes_mother_of_length() -> None:
     """
     Test BytesMother of_length method.
@@ -111,6 +121,7 @@ def test_bytes_mother_of_length() -> None:
     assert len(value) == length
 
 
+@mark.unit_testing
 def test_bytes_mother_of_length_invalid_length_type() -> None:
     """
     Test BytesMother of_length method with invalid length type.
@@ -122,6 +133,7 @@ def test_bytes_mother_of_length_invalid_length_type() -> None:
         BytesMother.of_length(length=IntegerMother.invalid_type())
 
 
+@mark.unit_testing
 def test_bytes_mother_of_length_invalid_length_value() -> None:
     """
     Test BytesMother of_length method with invalid length value.

@@ -2,11 +2,12 @@
 Test module for the TextMother class.
 """
 
-from pytest import raises as assert_raises
+from pytest import mark, raises as assert_raises
 
 from object_mother_pattern.mothers import IntegerMother, TextMother
 
 
+@mark.unit_testing
 def test_text_mother_happy_path() -> None:
     """
     Test TextMother happy path.
@@ -17,6 +18,7 @@ def test_text_mother_happy_path() -> None:
     assert 1 <= len(value) <= 1024
 
 
+@mark.unit_testing
 def test_text_mother_value() -> None:
     """
     Test TextMother create method with value.
@@ -26,6 +28,7 @@ def test_text_mother_value() -> None:
     assert TextMother.create(value=value) == value
 
 
+@mark.unit_testing
 def test_text_mother_length_equal_to_zero() -> None:
     """
     Test TextMother create method with length equal to 0.
@@ -35,6 +38,7 @@ def test_text_mother_length_equal_to_zero() -> None:
     assert value == ''
 
 
+@mark.unit_testing
 def test_text_mother_length_equal_to_one() -> None:
     """
     Test TextMother create method with length equal to 1.
@@ -44,6 +48,7 @@ def test_text_mother_length_equal_to_one() -> None:
     assert value == '.'
 
 
+@mark.unit_testing
 def test_text_mother_of_length_method() -> None:
     """
     Test TextMother of_length method.
@@ -56,6 +61,7 @@ def test_text_mother_of_length_method() -> None:
     assert value[-1] == '.'
 
 
+@mark.unit_testing
 def test_text_mother_invalid_type() -> None:
     """
     Test TextMother create method with invalid type.
@@ -63,6 +69,7 @@ def test_text_mother_invalid_type() -> None:
     assert type(TextMother.invalid_type()) is not str
 
 
+@mark.unit_testing
 def test_text_mother_invalid_value_type() -> None:
     """
     Test TextMother create method with invalid value type.
@@ -74,6 +81,7 @@ def test_text_mother_invalid_value_type() -> None:
         TextMother.create(value=TextMother.invalid_type())
 
 
+@mark.unit_testing
 def test_text_mother_invalid_min_length_type() -> None:
     """
     Test TextMother create method with invalid min length type.
@@ -85,6 +93,7 @@ def test_text_mother_invalid_min_length_type() -> None:
         TextMother.create(min_length=IntegerMother.invalid_type())
 
 
+@mark.unit_testing
 def test_text_mother_invalid_max_length_type() -> None:
     """
     Test TextMother create method with invalid max length type.
@@ -96,6 +105,7 @@ def test_text_mother_invalid_max_length_type() -> None:
         TextMother.create(max_length=IntegerMother.invalid_type())
 
 
+@mark.unit_testing
 def test_text_mother_min_length_less_than_zero() -> None:
     """
     Test TextMother create method with min greater than max.
@@ -107,6 +117,7 @@ def test_text_mother_min_length_less_than_zero() -> None:
         TextMother.create(min_length=IntegerMother.negative())
 
 
+@mark.unit_testing
 def test_text_mother_max_length_less_than_zero() -> None:
     """
     Test TextMother create method with max less than 0.
@@ -118,6 +129,7 @@ def test_text_mother_max_length_less_than_zero() -> None:
         TextMother.create(max_length=IntegerMother.negative())
 
 
+@mark.unit_testing
 def test_text_mother_min_length_greater_than_max_length() -> None:
     """
     Test TextMother create method with min greater than max.

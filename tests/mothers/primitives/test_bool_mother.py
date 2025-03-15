@@ -2,11 +2,12 @@
 Test module for the BooleanMother class.
 """
 
-from pytest import raises as assert_raises
+from pytest import mark, raises as assert_raises
 
 from object_mother_pattern.mothers import BooleanMother
 
 
+@mark.unit_testing
 def test_bool_mother_happy_path() -> None:
     """
     Test BooleanMother happy path.
@@ -16,6 +17,7 @@ def test_bool_mother_happy_path() -> None:
     assert type(value) is bool
 
 
+@mark.unit_testing
 def test_bool_mother_value() -> None:
     """
     Test BooleanMother create method with value.
@@ -25,6 +27,7 @@ def test_bool_mother_value() -> None:
     assert BooleanMother.create(value=value) == value
 
 
+@mark.unit_testing
 def test_bool_mother_true_method() -> None:
     """
     Test BooleanMother true method.
@@ -32,6 +35,7 @@ def test_bool_mother_true_method() -> None:
     assert BooleanMother.true() is True
 
 
+@mark.unit_testing
 def test_bool_mother_false_method() -> None:
     """
     Test BooleanMother false method.
@@ -39,6 +43,7 @@ def test_bool_mother_false_method() -> None:
     assert BooleanMother.false() is False
 
 
+@mark.unit_testing
 def test_bool_mother_invalid_type() -> None:
     """
     Test BooleanMother create method with invalid type.
@@ -46,6 +51,7 @@ def test_bool_mother_invalid_type() -> None:
     assert type(BooleanMother.invalid_type()) is not bool
 
 
+@mark.unit_testing
 def test_bool_mother_invalid_value_type() -> None:
     """
     Test BooleanMother create method with invalid value type.

@@ -2,11 +2,12 @@
 Test module for the StringMother class.
 """
 
-from pytest import raises as assert_raises
+from pytest import mark, raises as assert_raises
 
 from object_mother_pattern.mothers import IntegerMother, StringMother
 
 
+@mark.unit_testing
 def test_string_mother_happy_path() -> None:
     """
     Test StringMother happy path.
@@ -16,6 +17,7 @@ def test_string_mother_happy_path() -> None:
     assert type(value) is str
 
 
+@mark.unit_testing
 def test_string_mother_value() -> None:
     """
     Test StringMother create method with value.
@@ -25,6 +27,7 @@ def test_string_mother_value() -> None:
     assert StringMother.create(value=value) == value
 
 
+@mark.unit_testing
 def test_string_mother_invalid_type() -> None:
     """
     Test StringMother create method with invalid type.
@@ -32,6 +35,7 @@ def test_string_mother_invalid_type() -> None:
     assert type(StringMother.invalid_type()) is not str
 
 
+@mark.unit_testing
 def test_string_mother_invalid_value() -> None:
     """
     Test StringMother invalid_value method.
@@ -42,6 +46,7 @@ def test_string_mother_invalid_value() -> None:
     assert not value.isprintable()
 
 
+@mark.unit_testing
 def test_string_mother_invalid_value_type() -> None:
     """
     Test StringMother create method with invalid value type.
@@ -53,6 +58,7 @@ def test_string_mother_invalid_value_type() -> None:
         StringMother.create(value=StringMother.invalid_type())
 
 
+@mark.unit_testing
 def test_string_mother_invalid_min_length_type() -> None:
     """
     Test StringMother create method with invalid min_length type.
@@ -64,6 +70,7 @@ def test_string_mother_invalid_min_length_type() -> None:
         StringMother.create(min_length=IntegerMother.invalid_type())
 
 
+@mark.unit_testing
 def test_string_mother_invalid_min_length_value() -> None:
     """
     Test StringMother create method with invalid min_length value.
@@ -75,6 +82,7 @@ def test_string_mother_invalid_min_length_value() -> None:
         StringMother.create(min_length=IntegerMother.negative())
 
 
+@mark.unit_testing
 def test_string_mother_invalid_max_length_type() -> None:
     """
     Test StringMother create method with invalid max_length type.
@@ -86,6 +94,7 @@ def test_string_mother_invalid_max_length_type() -> None:
         StringMother.create(max_length=IntegerMother.invalid_type())
 
 
+@mark.unit_testing
 def test_string_mother_invalid_max_length_value() -> None:
     """
     Test StringMother create method with invalid max_length value.
@@ -97,6 +106,7 @@ def test_string_mother_invalid_max_length_value() -> None:
         StringMother.create(max_length=IntegerMother.negative())
 
 
+@mark.unit_testing
 def test_string_mother_min_length_greater_than_max_length() -> None:
     """
     Test StringMother create method with min_length greater than max_length.
@@ -111,6 +121,7 @@ def test_string_mother_min_length_greater_than_max_length() -> None:
         StringMother.create(min_length=max_value, max_length=min_value)
 
 
+@mark.unit_testing
 def test_string_mother_of_length() -> None:
     """
     Test StringMother of_length method.
@@ -121,6 +132,7 @@ def test_string_mother_of_length() -> None:
     assert len(value) == length
 
 
+@mark.unit_testing
 def test_string_mother_of_length_invalid_length_type() -> None:
     """
     Test StringMother of_length method with invalid length type.
@@ -132,6 +144,7 @@ def test_string_mother_of_length_invalid_length_type() -> None:
         StringMother.of_length(length=IntegerMother.invalid_type())
 
 
+@mark.unit_testing
 def test_string_mother_of_length_invalid_length_value() -> None:
     """
     Test StringMother of_length method with invalid length value.

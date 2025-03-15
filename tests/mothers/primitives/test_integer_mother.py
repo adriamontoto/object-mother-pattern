@@ -2,11 +2,12 @@
 Test module for the IntegerMother class.
 """
 
-from pytest import raises as assert_raises
+from pytest import mark, raises as assert_raises
 
 from object_mother_pattern.mothers import IntegerMother
 
 
+@mark.unit_testing
 def test_integer_mother_happy_path() -> None:
     """
     Test IntegerMother happy path.
@@ -17,6 +18,7 @@ def test_integer_mother_happy_path() -> None:
     assert -100 <= value <= 100
 
 
+@mark.unit_testing
 def test_integer_mother_value() -> None:
     """
     Test IntegerMother create method with value.
@@ -26,6 +28,7 @@ def test_integer_mother_value() -> None:
     assert IntegerMother.create(value=value) == value
 
 
+@mark.unit_testing
 def test_integer_mother_invalid_type() -> None:
     """
     Test IntegerMother create method with invalid type.
@@ -33,6 +36,7 @@ def test_integer_mother_invalid_type() -> None:
     assert type(IntegerMother.invalid_type()) is not int
 
 
+@mark.unit_testing
 def test_integer_mother_same_min_max() -> None:
     """
     Test IntegerMother create method with same min and max.
@@ -42,6 +46,7 @@ def test_integer_mother_same_min_max() -> None:
     assert IntegerMother.create(min=value, max=value) == value
 
 
+@mark.unit_testing
 def test_integer_mother_invalid_value_type() -> None:
     """
     Test IntegerMother create method with invalid value type.
@@ -53,6 +58,7 @@ def test_integer_mother_invalid_value_type() -> None:
         IntegerMother.create(value=IntegerMother.invalid_type())
 
 
+@mark.unit_testing
 def test_integer_mother_invalid_min_type() -> None:
     """
     Test IntegerMother create method with invalid min type.
@@ -64,6 +70,7 @@ def test_integer_mother_invalid_min_type() -> None:
         IntegerMother.create(min=IntegerMother.invalid_type())
 
 
+@mark.unit_testing
 def test_integer_mother_invalid_max_type() -> None:
     """
     Test IntegerMother create method with invalid max type.
@@ -75,6 +82,7 @@ def test_integer_mother_invalid_max_type() -> None:
         IntegerMother.create(max=IntegerMother.invalid_type())
 
 
+@mark.unit_testing
 def test_integer_mother_min_greater_than_max() -> None:
     """
     Test IntegerMother create method with min greater than max.
@@ -89,6 +97,7 @@ def test_integer_mother_min_greater_than_max() -> None:
         IntegerMother.create(min=max_value, max=min_value)
 
 
+@mark.unit_testing
 def test_integer_mother_positive() -> None:
     """
     Test IntegerMother positive method.
@@ -99,6 +108,7 @@ def test_integer_mother_positive() -> None:
     assert value > 0
 
 
+@mark.unit_testing
 def test_integer_mother_positive_invalid_max_type() -> None:
     """
     Test IntegerMother positive method with invalid max type.
@@ -110,6 +120,7 @@ def test_integer_mother_positive_invalid_max_type() -> None:
         IntegerMother.positive(max=IntegerMother.invalid_type())
 
 
+@mark.unit_testing
 def test_integer_mother_positive_max_less_than_one() -> None:
     """
     Test IntegerMother positive method with max less than 1.
@@ -123,6 +134,7 @@ def test_integer_mother_positive_max_less_than_one() -> None:
         IntegerMother.positive(max=max_value)
 
 
+@mark.unit_testing
 def test_integer_mother_negative() -> None:
     """
     Test IntegerMother negative method.
@@ -133,6 +145,7 @@ def test_integer_mother_negative() -> None:
     assert value < 0
 
 
+@mark.unit_testing
 def test_integer_mother_negative_invalid_min_type() -> None:
     """
     Test IntegerMother negative method with invalid min type.
@@ -144,6 +157,7 @@ def test_integer_mother_negative_invalid_min_type() -> None:
         IntegerMother.negative(min=IntegerMother.invalid_type())
 
 
+@mark.unit_testing
 def test_integer_mother_negative_min_greater_than_zero() -> None:
     """
     Test IntegerMother negative method with min greater than 0.

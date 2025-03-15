@@ -2,11 +2,12 @@
 Test module for the FloatMother class.
 """
 
-from pytest import raises as assert_raises
+from pytest import mark, raises as assert_raises
 
 from object_mother_pattern.mothers import FloatMother, IntegerMother
 
 
+@mark.unit_testing
 def test_float_mother_happy_path() -> None:
     """
     Test FloatMother happy path.
@@ -17,6 +18,7 @@ def test_float_mother_happy_path() -> None:
     assert -1 <= value <= 1
 
 
+@mark.unit_testing
 def test_float_mother_value() -> None:
     """
     Test FloatMother create method with value.
@@ -26,6 +28,7 @@ def test_float_mother_value() -> None:
     assert FloatMother.create(value=value) == value
 
 
+@mark.unit_testing
 def test_float_mother_invalid_type() -> None:
     """
     Test FloatMother create method with invalid type.
@@ -33,6 +36,7 @@ def test_float_mother_invalid_type() -> None:
     assert type(FloatMother.invalid_type()) is not float
 
 
+@mark.unit_testing
 def test_float_mother_same_min_max() -> None:
     """
     Test FloatMother create method with same min and max.
@@ -42,6 +46,7 @@ def test_float_mother_same_min_max() -> None:
     assert FloatMother.create(min=value, max=value, decimals=10) == value
 
 
+@mark.unit_testing
 def test_float_mother_invalid_value_type() -> None:
     """
     Test FloatMother create method with invalid value type.
@@ -53,6 +58,7 @@ def test_float_mother_invalid_value_type() -> None:
         FloatMother.create(value=FloatMother.invalid_type(remove_types=(int,)))
 
 
+@mark.unit_testing
 def test_float_mother_invalid_min_type() -> None:
     """
     Test FloatMother create method with invalid min type.
@@ -64,6 +70,7 @@ def test_float_mother_invalid_min_type() -> None:
         FloatMother.create(min=FloatMother.invalid_type(remove_types=(int,)))
 
 
+@mark.unit_testing
 def test_float_mother_invalid_max_type() -> None:
     """
     Test FloatMother create method with invalid max type.
@@ -75,6 +82,7 @@ def test_float_mother_invalid_max_type() -> None:
         FloatMother.create(max=FloatMother.invalid_type(remove_types=(int,)))
 
 
+@mark.unit_testing
 def test_float_mother_invalid_decimals_type() -> None:
     """
     Test FloatMother create method with invalid decimals type.
@@ -86,6 +94,7 @@ def test_float_mother_invalid_decimals_type() -> None:
         FloatMother.create(decimals=IntegerMother.invalid_type())
 
 
+@mark.unit_testing
 def test_float_mother_invalid_decimals_less_than_zero() -> None:
     """
     Test FloatMother create method with invalid decimals value less than zero.
@@ -97,6 +106,7 @@ def test_float_mother_invalid_decimals_less_than_zero() -> None:
         FloatMother.create(decimals=IntegerMother.negative())
 
 
+@mark.unit_testing
 def test_float_mother_invalid_decimals_higher_than_ten() -> None:
     """
     Test FloatMother create method with invalid decimals value higher than ten.
@@ -108,6 +118,7 @@ def test_float_mother_invalid_decimals_higher_than_ten() -> None:
         FloatMother.create(decimals=IntegerMother.create(min=11))
 
 
+@mark.unit_testing
 def test_float_mother_min_greater_than_max() -> None:
     """
     Test FloatMother create method with min greater than max.
@@ -122,6 +133,7 @@ def test_float_mother_min_greater_than_max() -> None:
         FloatMother.create(min=max_value, max=min_value)
 
 
+@mark.unit_testing
 def test_float_mother_positive() -> None:
     """
     Test FloatMother positive method.
@@ -132,6 +144,7 @@ def test_float_mother_positive() -> None:
     assert value > 0
 
 
+@mark.unit_testing
 def test_float_mother_positive_invalid_max_type() -> None:
     """
     Test FloatMother positive method with invalid max type.
@@ -143,6 +156,7 @@ def test_float_mother_positive_invalid_max_type() -> None:
         FloatMother.positive(max=FloatMother.invalid_type(remove_types=(int,)))
 
 
+@mark.unit_testing
 def test_float_mother_positive_max_less_than_one() -> None:
     """
     Test FloatMother positive method with max less than 1.
@@ -156,6 +170,7 @@ def test_float_mother_positive_max_less_than_one() -> None:
         FloatMother.positive(max=max_value)
 
 
+@mark.unit_testing
 def test_float_mother_negative() -> None:
     """
     Test FloatMother negative method.
@@ -166,6 +181,7 @@ def test_float_mother_negative() -> None:
     assert value < 0
 
 
+@mark.unit_testing
 def test_float_mother_negative_invalid_min_type() -> None:
     """
     Test FloatMother negative method with invalid min type.
@@ -177,6 +193,7 @@ def test_float_mother_negative_invalid_min_type() -> None:
         FloatMother.negative(min=FloatMother.invalid_type(remove_types=(int,)))
 
 
+@mark.unit_testing
 def test_float_mother_negative_min_greater_than_zero() -> None:
     """
     Test FloatMother negative method with min greater than 0.

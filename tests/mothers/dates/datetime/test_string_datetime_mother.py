@@ -5,11 +5,12 @@ Test module for the StringDatetimeMother class.
 from datetime import UTC, datetime
 
 from dateutil.relativedelta import relativedelta
-from pytest import raises as assert_raises
+from pytest import mark, raises as assert_raises
 
 from object_mother_pattern.mothers import DatetimeMother, IntegerMother, StringDatetimeMother
 
 
+@mark.unit_testing
 def test_string_datetime_mother_happy_path() -> None:
     """
     Test StringDatetimeMother happy path.
@@ -20,6 +21,7 @@ def test_string_datetime_mother_happy_path() -> None:
     datetime.fromisoformat(value)
 
 
+@mark.unit_testing
 def test_string_datetime_mother_value() -> None:
     """
     Test StringDatetimeMother create method with value.
@@ -29,6 +31,7 @@ def test_string_datetime_mother_value() -> None:
     assert StringDatetimeMother.create(value=value) == value
 
 
+@mark.unit_testing
 def test_string_datetime_mother_invalid_type() -> None:
     """
     Test StringDatetimeMother create method with invalid type.
@@ -36,6 +39,7 @@ def test_string_datetime_mother_invalid_type() -> None:
     assert type(StringDatetimeMother.invalid_type()) is not str
 
 
+@mark.unit_testing
 def test_string_datetime_mother_invalid_value_type() -> None:
     """
     Test StringDatetimeMother create method with invalid value type.
@@ -47,6 +51,7 @@ def test_string_datetime_mother_invalid_value_type() -> None:
         StringDatetimeMother.create(value=StringDatetimeMother.invalid_type())
 
 
+@mark.unit_testing
 def test_string_datetime_mother_invalid_start_datetime_type() -> None:
     """
     Test StringDatetimeMother create method with invalid start_datetime type.
@@ -58,6 +63,7 @@ def test_string_datetime_mother_invalid_start_datetime_type() -> None:
         StringDatetimeMother.create(start_datetime=DatetimeMother.invalid_type())
 
 
+@mark.unit_testing
 def test_string_datetime_mother_invalid_end_datetime_type() -> None:
     """
     Test StringDatetimeMother create method with invalid end_datetime type.
@@ -69,6 +75,7 @@ def test_string_datetime_mother_invalid_end_datetime_type() -> None:
         StringDatetimeMother.create(end_datetime=DatetimeMother.invalid_type())
 
 
+@mark.unit_testing
 def test_string_datetime_mother_start_datetime_greater_than_end_datetime() -> None:
     """
     Test StringDatetimeMother create method with start_datetime greater than end_datetime.
@@ -89,6 +96,7 @@ def test_string_datetime_mother_start_datetime_greater_than_end_datetime() -> No
         StringDatetimeMother.create(start_datetime=start_datetime, end_datetime=end_datetime)
 
 
+@mark.unit_testing
 def test_string_datetime_mother_out_of_range_method_happy_path() -> None:
     """
     Test StringDatetimeMother happy path.
@@ -105,6 +113,7 @@ def test_string_datetime_mother_out_of_range_method_happy_path() -> None:
     )
 
 
+@mark.unit_testing
 def test_string_datetime_mother_out_of_range_method_invalid_start_datetime_type() -> None:
     """
     Test StringDatetimeMother create method with invalid start_datetime type.
@@ -116,6 +125,7 @@ def test_string_datetime_mother_out_of_range_method_invalid_start_datetime_type(
         StringDatetimeMother.out_of_range(start_datetime=DatetimeMother.invalid_type())
 
 
+@mark.unit_testing
 def test_string_datetime_mother_out_of_range_method_invalid_end_datetime_type() -> None:
     """
     Test StringDatetimeMother create method with invalid end_datetime type.
@@ -127,6 +137,7 @@ def test_string_datetime_mother_out_of_range_method_invalid_end_datetime_type() 
         StringDatetimeMother.out_of_range(end_datetime=DatetimeMother.invalid_type())
 
 
+@mark.unit_testing
 def test_string_datetime_mother_out_of_range_method_invalid_range_type() -> None:
     """
     Test StringDatetimeMother create method with invalid range type.
@@ -138,6 +149,7 @@ def test_string_datetime_mother_out_of_range_method_invalid_range_type() -> None
         StringDatetimeMother.out_of_range(range=IntegerMother.invalid_type())
 
 
+@mark.unit_testing
 def test_string_datetime_mother_out_of_range_method_invalid_range_value() -> None:
     """
     Test StringDatetimeMother create method with invalid range value.
@@ -149,6 +161,7 @@ def test_string_datetime_mother_out_of_range_method_invalid_range_value() -> Non
         StringDatetimeMother.out_of_range(range=IntegerMother.negative())
 
 
+@mark.unit_testing
 def test_string_datetime_mother_out_of_range_method_start_datetime_greater_than_end_datetime() -> None:
     """
     Test StringDatetimeMother create method with start_datetime greater than end_datetime.

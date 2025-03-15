@@ -4,11 +4,12 @@ Test module for the UuidMother class.
 
 from uuid import UUID
 
-from pytest import raises as assert_raises
+from pytest import mark, raises as assert_raises
 
 from object_mother_pattern.mothers import UuidMother
 
 
+@mark.unit_testing
 def test_uuid_mother_happy_path() -> None:
     """
     Test UuidMother happy path.
@@ -18,6 +19,7 @@ def test_uuid_mother_happy_path() -> None:
     assert type(value) is UUID
 
 
+@mark.unit_testing
 def test_uuid_mother_value() -> None:
     """
     Test UuidMother create method with value.
@@ -27,6 +29,7 @@ def test_uuid_mother_value() -> None:
     assert UuidMother.create(value=value) == value
 
 
+@mark.unit_testing
 def test_uuid_mother_invalid_type() -> None:
     """
     Test UuidMother create method with invalid type.
@@ -34,6 +37,7 @@ def test_uuid_mother_invalid_type() -> None:
     assert type(UuidMother.invalid_type()) is not UUID
 
 
+@mark.unit_testing
 def test_uuid_mother_invalid_value_type() -> None:
     """
     Test UuidMother create method with invalid value type.

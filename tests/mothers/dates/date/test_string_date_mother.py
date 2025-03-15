@@ -5,11 +5,12 @@ Test module for the StringDateMother class.
 from datetime import UTC, datetime
 
 from dateutil.relativedelta import relativedelta
-from pytest import raises as assert_raises
+from pytest import mark, raises as assert_raises
 
 from object_mother_pattern.mothers import DateMother, IntegerMother, StringDateMother
 
 
+@mark.unit_testing
 def test_string_date_mother_happy_path() -> None:
     """
     Test StringDateMother happy path.
@@ -19,6 +20,7 @@ def test_string_date_mother_happy_path() -> None:
     assert type(value) is str
 
 
+@mark.unit_testing
 def test_string_date_mother_value() -> None:
     """
     Test StringDateMother create method with value.
@@ -28,6 +30,7 @@ def test_string_date_mother_value() -> None:
     assert StringDateMother.create(value=value) == value
 
 
+@mark.unit_testing
 def test_string_date_mother_invalid_type() -> None:
     """
     Test StringDateMother create method with invalid type.
@@ -35,6 +38,7 @@ def test_string_date_mother_invalid_type() -> None:
     assert type(StringDateMother.invalid_type()) is not str
 
 
+@mark.unit_testing
 def test_string_date_mother_invalid_value_type() -> None:
     """
     Test StringDateMother create method with invalid value type.
@@ -46,6 +50,7 @@ def test_string_date_mother_invalid_value_type() -> None:
         StringDateMother.create(value=StringDateMother.invalid_type())
 
 
+@mark.unit_testing
 def test_string_date_mother_invalid_start_date_type() -> None:
     """
     Test StringDateMother create method with invalid start_date type.
@@ -57,6 +62,7 @@ def test_string_date_mother_invalid_start_date_type() -> None:
         StringDateMother.create(start_date=DateMother.invalid_type())
 
 
+@mark.unit_testing
 def test_string_date_mother_invalid_end_date_type() -> None:
     """
     Test StringDateMother create method with invalid end_date type.
@@ -68,6 +74,7 @@ def test_string_date_mother_invalid_end_date_type() -> None:
         StringDateMother.create(end_date=DateMother.invalid_type())
 
 
+@mark.unit_testing
 def test_string_date_mother_start_date_greater_than_end_date() -> None:
     """
     Test StringDateMother create method with start_date greater than end_date.
@@ -88,6 +95,7 @@ def test_string_date_mother_start_date_greater_than_end_date() -> None:
         StringDateMother.create(start_date=start_date, end_date=end_date)
 
 
+@mark.unit_testing
 def test_string_date_mother_out_of_range_method_happy_path() -> None:
     """
     Test StringDateMother happy path.
@@ -104,6 +112,7 @@ def test_string_date_mother_out_of_range_method_happy_path() -> None:
     )
 
 
+@mark.unit_testing
 def test_string_date_mother_out_of_range_method_invalid_start_date_type() -> None:
     """
     Test StringDateMother create method with invalid start_date type.
@@ -115,6 +124,7 @@ def test_string_date_mother_out_of_range_method_invalid_start_date_type() -> Non
         StringDateMother.out_of_range(start_date=DateMother.invalid_type())
 
 
+@mark.unit_testing
 def test_string_date_mother_out_of_range_method_invalid_end_date_type() -> None:
     """
     Test StringDateMother create method with invalid end_date type.
@@ -126,6 +136,7 @@ def test_string_date_mother_out_of_range_method_invalid_end_date_type() -> None:
         StringDateMother.out_of_range(end_date=DateMother.invalid_type())
 
 
+@mark.unit_testing
 def test_string_date_mother_out_of_range_method_invalid_range_type() -> None:
     """
     Test StringDateMother create method with invalid range type.
@@ -137,6 +148,7 @@ def test_string_date_mother_out_of_range_method_invalid_range_type() -> None:
         StringDateMother.out_of_range(range=IntegerMother.invalid_type())
 
 
+@mark.unit_testing
 def test_string_date_mother_out_of_range_method_invalid_range_value() -> None:
     """
     Test StringDateMother create method with invalid range value.
@@ -148,6 +160,7 @@ def test_string_date_mother_out_of_range_method_invalid_range_value() -> None:
         StringDateMother.out_of_range(range=IntegerMother.negative())
 
 
+@mark.unit_testing
 def test_string_date_mother_out_of_range_method_start_date_greater_than_end_date() -> None:
     """
     Test StringDateMother create method with start_date greater than end_date.

@@ -2,11 +2,12 @@
 Test module for the NameMother class.
 """
 
-from pytest import raises as assert_raises
+from pytest import mark, raises as assert_raises
 
 from object_mother_pattern.mothers import IntegerMother, NameMother
 
 
+@mark.unit_testing
 def test_name_mother_happy_path() -> None:
     """
     Test NameMother happy path.
@@ -17,6 +18,7 @@ def test_name_mother_happy_path() -> None:
     assert 3 <= len(value) <= 128
 
 
+@mark.unit_testing
 def test_name_mother_value() -> None:
     """
     Test NameMother create method with value.
@@ -26,6 +28,7 @@ def test_name_mother_value() -> None:
     assert NameMother.create(value=value) == value
 
 
+@mark.unit_testing
 def test_name_mother_of_length_method() -> None:
     """
     Test NameMother of_length method.
@@ -37,6 +40,7 @@ def test_name_mother_of_length_method() -> None:
     assert len(value) == text_length
 
 
+@mark.unit_testing
 def test_name_mother_invalid_type() -> None:
     """
     Test NameMother create method with invalid type.
@@ -44,6 +48,7 @@ def test_name_mother_invalid_type() -> None:
     assert type(NameMother.invalid_type()) is not str
 
 
+@mark.unit_testing
 def test_name_mother_invalid_value_type() -> None:
     """
     Test NameMother create method with invalid value type.
@@ -55,6 +60,7 @@ def test_name_mother_invalid_value_type() -> None:
         NameMother.create(value=NameMother.invalid_type())
 
 
+@mark.unit_testing
 def test_name_mother_invalid_min_length_type() -> None:
     """
     Test NameMother create method with invalid min length type.
@@ -66,6 +72,7 @@ def test_name_mother_invalid_min_length_type() -> None:
         NameMother.create(min_length=IntegerMother.invalid_type())
 
 
+@mark.unit_testing
 def test_name_mother_invalid_max_length_type() -> None:
     """
     Test NameMother create method with invalid max length type.
@@ -77,6 +84,7 @@ def test_name_mother_invalid_max_length_type() -> None:
         NameMother.create(max_length=IntegerMother.invalid_type())
 
 
+@mark.unit_testing
 def test_name_mother_min_length_less_than_three() -> None:
     """
     Test NameMother create method with min less than 3.
@@ -88,6 +96,7 @@ def test_name_mother_min_length_less_than_three() -> None:
         NameMother.create(min_length=IntegerMother.negative())
 
 
+@mark.unit_testing
 def test_name_mother_max_length_less_than_three() -> None:
     """
     Test NameMother create method with max less than 3.
@@ -99,6 +108,7 @@ def test_name_mother_max_length_less_than_three() -> None:
         NameMother.create(max_length=IntegerMother.negative())
 
 
+@mark.unit_testing
 def test_name_mother_min_length_greater_than_max_length() -> None:
     """
     Test NameMother create method with min greater than max.

@@ -101,7 +101,7 @@ class FloatMother(BaseMother[float]):
             raise ValueError('FloatMother decimals value must be less than or equal to 10.')
 
         if min == max:
-            return min
+            return round(number=min, ndigits=decimals)
 
         if min == 0:
             min = 0.0000000001  # pragma: no cover

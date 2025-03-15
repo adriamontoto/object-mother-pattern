@@ -39,7 +39,7 @@ def test_float_mother_same_min_max() -> None:
     """
     value = FloatMother.create()
 
-    assert FloatMother.create(min=value, max=value) == value
+    assert FloatMother.create(min=value, max=value, decimals=10) == value
 
 
 def test_float_mother_invalid_value_type() -> None:

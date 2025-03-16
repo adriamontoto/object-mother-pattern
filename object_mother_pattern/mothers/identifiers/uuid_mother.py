@@ -15,7 +15,7 @@ from object_mother_pattern.mothers.base_mother import BaseMother
 
 class UuidMother(BaseMother[UUID]):
     """
-    UuidMother class.
+    UuidMother class is responsible for creating random universally unique identifier values.
 
     Example:
     ```python
@@ -33,16 +33,17 @@ class UuidMother(BaseMother[UUID]):
     @override
     def create(cls, *, value: UUID | None = None) -> UUID:
         """
-        Create a random UUID. If a value is provided, it will be returned.
+        Create a random UUID value. If a specific UUID value is provided via `value`, it is returned after validation.
+        Otherwise, the method generates a random UUID.
 
         Args:
-            value (UUID | None, optional): UUID value. Defaults to None.
+            value (UUID | None, optional): Specific value to return. Defaults to None.
 
         Raises:
-            TypeError: If value is not a UUID.
+            TypeError: If the provided `value` is not a UUID.
 
         Returns:
-            UUID: Random universally unique identifier.
+            UUID: A random universally unique identifier value.
 
         Example:
         ```python

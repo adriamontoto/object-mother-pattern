@@ -17,7 +17,10 @@ from .date_mother import DateMother
 
 class StringDateMother(BaseMother[str]):
     """
-    StringDateMother class.
+    StringDateMother class is responsible for creating random string date values in ISO format.
+
+     Formats:
+        - ISO: `YYYY-MM-DD`
 
     Example:
     ```python
@@ -41,23 +44,24 @@ class StringDateMother(BaseMother[str]):
         end_date: date | None = None,
     ) -> str:
         """
-        Create a random date value as a string in ISO format within the provided range. If a value is provided, it will
-        be returned. If start_date is not provided, it will be set to 100 years ago. If end_date is not provided, it
-        will be set to today. Range is inclusive.
+        Create a random string date value in ISO format within the provided range. If a specific string date value is
+        provided via `value`, it is returned after validation. Otherwise, the method generates a random string date
+        between `start_date` and `end_date`. By default, if not specified, `start_date` is set to 100 years before today
+        and `end_date` is set to today (both inclusive).
 
         Args:
-            value (str | None, optional): Date value as string. Defaults to None.
-            start_date (date | None, optional): Start date. Defaults to None.
-            end_date (date | None, optional): End date. Defaults to None.
+            value (str | None, optional): Specific value to return. Defaults to None.
+            start_date (date | None, optional): The beginning of the date range. Defaults to None.
+            end_date (date | None, optional): The end of the date range. Defaults to None.
 
         Raises:
-            TypeError: If value is not a string.
-            TypeError: If start_date is not a date.
-            TypeError: If end_date is not a date.
-            ValueError: If end_date is older than start_date.
+            TypeError: If the provided `value` is not a string.
+            TypeError: If the provided `start_date` is not a date.
+            TypeError: If the provided `end_date` is not a date.
+            ValueError: If `end_date` is older than `start_date`.
 
         Returns:
-            str: Random date as a string in ISO format.
+            str: A randomly string date value in ISO format within the provided range.
 
         Example:
         ```python
@@ -85,23 +89,24 @@ class StringDateMother(BaseMother[str]):
         range: int = 100,
     ) -> str:
         """
-        Create a random date value as a string in ISO format out of the provided range. If start_date is not provided,
-        it will be set to 100 years. If end_date is not provided, it will be set to today. Range is inclusive.
+        Create a random string date value in ISO format that is either before the `start_date` or after the `end_date`
+        by a time offset specified by the `range` parameter. By default, if `start_date` and `end_date` are not
+        provided, they default to 100 years ago and today, respectively.
 
         Args:
-            start_date (date | None, optional): Out of range start date. Defaults to None.
-            end_date (date | None, optional): Out of range end date. Defaults to None.
-            range (int, optional): Out of range range. Defaults to 100.
+            start_date (date | None, optional): The beginning of the date range. Defaults to None.
+            end_date (date | None, optional): The end of the date range. Defaults to None.
+            range (int, optional): The range of the date. Must be >= 0. Defaults to 100.
 
         Raises:
-            TypeError: If start_date is not a date.
-            TypeError: If end_date is not a date.
-            ValueError: If end_date is older than start_date.
-            TypeError: If range is not an integer.
-            ValueError: If range is a negative integer.
+            TypeError: If the provided `start_date` is not a date.
+            TypeError: If the provided `end_date` is not a date.
+            ValueError: If `end_date` is older than `start_date`.
+            TypeError: If the provided `range` is not an integer.
+            ValueError: If `range` is a negative integer.
 
         Returns:
-            str: Random date out of range as a string in ISO format.
+            str: A randomly string date value in ISO format out of the provided range.
 
         Example:
         ```python

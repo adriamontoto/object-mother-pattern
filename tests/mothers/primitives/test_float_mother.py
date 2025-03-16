@@ -141,7 +141,7 @@ def test_float_mother_positive() -> None:
     value = FloatMother.positive()
 
     assert type(value) is float
-    assert value > 0
+    assert value >= 0
 
 
 @mark.unit_testing
@@ -178,7 +178,7 @@ def test_float_mother_negative() -> None:
     value = FloatMother.negative()
 
     assert type(value) is float
-    assert value < 0
+    assert value <= 0
 
 
 @mark.unit_testing

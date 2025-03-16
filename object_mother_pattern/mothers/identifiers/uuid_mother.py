@@ -3,7 +3,7 @@ UuidMother module.
 """
 
 from sys import version_info
-from uuid import UUID
+from uuid import UUID, uuid4
 
 if version_info >= (3, 12):
     from typing import override  # pragma: no cover
@@ -60,4 +60,4 @@ class UuidMother(BaseMother[UUID]):
 
             return value
 
-        return cls._random().uuid4(cast_to=None)  # type: ignore[return-value]
+        return uuid4()

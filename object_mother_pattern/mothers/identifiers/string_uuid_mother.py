@@ -3,6 +3,7 @@ StringUuidMother module.
 """
 
 from sys import version_info
+from uuid import uuid4
 
 if version_info >= (3, 12):
     from typing import override  # pragma: no cover
@@ -60,7 +61,7 @@ class StringUuidMother(BaseMother[str]):
 
             return value
 
-        return str(object=cls._random().uuid4())
+        return str(object=uuid4())
 
     @classmethod
     def invalid_value(cls) -> str:

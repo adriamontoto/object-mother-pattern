@@ -96,4 +96,4 @@ class BaseMother(ABC, Generic[T]):
         if UUID not in remove_types:
             types.append(uuid4())
 
-        return choice(seq=types)
+        return choice(seq=types)  # noqa: S311

@@ -18,7 +18,7 @@ from object_mother_pattern.mothers.base_mother import BaseMother
 
 class DateMother(BaseMother[date]):
     """
-    DateMother class.
+    DateMother class is responsible for creating random date values.
 
     Example:
     ```python
@@ -42,23 +42,24 @@ class DateMother(BaseMother[date]):
         end_date: date | None = None,
     ) -> date:
         """
-        Create a random date value within the provided range. If a value is provided, it will be returned.
-        If start_date is not provided, it will be set to 100 years ago. If end_date is not provided, it will be set to
-        today. Range is inclusive.
+        Create a random date value within the provided range. If a specific date value is provided via `value`, it is
+        returned after validation. Otherwise, the method generates a random date between `start_date` and `end_date`.
+        By default, if not specified, `start_date` is set to 100 years before today and `end_date` is set to today
+        (both inclusive).
 
         Args:
-            value (date | None, optional): Date value. Defaults to None.
-            start_date (date | None, optional): Start date. Defaults to None.
-            end_date (date | None, optional): End date. Defaults to None.
+            value (date | None, optional): Specific value to return. Defaults to None.
+            start_date (date | None, optional): The beginning of the date range. Defaults to None.
+            end_date (date | None, optional): The end of the date range. Defaults to None.
 
         Raises:
-            TypeError: If value is not a date.
-            TypeError: If start_date is not a date.
-            TypeError: If end_date is not a date.
-            ValueError: If end_date is older than start_date.
+            TypeError: If the provided `value` is not a date.
+            TypeError: If the provided `start_date` is not a date.
+            TypeError: If the provided `end_date` is not a date.
+            ValueError: If `end_date` is older than `start_date`.
 
         Returns:
-            date: Random date.
+            date: A randomly date value within the provided range.
 
         Example:
         ```python
@@ -102,23 +103,24 @@ class DateMother(BaseMother[date]):
         range: int = 100,
     ) -> date:
         """
-        Create a random date value out of the provided range. If start_date is not provided, it will be set to 100
-        years. If end_date is not provided, it will be set to today. Range is inclusive.
+        Create a random date value that is either before the `start_date` or after the `end_date` by a time offset
+        specified by the `range` parameter. By default, if `start_date` and `end_date` are not provided, they default
+        to 100 years ago and today, respectively.
 
         Args:
-            start_date (date | None, optional): Out of range start date. Defaults to None.
-            end_date (date | None, optional): Out of range end date. Defaults to None.
-            range (int, optional): Out of range range. Defaults to 100.
+            start_date (date | None, optional): The beginning of the date range. Defaults to None.
+            end_date (date | None, optional): The end of the date range. Defaults to None.
+            range (int, optional): The range of the date. Must be >= 0. Defaults to 100.
 
         Raises:
-            TypeError: If start_date is not a date.
-            TypeError: If end_date is not a date.
-            ValueError: If end_date is older than start_date.
-            TypeError: If range is not an integer.
-            ValueError: If range is a negative integer.
+            TypeError: If the provided `start_date` is not a date.
+            TypeError: If the provided `end_date` is not a date.
+            ValueError: If `end_date` is older than `start_date`.
+            TypeError: If the provided `range` is not an integer.
+            ValueError: If `range` is a negative integer.
 
         Returns:
-            date: Random date out of range.
+            date: A randomly date value out of the provided range.
 
         Example:
         ```python
@@ -151,7 +153,7 @@ class DateMother(BaseMother[date]):
         if range < 0:
             raise ValueError('DateMother range must be a positive integer.')
 
-        return choice(
+        return choice(  # noqa: S311
             seq=[
                 cls._random().date_between(start_date=start_date - relativedelta(years=range), end_date=start_date),
                 cls._random().date_between(start_date=end_date, end_date=end_date + relativedelta(years=range)),

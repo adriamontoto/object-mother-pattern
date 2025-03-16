@@ -2,7 +2,6 @@
 StringUuidMother module.
 """
 
-from random import choice
 from sys import version_info
 
 if version_info >= (3, 12):
@@ -10,12 +9,13 @@ if version_info >= (3, 12):
 else:
     from typing_extensions import override  # pragma: no cover
 
+from object_mother_pattern.mothers import StringMother
 from object_mother_pattern.mothers.base_mother import BaseMother
 
 
 class StringUuidMother(BaseMother[str]):
     """
-    StringUuidMother class.
+    StringUuidMother class is responsible for creating random string universally unique identifier values.
 
     Example:
     ```python
@@ -33,16 +33,17 @@ class StringUuidMother(BaseMother[str]):
     @override
     def create(cls, *, value: str | None = None) -> str:
         """
-        Create a random string UUID. If a value is provided, it will be returned.
+        Create a random string UUID value. If a specific string UUID value is provided via `value`, it is returned after
+        validation. Otherwise, the method generates a random string UUID.
 
         Args:
-            value (str | None, optional): String UUID value. Defaults to None.
+            value (str | None, optional): Specific value to return. Defaults to None.
 
         Raises:
-            TypeError: If value is not a string UUID.
+            TypeError: If the provided `value` is not a string.
 
         Returns:
-            str: Random universally unique identifier.
+            str: A random string universally unique identifier value.
 
         Example:
         ```python
@@ -69,6 +70,4 @@ class StringUuidMother(BaseMother[str]):
         Returns:
             str: Invalid string.
         """
-        non_printable_chars = ''.join(chr(i) for i in range(32))
-
-        return ''.join(choice(seq=non_printable_chars) for _ in range(10))
+        return StringMother.invalid_value()

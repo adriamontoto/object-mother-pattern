@@ -45,7 +45,8 @@ class MacAddressCase(StrEnum):
 
 class MacAddressMother(BaseMother[str]):
     """
-    MacAddressMother class is responsible for creating random MAC address values.
+    MacAddressMother class is responsible for creating random MAC address values. Otherwise, a random MAC address value
+    is generated.
 
     Formats:
         - Raw: `D5B9EB4DC2CC`

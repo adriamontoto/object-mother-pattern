@@ -16,6 +16,8 @@ T = TypeVar('T')
 class BaseMother(ABC, Generic[T]):
     """
     BaseMother class.
+
+    ***This class is abstract and should not be instantiated directly***.
     """
 
     _type: type
@@ -34,13 +36,14 @@ class BaseMother(ABC, Generic[T]):
     @abstractmethod
     def create(cls, *, value: T | None = None) -> T:
         """
-        Create a random T. If a value is provided, it will be returned.
+        Create a random T value. If a specific T value is provided via `value`, it is returned after validation.
+        Otherwise, a random T value is generated.
 
         Args:
-            value (T | None, optional): T value. Defaults to None.
+            value (T | None, optional): A specific T value to return. Defaults to None.
 
         Returns:
-            T: Random T.
+            T: A randomly generated T value.
         """
 
     @classmethod
@@ -49,7 +52,7 @@ class BaseMother(ABC, Generic[T]):
         Create an invalid type.
 
         Args:
-            remove_types (Iterable[type[Any]], optional): Iterable of types to remove. Defaults to None.
+            remove_types (Iterable[type[Any]] | None, optional): Iterable of types to remove. Defaults to None.
 
         Returns:
             Any: Invalid type.

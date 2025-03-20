@@ -17,6 +17,15 @@ from object_mother_pattern.mothers.primitives.string_mother import StringMother
 class UsernameMother(BaseMother[str]):
     """
     UsernameMother class is responsible for creating random username values.
+
+    Example:
+    ```python
+    from object_mother_pattern.mothers.people import UsernameMother
+
+    username = UsernameMother.create()
+    print(username)
+    # >>> rickydavila
+    ```
     """
 
     _type: type = str

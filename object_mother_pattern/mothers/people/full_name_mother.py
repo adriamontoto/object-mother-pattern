@@ -17,6 +17,15 @@ from object_mother_pattern.mothers.primitives.string_mother import StringMother
 class FullNameMother(BaseMother[str]):
     """
     FullNameMother class is responsible for creating random full name values.
+
+    Example:
+    ```python
+    from object_mother_pattern.mothers.people import FullNameMother
+
+    name = FullNameMother.create()
+    print(name)
+    # >>> Brady Warrenbruce Jacobso
+    ```
     """
 
     _type: type = str

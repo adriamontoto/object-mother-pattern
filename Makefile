@@ -65,3 +65,7 @@ clean: # Remove all generated files
 	@rm --force --recursive .coverage.*
 	@rm --force --recursive coverage.xml
 	@rm --force --recursive htmlcov
+
+.PHONY: update-lists
+update-lists: # Update content lists
+	@python3 update_lists.py

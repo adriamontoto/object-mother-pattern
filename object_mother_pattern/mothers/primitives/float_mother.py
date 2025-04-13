@@ -2,7 +2,7 @@
 FloatMother module.
 """
 
-from random import randint, uniform
+from random import choice, randint, uniform
 from sys import version_info
 
 if version_info >= (3, 12):
@@ -170,3 +170,55 @@ class FloatMother(BaseMother[float]):
         ```
         """
         return cls.create(min=min, max=-0.0000000001, decimals=decimals)
+
+    @classmethod
+    def out_of_range(cls, *, min: int | float = -1.0, max: int | float = 1.0, range: int | float = 1) -> float:
+        """
+        Create a random float value that is either less than `min` or greater than `max` by an offset
+        specified by the `range` parameter.
+
+        Args:
+            min (int | float, optional): The lower bound of the range. Defaults to -1.0.
+            max (int | float, optional): The upper bound of the range. Defaults to 1.0.
+            range (int | float, optional): The range offset. Must be >= 0. Defaults to 1.
+
+        Raises:
+            TypeError: If `min` is not an integer or a float.
+            TypeError: If `max` is not an integer or a float.
+            ValueError: If `min` is greater than `max`.
+            TypeError: If `range` is not an integer or a float.
+            ValueError: If `range` is a negative value.
+
+        Returns:
+            float: A randomly generated float value out of the provided range.
+
+        Example:
+        ```python
+        from object_mother_pattern.mothers import FloatMother
+
+        number = FloatMother.out_of_range()
+        print(number)
+        # >>> -1.2073998516955866
+        ```
+        """
+        if type(min) is not int and type(min) is not float:
+            raise TypeError('FloatMother min value must be an integer or a float.')
+
+        if type(max) is not int and type(max) is not float:
+            raise TypeError('FloatMother max value must be an integer or a float.')
+
+        if min > max:
+            raise ValueError('FloatMother min value must be less than or equal to max value.')
+
+        if type(range) is not int and type(range) is not float:
+            raise TypeError('FloatMother range must be an integer or a float.')
+
+        if range < 0:
+            raise ValueError('FloatMother range must be a positive value.')
+
+        return choice(  # noqa: S311
+            seq=[
+                uniform(a=min - range, b=min),  # noqa: S311
+                uniform(a=max, b=max + range),  # noqa: S311
+            ]
+        )

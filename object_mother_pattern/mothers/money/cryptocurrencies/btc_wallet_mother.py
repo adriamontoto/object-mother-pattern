@@ -10,9 +10,24 @@ if version_info >= (3, 12):
 else:
     from typing_extensions import override  # pragma: no cover
 
+from enum import StrEnum, unique
+from random import choice
+from typing import assert_never
+
 from object_mother_pattern.mothers.base_mother import BaseMother
 
 from .utils import get_bip39_words
+
+
+@unique
+class BtcWalletCase(StrEnum):
+    """
+    Type of BTC wallet address cases.
+    """
+
+    LOWERCASE = 'lowercase'
+    UPPERCASE = 'uppercase'
+    MIXED = 'mixed'
 
 
 class BtcWalletMother(BaseMother[str]):
@@ -72,4 +87,20 @@ class BtcWalletMother(BaseMother[str]):
         if word_number < 1:
             raise ValueError('BtcWalletMother word_number must be greater than or equal to 1.')
 
-        return ' '.join(choices(population=get_bip39_words(), k=word_number))  # noqa: S311
+        wallet = ' '.join(choices(population=get_bip39_words(), k=word_number))  # noqa: S311
+
+        wallet_case = BtcWalletCase(value=choice(seq=tuple(BtcWalletCase)))  # noqa: S311
+        match wallet_case:
+            case BtcWalletCase.LOWERCASE:
+                wallet = wallet.lower()
+
+            case BtcWalletCase.UPPERCASE:
+                wallet = wallet.upper()
+
+            case BtcWalletCase.MIXED:
+                wallet = ''.join(choice(seq=(char.upper(), char.lower())) for char in wallet)  # noqa: S311
+
+            case _:
+                assert_never(wallet)
+
+        return wallet

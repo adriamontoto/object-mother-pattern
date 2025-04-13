@@ -2,11 +2,8 @@
 AwsCloudRegionMother module.
 """
 
-from functools import lru_cache
 from random import choice
-from re import DOTALL, findall
 from sys import version_info
-from urllib.request import urlopen
 
 if version_info >= (3, 12):
     from typing import override  # pragma: no cover
@@ -15,26 +12,7 @@ else:
 
 from object_mother_pattern.mothers.base_mother import BaseMother
 
-
-@lru_cache(maxsize=1)
-def get_aws_cloud_regions() -> tuple[str]:
-    """
-    Get AWS cloud regions.
-
-    Returns:
-        tuple[str]: The AWS cloud regions.
-
-    References:
-        AWS Cloud Regions: https://docs.aws.amazon.com/global-infrastructure/latest/regions/aws-regions.html#available-regions
-    """
-    url = 'https://docs.aws.amazon.com/global-infrastructure/latest/regions/aws-regions.html#available-regions'
-    with urlopen(url=url) as response:  # noqa: S310
-        content = response.read().decode('utf-8')
-
-    pattern = r'<tr>\s*<td[^>]*tabindex="-1">(.*?)</td>\s*<td[^>]*tabindex="-1">.*?</td>\s*<td[^>]*tabindex="-1">.*?</td>\s*</tr>'  # noqa: E501
-    region_codes = findall(pattern=pattern, string=content, flags=DOTALL)
-
-    return tuple(region_code.lower() for region_code in region_codes)
+from .utils import get_aws_cloud_regions
 
 
 class AwsCloudRegionMother(BaseMother[str]):

@@ -11,6 +11,7 @@ else:
     from typing_extensions import override  # pragma: no cover
 
 from object_mother_pattern.mothers.base_mother import BaseMother
+from object_mother_pattern.mothers.primitives.string_mother import StringMother
 
 from .date_mother import DateMother
 
@@ -118,3 +119,13 @@ class StringDateMother(BaseMother[str]):
         ```
         """
         return DateMother.out_of_range(start_date=start_date, end_date=end_date, range=range).isoformat()
+
+    @classmethod
+    def invalid_value(cls) -> str:
+        """
+        Create an invalid string value.
+
+        Returns:
+            str: Invalid string.
+        """
+        return StringMother.invalid_value()

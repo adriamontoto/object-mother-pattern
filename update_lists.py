@@ -2,7 +2,27 @@
 Update the lists used in the Object Mother Pattern package.
 """
 
+from re import DOTALL, findall
 from urllib.request import urlopen
+
+
+def update_aws_cloud_regions() -> None:
+    """
+    Retrieve AWS cloud regions from the official AWS documentation and update the local AWS regions file..
+
+    References:
+        AWS Cloud Regions: https://docs.aws.amazon.com/global-infrastructure/latest/regions/aws-regions.html#available-regions
+    """
+    url = 'https://docs.aws.amazon.com/global-infrastructure/latest/regions/aws-regions.html#available-regions'
+    with urlopen(url=url) as response:  # noqa: S310
+        content = response.read().decode('utf-8')
+
+    pattern = r'<tr>\s*<td[^>]*tabindex="-1">(.*?)</td>\s*<td[^>]*tabindex="-1">.*?</td>\s*<td[^>]*tabindex="-1">.*?</td>\s*</tr>'  # noqa: E501
+    aws_regions = tuple(region_code.lower() for region_code in findall(pattern=pattern, string=content, flags=DOTALL))
+
+    path = 'object_mother_pattern/mothers/internet/utils/aws_regions.txt'
+    with open(file=path, mode='w', encoding='utf-8') as file:
+        file.writelines(f'{word}\n' for word in aws_regions)
 
 
 def update_bip39_words() -> None:
@@ -42,5 +62,6 @@ def update_tld_domains() -> None:
 
 
 if __name__ == '__main__':
+    update_aws_cloud_regions()
     update_bip39_words()
     update_tld_domains()

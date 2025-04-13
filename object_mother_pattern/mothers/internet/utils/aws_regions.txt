@@ -1,3 +1,5 @@
+# This file was automatically updated using "update_lists.py" on 2025-04-13T18:00:09.855219+00:00
+
 us-east-1
 us-east-2
 us-west-1

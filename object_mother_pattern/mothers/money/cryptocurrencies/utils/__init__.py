@@ -13,4 +13,7 @@ def get_bip39_words() -> tuple[str, ...]:
         BIP39 Words: https://github.com/bitcoin/bips/blob/master/bip-0039/english.txt
     """
     with open(file='object_mother_pattern/mothers/money/cryptocurrencies/utils/bip39_words.txt') as file:
-        return tuple(file.read().splitlines())
+        lines = file.read().splitlines()
+        filtered_lines = tuple(line for line in lines if line.strip() and not line.strip().startswith('#'))
+
+        return filtered_lines

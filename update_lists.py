@@ -2,8 +2,25 @@
 Update the lists used in the Object Mother Pattern package.
 """
 
+from datetime import UTC, datetime
 from re import DOTALL, findall
 from urllib.request import urlopen
+
+
+def add_updated_date_comment(file_path: str) -> None:
+    """
+    Automatically add a comment indicating the last updated date to the first line of the specified file.
+
+    Args:
+        file_path (str): The path of the file to be updated.
+    """
+    now = datetime.now(tz=UTC).isoformat()
+
+    with open(file=file_path, mode='r+', encoding='utf-8') as file:
+        content = file.read()
+        file.seek(0)
+        file.write(f'# This file was automatically updated using "update_lists.py" on {now}\n\n{content}')
+        file.truncate()
 
 
 def update_aws_cloud_regions() -> None:
@@ -24,6 +41,8 @@ def update_aws_cloud_regions() -> None:
     with open(file=path, mode='w', encoding='utf-8') as file:
         file.writelines(f'{word}\n' for word in aws_regions)
 
+    add_updated_date_comment(file_path=path)
+
 
 def update_bip39_words() -> None:
     """
@@ -42,6 +61,8 @@ def update_bip39_words() -> None:
     with open(file=path, mode='w', encoding='utf-8') as file:
         file.writelines(f'{word}\n' for word in bip39_words)
 
+    add_updated_date_comment(file_path=path)
+
 
 def update_tld_domains() -> None:
     """
@@ -59,6 +80,8 @@ def update_tld_domains() -> None:
     path = 'object_mother_pattern/mothers/internet/utils/tld_domains.txt'
     with open(file=path, mode='w', encoding='utf-8') as file:
         file.writelines(f'{domain}\n' for domain in tld_domains)
+
+    add_updated_date_comment(file_path=path)
 
 
 if __name__ == '__main__':

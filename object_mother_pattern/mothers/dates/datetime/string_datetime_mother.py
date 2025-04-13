@@ -11,6 +11,7 @@ else:
     from typing_extensions import override  # pragma: no cover
 
 from object_mother_pattern.mothers.base_mother import BaseMother
+from object_mother_pattern.mothers.primitives.string_mother import StringMother
 
 from .datetime_mother import DatetimeMother
 
@@ -126,3 +127,13 @@ class StringDatetimeMother(BaseMother[str]):
             end_datetime=end_datetime,
             range=range,
         ).isoformat()
+
+    @classmethod
+    def invalid_value(cls) -> str:
+        """
+        Create an invalid string value.
+
+        Returns:
+            str: Invalid string.
+        """
+        return StringMother.invalid_value()

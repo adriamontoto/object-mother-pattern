@@ -9,7 +9,7 @@ if version_info >= (3, 12):
 else:
     from typing_extensions import override  # pragma: no cover
 
-from random import randint
+from random import choice, randint
 
 from object_mother_pattern.mothers.base_mother import BaseMother
 
@@ -129,3 +129,55 @@ class IntegerMother(BaseMother[int]):
         ```
         """
         return cls.create(min=min, max=-1)
+
+    @classmethod
+    def out_of_range(cls, *, min: int = -100, max: int = 100, range: int = 100) -> int:
+        """
+        Create a random integer value that is either less than `min` or greater than `max` by a time offset
+        specified by the `range` parameter.
+
+        Args:
+            min (int, optional): The lower bound of the range. Defaults to -100.
+            max (int, optional): The upper bound of the range. Defaults to 100.
+            range (int, optional): The range offset. Must be >= 0. Defaults to 100.
+
+        Raises:
+            TypeError: If `min` is not an integer.
+            TypeError: If `max` is not an integer.
+            ValueError: If `min` is greater than `max`.
+            TypeError: If `range` is not an integer.
+            ValueError: If `range` is a negative integer.
+
+        Returns:
+            int: A randomly generated integer value out of the provided range.
+
+        Example:
+        ```python
+        from object_mother_pattern.mothers import IntegerMother
+
+        number = IntegerMother.out_of_range(min=-10, max=10, range=20)
+        print(number)
+        # >>> -163
+        ```
+        """
+        if type(min) is not int:
+            raise TypeError('IntegerMother min value must be an integer.')
+
+        if type(max) is not int:
+            raise TypeError('IntegerMother max value must be an integer.')
+
+        if min > max:
+            raise ValueError('IntegerMother min value must be less than or equal to max value.')
+
+        if type(range) is not int:
+            raise TypeError('IntegerMother range must be an integer.')
+
+        if range < 0:
+            raise ValueError('IntegerMother range must be a positive integer.')
+
+        return choice(  # noqa: S311
+            seq=[
+                randint(a=min - range, b=min),  # noqa: S311
+                randint(a=max, b=max + range),  # noqa: S311
+            ]
+        )

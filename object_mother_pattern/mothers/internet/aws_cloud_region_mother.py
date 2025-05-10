@@ -11,6 +11,7 @@ else:
     from typing_extensions import override  # pragma: no cover
 
 from object_mother_pattern.mothers.base_mother import BaseMother
+from object_mother_pattern.mothers.primitives import StringMother
 
 from .utils import get_aws_cloud_regions
 
@@ -66,3 +67,13 @@ class AwsCloudRegionMother(BaseMother[str]):
             return value
 
         return choice(seq=get_aws_cloud_regions())  # noqa: S311
+
+    @classmethod
+    def invalid_value(cls) -> str:
+        """
+        Create an invalid AWS cloud region value.
+
+        Returns:
+            str: Invalid AWS cloud region string.
+        """
+        return StringMother.invalid_value()

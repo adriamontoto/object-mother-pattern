@@ -40,6 +40,17 @@ def test_string_datetime_mother_invalid_type() -> None:
 
 
 @mark.unit_testing
+def test_string_datetime_mother_invalid_value() -> None:
+    """
+    Test StringDatetimeMother invalid_value method.
+    """
+    value = StringDatetimeMother.invalid_value()
+
+    assert type(value) is str
+    assert not value.isprintable()
+
+
+@mark.unit_testing
 def test_string_datetime_mother_invalid_value_type() -> None:
     """
     Test StringDatetimeMother create method with invalid value type.

@@ -177,7 +177,7 @@ class IntegerMother(BaseMother[int]):
 
         return choice(  # noqa: S311
             seq=[
-                randint(a=min - range, b=min),  # noqa: S311
-                randint(a=max, b=max + range),  # noqa: S311
+                randint(a=min - range, b=min - 1),  # noqa: S311
+                randint(a=max + 1, b=max + range),  # noqa: S311
             ]
         )

@@ -2,7 +2,6 @@
 PortMother module.
 """
 
-from random import choice
 from sys import version_info
 
 if version_info >= (3, 12):
@@ -12,7 +11,7 @@ else:
 
 
 from object_mother_pattern.mothers.base_mother import BaseMother
-from object_mother_pattern.mothers.primitives.integer_mother import IntegerMother
+from object_mother_pattern.mothers.primitives import IntegerMother
 
 
 class PortMother(BaseMother[int]):
@@ -670,13 +669,4 @@ class PortMother(BaseMother[int]):
         # >>> -4237
         ```
         """
-        min_port = 0
-        max_port = 65535
-        offset = 10000
-
-        return choice(  # noqa: S311
-            seq=[
-                IntegerMother.create(min=min_port - offset, max=min_port - 1),
-                IntegerMother.create(min=max_port + 1, max=max_port + offset),
-            ]
-        )
+        return IntegerMother.out_of_range(min=0, max=65535)

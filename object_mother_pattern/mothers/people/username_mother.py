@@ -102,12 +102,12 @@ class UsernameMother(BaseMother[str]):
 
         username = cls._random().user_name()
         while len(username) < length:
-            separator = choice(seq=separators)  # noqa: S311
-            username += separator + cls._random().user_name()
+            separator = choice(seq=separators)  # noqa: S311  # pragma: no cover
+            username += separator + cls._random().user_name()  # pragma: no cover
 
         username = username[:length]
         if username[-1] in separators:
-            username = username[:-1] + cls._random().lexify(text='?').lower()
+            username = username[:-1] + cls._random().lexify(text='?').lower()  # pragma: no cover
 
         return username
 

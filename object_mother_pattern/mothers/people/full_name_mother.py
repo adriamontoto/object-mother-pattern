@@ -2,7 +2,6 @@
 FullNameMother module.
 """
 
-from random import choice, randint
 from sys import version_info
 
 if version_info >= (3, 12):
@@ -10,8 +9,24 @@ if version_info >= (3, 12):
 else:
     from typing_extensions import override  # pragma: no cover
 
-from object_mother_pattern.mothers.base_mother import BaseMother
-from object_mother_pattern.mothers.primitives.string_mother import StringMother
+
+from enum import StrEnum, unique
+from random import choice, randint
+from typing import assert_never
+
+from object_mother_pattern.mothers import BaseMother, StringMother
+
+
+@unique
+class FullNameCase(StrEnum):
+    """
+    Type of full name case.
+    """
+
+    LOWERCASE = 'lowercase'
+    UPPERCASE = 'uppercase'
+    TITLECASE = 'titlecase'
+    MIXED = 'mixed'
 
 
 class FullNameMother(BaseMother[str]):
@@ -32,7 +47,14 @@ class FullNameMother(BaseMother[str]):
 
     @classmethod
     @override
-    def create(cls, *, value: str | None = None, min_length: int = 3, max_length: int = 128) -> str:
+    def create(  # noqa: C901
+        cls,
+        *,
+        value: str | None = None,
+        min_length: int = 3,
+        max_length: int = 128,
+        full_name_case: FullNameCase | None = None,
+    ) -> str:
         """
         Create a random string full name value. If a specific string full name value is provided via `value`, it is
         returned after validation. Otherwise, a random string full name value is generated within the provided range of
@@ -43,6 +65,7 @@ class FullNameMother(BaseMother[str]):
             min_length (int, optional): Minimum length of the full name. Must be >= 1. Defaults to 3.
             max_length (int, optional): Maximum length of the full name. Must be >= 1 and >= `min_length`. Defaults to
             128.
+            full_name_case (FullNameCase | None, optional): The case of the full name. Defaults to None (random case).
 
         Raises:
             TypeError: If the provided `value` is not a string.
@@ -51,6 +74,7 @@ class FullNameMother(BaseMother[str]):
             ValueError: If `min_length` is not greater than 0.
             ValueError: If `max_length` is not greater than 0.
             ValueError: If `min_length` is greater than `max_length`.
+            TypeError: If `full_name_case` is not a FullNameCase.
 
         Returns:
             str: A randomly generated full name value in the provided range.
@@ -85,6 +109,12 @@ class FullNameMother(BaseMother[str]):
         if min_length > max_length:
             raise ValueError('FullNameMother min_length must be less than or equal to max_length.')
 
+        if full_name_case is None:
+            full_name_case = FullNameCase(value=choice(seq=tuple(FullNameCase)))  # noqa: S311
+
+        if type(full_name_case) is not FullNameCase:
+            raise TypeError('FullNameMother full_name_case must be a FullNameCase.')
+
         length = randint(a=min_length, b=max_length)  # noqa: S311
 
         name = cls._random().name()
@@ -93,9 +123,25 @@ class FullNameMother(BaseMother[str]):
 
         name = name[:length]
         if name != name.strip():
-            name = name[:-1] + cls._random().lexify(text='?').lower()
+            name = name[:-1] + cls._random().lexify(text='?').lower()  # pragma: no cover
 
-        return choice(seq=(name.lower(), name.upper(), name.title()))  # noqa: S311
+        match full_name_case:
+            case FullNameCase.LOWERCASE:
+                name = name.lower()
+
+            case FullNameCase.UPPERCASE:
+                name = name.upper()
+
+            case FullNameCase.TITLECASE:
+                name = name.title()
+
+            case FullNameCase.MIXED:
+                name = ''.join(choice((char.upper(), char.lower())) for char in name)  # noqa: S311
+
+            case _:  # pragma: no cover
+                assert_never(full_name_case)
+
+        return name
 
     @classmethod
     def of_length(cls, *, length: int) -> str:

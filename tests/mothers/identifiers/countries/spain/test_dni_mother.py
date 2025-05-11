@@ -24,6 +24,16 @@ def test_dni_mother_happy_path() -> None:
 
 
 @mark.unit_testing
+def test_dni_mother_value() -> None:
+    """
+    Test DniMother create method with value.
+    """
+    value = DniMother.create()
+
+    assert DniMother.create(value=value) == value
+
+
+@mark.unit_testing
 def test_dni_mother_invalid_value_type() -> None:
     """
     Test DniMother create method with invalid value type.
@@ -36,23 +46,13 @@ def test_dni_mother_invalid_value_type() -> None:
 
 
 @mark.unit_testing
-def test_dni_mother_value() -> None:
-    """
-    Test DniMother create method with value.
-    """
-    value = DniMother.create()
-
-    assert DniMother.create(value=value) == value
-
-
-@mark.unit_testing
 def test_dni_mother_lowercase_case() -> None:
     """
     Test DniMother create method with lowercase case.
     """
     value = DniMother.create(dni_case=DniCase.LOWERCASE)
 
-    assert value[8].islower()
+    assert value.islower()
 
 
 @mark.unit_testing
@@ -62,7 +62,7 @@ def test_dni_mother_uppercase_case() -> None:
     """
     value = DniMother.create(dni_case=DniCase.UPPERCASE)
 
-    assert value[8].isupper()
+    assert value.isupper()
 
 
 @mark.unit_testing

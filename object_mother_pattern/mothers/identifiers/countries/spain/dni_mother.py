@@ -27,10 +27,9 @@ class DniCase(StrEnum):
 
 class DniMother(BaseMother[str]):
     """
-    DniMother class is responsible for creating valid Spanish National Identity Document (DNI) values.
-
-    A valid Spanish DNI consists of 8 digits followed by a letter. The letter is calculated using
-    a specific algorithm and serves as a validation check digit.
+    DniMother class is responsible for creating valid Spanish National Identity Document (DNI) values. A valid Spanish
+    DNI consists of 8 digits followed by a letter. The letter is calculated using a specific algorithm and serves as a
+    validation check digit.
 
     Example:
     ```python

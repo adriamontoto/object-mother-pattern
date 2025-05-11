@@ -169,3 +169,82 @@ def test_integer_mother_negative_min_greater_than_zero() -> None:
         match='IntegerMother min value must be less than or equal to max value.',
     ):
         IntegerMother.negative(min=min_value)
+
+
+@mark.unit_testing
+def test_integer_mother_out_of_range() -> None:
+    """
+    Test IntegerMother out_of_range method.
+    """
+    min_value = IntegerMother.create(max=0)
+    max_value = IntegerMother.create(min=0)
+    range_value = IntegerMother.create(min=0)
+
+    value = IntegerMother.out_of_range(min=min_value, max=max_value, range=range_value)
+
+    assert type(value) is int
+    assert value < min_value or value > max_value
+    assert (min_value - range_value <= value <= min_value) or (max_value <= value <= max_value + range_value)
+
+
+@mark.unit_testing
+def test_integer_mother_out_of_range_invalid_min_type() -> None:
+    """
+    Test IntegerMother out_of_range method with invalid min type.
+    """
+    with assert_raises(
+        expected_exception=TypeError,
+        match='IntegerMother min value must be an integer.',
+    ):
+        IntegerMother.out_of_range(min=IntegerMother.invalid_type())
+
+
+@mark.unit_testing
+def test_integer_mother_out_of_range_invalid_max_type() -> None:
+    """
+    Test IntegerMother out_of_range method with invalid max type.
+    """
+    with assert_raises(
+        expected_exception=TypeError,
+        match='IntegerMother max value must be an integer.',
+    ):
+        IntegerMother.out_of_range(max=IntegerMother.invalid_type())
+
+
+@mark.unit_testing
+def test_integer_mother_out_of_range_min_greater_than_max() -> None:
+    """
+    Test IntegerMother out_of_range method with min greater than max.
+    """
+    min_value = IntegerMother.positive()
+    max_value = IntegerMother.negative()
+
+    with assert_raises(
+        expected_exception=ValueError,
+        match='IntegerMother min value must be less than or equal to max value.',
+    ):
+        IntegerMother.out_of_range(min=min_value, max=max_value)
+
+
+@mark.unit_testing
+def test_integer_mother_out_of_range_invalid_range_type() -> None:
+    """
+    Test IntegerMother out_of_range method with invalid range type.
+    """
+    with assert_raises(
+        expected_exception=TypeError,
+        match='IntegerMother range must be an integer.',
+    ):
+        IntegerMother.out_of_range(range=IntegerMother.invalid_type())
+
+
+@mark.unit_testing
+def test_integer_mother_out_of_range_negative_range() -> None:
+    """
+    Test IntegerMother out_of_range method with negative range.
+    """
+    with assert_raises(
+        expected_exception=ValueError,
+        match='IntegerMother range must be a positive integer.',
+    ):
+        IntegerMother.out_of_range(range=IntegerMother.negative())

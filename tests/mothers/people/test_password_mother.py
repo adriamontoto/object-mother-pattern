@@ -290,7 +290,7 @@ def test_password_mother_random_length_happy_path() -> None:
     """
     Test PasswordMother random_length method happy path.
     """
-    min_length = IntegerMother.create(min=0, max=16)
+    min_length = IntegerMother.positive(max=16)
     max_length = IntegerMother.create(min=16, max=32)
     value = PasswordMother.random_length(min_length=min_length, max_length=max_length)
 
@@ -303,7 +303,7 @@ def test_password_mother_random_length_exclude_super_special() -> None:
     """
     Test PasswordMother random_length method with exclude_super_special.
     """
-    min_length = IntegerMother.create(min=0, max=16)
+    min_length = IntegerMother.positive(max=16)
     max_length = IntegerMother.create(min=16, max=32)
     value = PasswordMother.random_length(min_length=min_length, max_length=max_length, exclude_super_special=True)
 

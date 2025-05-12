@@ -68,16 +68,26 @@ class MacAddressMother(BaseMother[str]):
 
     @classmethod
     @override
-    def create(cls, *, value: str | None = None) -> str:  # noqa: C901
+    def create(  # noqa: C901
+        cls,
+        *,
+        value: str | None = None,
+        mac_format: MacAddressFormat | None = None,
+        mac_case: MacAddressCase | None = None,
+    ) -> str:
         """
         Create a random MAC address value with a random format and random case (lowercase, uppercase, mixed). If a
         specific MAC address value is provided via `value`, it is returned after validation.
 
         Args:
             value (str | None, optional): A specific MAC address value to return. Defaults to None.
+            mac_format (MacAddressFormat | None, optional): A specific MAC address format to use. Defaults to None.
+            mac_case (MacAddressCase | None, optional): A specific MAC address case to use. Defaults to None.
 
         Raises:
             TypeError: If the provided `value` is not a string.
+            ValueError: If the provided `mac_format` is not a valid MAC address format.
+            ValueError: If the provided `mac_case` is not a valid MAC address case.
 
         Returns:
             str: A randomly generated MAC address value.
@@ -97,7 +107,18 @@ class MacAddressMother(BaseMother[str]):
 
             return value
 
-        mac_format = MacAddressFormat(value=choice(seq=tuple(MacAddressFormat)))  # noqa: S311
+        if mac_format is None:
+            mac_format = MacAddressFormat(value=choice(seq=tuple(MacAddressFormat)))  # noqa: S311
+
+        if type(mac_format) is not MacAddressFormat:
+            raise ValueError('MacAddressMother mac_format must be a MacAddressFormat.')
+
+        if mac_case is None:
+            mac_case = MacAddressCase(value=choice(seq=tuple(MacAddressCase)))  # noqa: S311
+
+        if type(mac_case) is not MacAddressCase:
+            raise ValueError('MacAddressMother mac_case must be a MacAddressCase.')
+
         match mac_format:
             case MacAddressFormat.RAW:
                 mac_address = cls.raw_format()
@@ -120,10 +141,9 @@ class MacAddressMother(BaseMother[str]):
             case MacAddressFormat.BROADCAST:
                 mac_address = cls.broadcast()
 
-            case _:
+            case _:  # pragma: no cover
                 assert_never(mac_format)
 
-        mac_case = MacAddressCase(value=choice(seq=tuple(MacAddressCase)))  # noqa: S311
         match mac_case:
             case MacAddressCase.LOWERCASE:
                 mac_address = mac_address.lower()
@@ -134,7 +154,7 @@ class MacAddressMother(BaseMother[str]):
             case MacAddressCase.MIXED:
                 mac_address = ''.join(choice(seq=(char.upper(), char.lower())) for char in mac_address)  # noqa: S311
 
-            case _:
+            case _:  # pragma: no cover
                 assert_never(mac_case)
 
         return mac_address
@@ -185,7 +205,7 @@ class MacAddressMother(BaseMother[str]):
         # >>> D5:B9:EB:4D:C2:CC
         ```
         """
-        return cls._create()
+        return cls._create().upper()
 
     @classmethod
     def mixed(cls) -> str:

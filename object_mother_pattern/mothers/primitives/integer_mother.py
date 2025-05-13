@@ -175,9 +175,10 @@ class IntegerMother(BaseMother[int]):
         if range < 0:
             raise ValueError('IntegerMother range must be a positive integer.')
 
+        epsilon = 1
         return choice(  # noqa: S311
             seq=[
-                randint(a=min - range, b=min - 1),  # noqa: S311
-                randint(a=max + 1, b=max + range),  # noqa: S311
+                randint(a=min - range, b=min - epsilon),  # noqa: S311
+                randint(a=max + epsilon, b=max + range),  # noqa: S311
             ]
         )

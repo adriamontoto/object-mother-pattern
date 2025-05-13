@@ -153,9 +153,16 @@ class DateMother(BaseMother[date]):
         if range < 0:
             raise ValueError('DateMother range must be a positive integer.')
 
+        epsilon = relativedelta(days=1)
         return choice(  # noqa: S311
             seq=[
-                cls._random().date_between(start_date=start_date - relativedelta(years=range), end_date=start_date),
-                cls._random().date_between(start_date=end_date, end_date=end_date + relativedelta(years=range)),
+                cls._random().date_between(
+                    start_date=start_date - relativedelta(years=range),
+                    end_date=start_date - epsilon,
+                ),
+                cls._random().date_between(
+                    start_date=end_date + epsilon,
+                    end_date=end_date + relativedelta(years=range),
+                ),
             ]
         )

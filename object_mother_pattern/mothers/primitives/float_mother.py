@@ -216,9 +216,10 @@ class FloatMother(BaseMother[float]):
         if range < 0:
             raise ValueError('FloatMother range must be a positive value.')
 
+        epsilon = 1e-12
         return choice(  # noqa: S311
             seq=[
-                uniform(a=min - range, b=min),  # noqa: S311
-                uniform(a=max, b=max + range),  # noqa: S311
+                uniform(a=min - range, b=min - epsilon),  # noqa: S311
+                uniform(a=max + epsilon, b=max + range),  # noqa: S311
             ]
         )

@@ -70,7 +70,7 @@ def test_nie_mother_mixed_case() -> None:
     """
     Test NieMother create method with mixed case.
     """
-    value = NieMother.create(nie_case=NieCase.MIXED)
+    value = NieMother.create(nie_case=NieCase.MIXEDCASE)
 
     assert any(char.islower() or char.isupper() for char in value)
 

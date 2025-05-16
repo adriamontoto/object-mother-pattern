@@ -23,7 +23,7 @@ class NieCase(StrEnum):
 
     LOWERCASE = 'lowercase'
     UPPERCASE = 'uppercase'
-    MIXED = 'mixed'
+    MIXEDCASE = 'mixedcase'
 
 
 class NieMother(BaseMother[str]):
@@ -100,7 +100,7 @@ class NieMother(BaseMother[str]):
             case NieCase.UPPERCASE:
                 nie = nie.upper()
 
-            case NieCase.MIXED:
+            case NieCase.MIXEDCASE:
                 nie = ''.join(choice(seq=(char.upper(), char.lower())) for char in nie)  # noqa: S311
 
             case _:  # pragma: no cover

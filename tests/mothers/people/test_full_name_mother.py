@@ -149,7 +149,7 @@ def test_full_name_mother_case_mixed() -> None:
     """
     Test FullNameMother create method with mixed case.
     """
-    value = FullNameMother.create(full_name_case=FullNameCase.MIXED)
+    value = FullNameMother.create(full_name_case=FullNameCase.MIXEDCASE)
 
     assert any(char.islower() or char.isupper() for char in value)
 

@@ -40,7 +40,7 @@ class MacAddressCase(StrEnum):
 
     LOWERCASE = 'lowercase'
     UPPERCASE = 'uppercase'
-    MIXED = 'mixed'
+    MIXEDCASE = 'mixedcase'
 
 
 class MacAddressMother(BaseMother[str]):
@@ -151,7 +151,7 @@ class MacAddressMother(BaseMother[str]):
             case MacAddressCase.UPPERCASE:
                 mac_address = mac_address.upper()
 
-            case MacAddressCase.MIXED:
+            case MacAddressCase.MIXEDCASE:
                 mac_address = ''.join(choice(seq=(char.upper(), char.lower())) for char in mac_address)  # noqa: S311
 
             case _:  # pragma: no cover

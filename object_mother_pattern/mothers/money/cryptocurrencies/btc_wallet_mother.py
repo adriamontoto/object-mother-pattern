@@ -27,7 +27,7 @@ class BtcWalletCase(StrEnum):
 
     LOWERCASE = 'lowercase'
     UPPERCASE = 'uppercase'
-    MIXED = 'mixed'
+    MIXEDCASE = 'mixedcase'
 
 
 class BtcWalletMother(BaseMother[str]):
@@ -110,7 +110,7 @@ class BtcWalletMother(BaseMother[str]):
             case BtcWalletCase.UPPERCASE:
                 wallet = wallet.upper()
 
-            case BtcWalletCase.MIXED:
+            case BtcWalletCase.MIXEDCASE:
                 wallet = ''.join(choice(seq=(char.upper(), char.lower())) for char in wallet)  # noqa: S311
 
             case _:  # pragma: no cover

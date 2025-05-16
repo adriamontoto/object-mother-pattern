@@ -26,7 +26,7 @@ class FullNameCase(StrEnum):
     LOWERCASE = 'lowercase'
     UPPERCASE = 'uppercase'
     TITLECASE = 'titlecase'
-    MIXED = 'mixed'
+    MIXEDCASE = 'mixedcase'
 
 
 class FullNameMother(BaseMother[str]):
@@ -135,7 +135,7 @@ class FullNameMother(BaseMother[str]):
             case FullNameCase.TITLECASE:
                 name = name.title()
 
-            case FullNameCase.MIXED:
+            case FullNameCase.MIXEDCASE:
                 name = ''.join(choice((char.upper(), char.lower())) for char in name)  # noqa: S311
 
             case _:  # pragma: no cover

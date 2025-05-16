@@ -122,7 +122,7 @@ def test_btc_wallet_mother_mixed_case() -> None:
     """
     Test BtcWalletMother create method with mixed case.
     """
-    value = BtcWalletMother.create(wallet_case=BtcWalletCase.MIXED)
+    value = BtcWalletMother.create(wallet_case=BtcWalletCase.MIXEDCASE)
 
     assert any(char.islower() or char.isupper() for char in value)
 

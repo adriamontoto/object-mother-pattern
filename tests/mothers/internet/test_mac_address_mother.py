@@ -67,7 +67,7 @@ def test_mac_address_mother_mixed_case() -> None:
     """
     Test MacAddressMother create method with mixed case.
     """
-    value = MacAddressMother.create(mac_case=MacAddressCase.MIXED)
+    value = MacAddressMother.create(mac_case=MacAddressCase.MIXEDCASE)
 
     assert any(char.islower() or char.isupper() for char in value) or value == '00:00:00:00:00:00'
 

@@ -20,16 +20,16 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: 📥 Checkout the repository
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
 
       - name: 🐍 Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5.6.0
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
         with:
           python-version: ${{ matrix.python-version }}
 
       - id: cache
         name: 📦 Create cache
-        uses: actions/cache@v4.2.3
+        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684
         with:
           path: ${{ env.pythonLocation }}
           key: ${{ matrix.os }}-python-${{ matrix.python-version }}-${{ hashFiles('pyproject.toml', 'requirements*') }}
@@ -43,7 +43,7 @@ jobs:
         run: make lint CI=true VERBOSE=true
 
       - name: 🫙 Store type coverage
-        uses: actions/upload-artifact@v4.6.2
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:
           name: type_coverage_report_${{ matrix.os }}_${{ matrix.python-version }}

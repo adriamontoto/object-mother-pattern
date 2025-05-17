@@ -46,12 +46,13 @@ tests = [
     'pytest>=8.0.0',
     'pytest-randomly>=3.0.0',
     'coverage[toml]>=7.0.0',
+    'smokeshow>=0.5.0',
     'ruff>=0.11.10',
     'mypy[reports]>=1.0.0',
     'pre-commit>=3.0.0',
+    'build>=1.2.2',
     'types-python-dateutil>=2.9.0.20241206',
 ]
-
 
 [project.urls]
 Homepage = 'https://github.com/adriamontoto/object-mother-pattern'

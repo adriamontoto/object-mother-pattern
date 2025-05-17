@@ -1,6 +1,12 @@
-FULL_SOURCES = object_mother_pattern tests
+SHELL := /usr/bin/env bash
+.SHELLFLAGS := -eu -o pipefail -c
+
 SOURCES = object_mother_pattern
+FULL_SOURCES = $(SOURCES) tests
 CONFIGURATION_FILE = pyproject.toml 
+VERBOSE ?= false
+PYTHON_VERSION ?= 3.13
+PYTHON_VIRTUAL_ENVIRONMENT ?= .venv
 
 
 .PHONY: help
@@ -15,41 +21,37 @@ install: # Install dependencies
 
 
 .PHONY: install-dev
-install-dev: # Install development dependencies
-	@pip install --requirement requirements_dev.txt
+	@$(PYTHON_VIRTUAL_ENVIRONMENT)/bin/pip$(PYTHON_VERSION) install --requirement requirements_dev.txt
 
 
 .PHONY: install-prod
-install-prod: # Install production dependencies
-	@pip install --requirement requirements.txt
+	@$(PYTHON_VIRTUAL_ENVIRONMENT)/bin/pip$(PYTHON_VERSION) install --requirement requirements.txt
 
 
 .PHONY: format
-format: # Automatically format python code
-	@ruff check $(FULL_SOURCES) --fix-only --config $(CONFIGURATION_FILE)
-	@ruff format $(FULL_SOURCES) --config $(CONFIGURATION_FILE)
+	@$(PYTHON_VIRTUAL_ENVIRONMENT)/bin/ruff check $(FULL_SOURCES) --fix-only --config $(CONFIGURATION_FILE)
+	@$(PYTHON_VIRTUAL_ENVIRONMENT)/bin/ruff format $(FULL_SOURCES) --config $(CONFIGURATION_FILE)
 
 
 .PHONY: lint
 lint: # Lint python code
 	@set -e; \
-	mypy $(FULL_SOURCES) --txt-report . --config-file $(CONFIGURATION_FILE) || mypy_exit=$$?; \
-	ruff check $(FULL_SOURCES) || ruff_exit=$$?; \
+	$(PYTHON_VIRTUAL_ENVIRONMENT)/bin/mypy $(FULL_SOURCES) --txt-report . --config-file $(CONFIGURATION_FILE) || mypy_exit=$$?; \
+	$(PYTHON_VIRTUAL_ENVIRONMENT)/bin/ruff check $(FULL_SOURCES) || ruff_exit=$$?; \
 	exit $$(( mypy_exit || ruff_exit ))
 
 
 .PHONY: test
-test: # Run all tests
-	@pytest --config-file $(CONFIGURATION_FILE)
+	@$(PYTHON_VIRTUAL_ENVIRONMENT)/bin/pytest --config-file $(CONFIGURATION_FILE)
 
 
 .PHONY: coverage
 coverage: # Get coverage report
 	@set -e; \
-	coverage erase; \
-	coverage run --module pytest --config-file $(CONFIGURATION_FILE) || coverage_exit=$$?; \
-	coverage combine; \
-	coverage report; \
+	$(PYTHON_VIRTUAL_ENVIRONMENT)/bin/coverage erase; \
+	$(PYTHON_VIRTUAL_ENVIRONMENT)/bin/coverage run --module pytest --config-file $(CONFIGURATION_FILE) || coverage_exit=$$?; \
+	$(PYTHON_VIRTUAL_ENVIRONMENT)/bin/coverage combine; \
+	$(PYTHON_VIRTUAL_ENVIRONMENT)/bin/coverage report; \
 	exit $$coverage_exit
 
 
@@ -67,5 +69,4 @@ clean: # Remove all generated files
 	@rm --force --recursive htmlcov
 
 .PHONY: update-lists
-update-lists: # Update content lists
-	@python3 update_lists.py
+	@$(PYTHON_VIRTUAL_ENVIRONMENT)/bin/python$(PYTHON_VERSION) update_lists.py

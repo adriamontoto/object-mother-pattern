@@ -1,7 +1,4 @@
-# Documentation: https://pre-commit.com
-
-# General flags
-fail_fast: true # If there is an error it will fail the test
+fail_fast: true
 
 default_language_version:
   python: python3.13
@@ -17,7 +14,6 @@ repos:
         pass_filenames: false
         stages:
           - pre-commit
-          - pre-push
 
       - id: check-added-large-files
         name: 📦 Large Files Checker
@@ -52,7 +48,6 @@ repos:
         name: 🔍 Secrets Checker
         stages:
           - pre-commit
-          - pre-push
 
   - repo: https://github.com/commitizen-tools/commitizen
     rev: v4.7.1

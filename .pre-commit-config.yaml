@@ -46,7 +46,7 @@ repos:
           - pre-commit
 
   - repo: https://github.com/gitleaks/gitleaks
-    rev: v8.20.1
+    rev: v8.26.0
     hooks:
       - id: gitleaks
         name: 🔍 Secrets Checker

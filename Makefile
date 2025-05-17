@@ -10,31 +10,33 @@ PYTHON_VIRTUAL_ENVIRONMENT ?= .venv
 
 
 .PHONY: help
-help: # Display this help
-	@echo "Usage: make [COMMAND] [OPTIONS]..."
+help: # It displays this help message
+	@printf "\nUsage: make [COMMAND] [OPTIONS]...\n"
 	@awk 'BEGIN {FS = ":.*#"; printf "\nCommands:\n  make \033[36m\033[0m\n"} /^[a-zA-Z_-]+:.*?#/ { printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
-
-
-.PHONY: install
-install: # Install dependencies
-	@make install-dev
+	@printf "\nOptions (override with VAR=value):\n"
+	@printf "  %-40s %s\n" "VERBOSE=$(VERBOSE)"                   "Show command output (true/false)"
+	@printf "  %-40s %s\n" "PYTHON_VERSION=$(PYTHON_VERSION)"     "Used python interpreter for creating the virtual environment"
+	@printf "  %-40s %s\n" "PYTHON_VIRTUAL_ENVIRONMENT=$(PYTHON_VIRTUAL_ENVIRONMENT)" "Name of the virtual environment folder"
+	@printf "\n"
 
 
 .PHONY: install-dev
-	@$(PYTHON_VIRTUAL_ENVIRONMENT)/bin/pip$(PYTHON_VERSION) install --requirement requirements_dev.txt
+install-dev: # It installs development dependencies
+install: # An alias for 'make install-dev'
 
 
 .PHONY: install-prod
-	@$(PYTHON_VIRTUAL_ENVIRONMENT)/bin/pip$(PYTHON_VERSION) install --requirement requirements.txt
+install-prod: # It installs production dependencies
 
 
 .PHONY: format
+format: # It automatically formats code
 	@$(PYTHON_VIRTUAL_ENVIRONMENT)/bin/ruff check $(FULL_SOURCES) --fix-only --config $(CONFIGURATION_FILE)
 	@$(PYTHON_VIRTUAL_ENVIRONMENT)/bin/ruff format $(FULL_SOURCES) --config $(CONFIGURATION_FILE)
 
 
 .PHONY: lint
-lint: # Lint python code
+lint: # It automatically lints code
 	@set -e; \
 	$(PYTHON_VIRTUAL_ENVIRONMENT)/bin/mypy $(FULL_SOURCES) --txt-report . --config-file $(CONFIGURATION_FILE) || mypy_exit=$$?; \
 	$(PYTHON_VIRTUAL_ENVIRONMENT)/bin/ruff check $(FULL_SOURCES) || ruff_exit=$$?; \
@@ -42,11 +44,12 @@ lint: # Lint python code
 
 
 .PHONY: test
+test: # It runs all tests
 	@$(PYTHON_VIRTUAL_ENVIRONMENT)/bin/pytest --config-file $(CONFIGURATION_FILE)
 
 
 .PHONY: coverage
-coverage: # Get coverage report
+coverage: # It gets the test coverage report
 	@set -e; \
 	$(PYTHON_VIRTUAL_ENVIRONMENT)/bin/coverage erase; \
 	$(PYTHON_VIRTUAL_ENVIRONMENT)/bin/coverage run --module pytest --config-file $(CONFIGURATION_FILE) || coverage_exit=$$?; \
@@ -56,17 +59,8 @@ coverage: # Get coverage report
 
 
 .PHONY: clean
-clean: # Remove all generated files
-	@rm --force --recursive `find . -type f -name '*.py[co]'`
-	@rm --force --recursive `find . -name __pycache__`
-	@rm --force --recursive `find . -name .ruff_cache`
-	@rm --force --recursive `find . -name .mypy_cache`
-	@rm --force --recursive `find . -name index.txt`
-	@rm --force --recursive `find . -name .pytest_cache`
-	@rm --force --recursive .coverage
-	@rm --force --recursive .coverage.*
-	@rm --force --recursive coverage.xml
-	@rm --force --recursive htmlcov
+clean: # It cleans up the project, removing the virtual environment and some files
 
 .PHONY: update-lists
+update-lists: # It updates content lists
 	@$(PYTHON_VIRTUAL_ENVIRONMENT)/bin/python$(PYTHON_VERSION) update_lists.py

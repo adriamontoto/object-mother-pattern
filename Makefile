@@ -29,7 +29,9 @@ install-dev: # It installs development dependencies
 	@echo -e "\n✅ Development dependencies installed correctly.\n"
 
 
+.PHONY: install
 install: # An alias for 'make install-dev'
+	@$(MAKE) --no-print-directory install-dev
 
 
 .PHONY: install-prod
@@ -63,6 +65,11 @@ test: # It runs all tests
 	@echo -e "\n⌛ Running tests...\n"
 
 	@$(PYTHON_VIRTUAL_ENVIRONMENT)/bin/pytest --config-file $(CONFIGURATION_FILE)
+
+
+.PHONY: tests
+tests: # An alias for 'make test'
+	@$(MAKE) --no-print-directory test
 
 
 .PHONY: coverage

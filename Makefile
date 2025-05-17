@@ -77,6 +77,8 @@ lint: # It automatically lints code
 	@echo -e "\n⌛ Linting project code...\n"
 
 	@set -e; \
+	mypy_exit=0; \
+	ruff_exit=0; \
 	$(PYTHON_VIRTUAL_ENVIRONMENT)/bin/mypy $(FULL_SOURCES) --txt-report . --config-file $(CONFIGURATION_FILE) || mypy_exit=$$?; \
 	$(PYTHON_VIRTUAL_ENVIRONMENT)/bin/ruff check $(FULL_SOURCES) || ruff_exit=$$?; \
 	exit $$(( mypy_exit || ruff_exit ))
@@ -103,7 +105,7 @@ coverage: # It gets the test coverage report
 	$(PYTHON_VIRTUAL_ENVIRONMENT)/bin/coverage run --module pytest --config-file $(CONFIGURATION_FILE) || coverage_exit=$$?; \
 	$(PYTHON_VIRTUAL_ENVIRONMENT)/bin/coverage combine; \
 	$(PYTHON_VIRTUAL_ENVIRONMENT)/bin/coverage report; \
-	exit $$coverage_exit
+	exit $${coverage_exit:-0}
 
 
 .PHONY: clean

@@ -39,13 +39,13 @@ jobs:
 
       - name: 📦 Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
-        run: make install-dev CI=true
+        run: make install-dev CI=true VERBOSE=true
 
       - name: 📂 Create coverage directory
         run: mkdir coverage
 
       - name: 🏃 Run Tests
-        run: make coverage CI=true
+        run: make coverage CI=true VERBOSE=true
         env:
           COVERAGE_FILE: coverage/.coverage_${{ matrix.os }}_python_${{ matrix.python-version }}
           CONTEXT: ${{ matrix.os }}-python-${{ matrix.python-version }}-${{ hashFiles('pyproject.toml', 'requirements*') }}
@@ -87,7 +87,7 @@ jobs:
 
       - name: 📦 Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
-        run: make install-dev CI=true
+        run: make install-dev CI=true VERBOSE=true
 
       - name: 📥 Download coverage files
         uses: actions/download-artifact@v4.3.0

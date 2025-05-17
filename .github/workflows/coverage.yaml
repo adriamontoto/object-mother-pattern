@@ -21,13 +21,25 @@ jobs:
     name: Smokeshow Pipeline
     timeout-minutes: 5
     steps:
+      - name: 📥 Checkout the repository
+        uses: actions/checkout@v4.2.2
+
       - name: 🐍 Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5.6.0
         with:
           python-version: ${{ matrix.python-version }}
 
+      - id: cache
+        name: 📦 Create cache
+        uses: actions/cache@v4.2.3
+        with:
+          path: ${{ env.pythonLocation }}
+          key: ${{ matrix.os }}-python-${{ matrix.python-version }}-${{ hashFiles('pyproject.toml', 'requirements*') }}
+          restore-keys: ${{ matrix.os }}-python-${{ matrix.python-version }}-
+
       - name: 📦 Install dependencies
-        run: pip install smokeshow
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: make install-dev CI=true VERBOSE=true
 
       - name: 📥 Download coverage files
         uses: actions/download-artifact@v4.3.0

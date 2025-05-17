@@ -37,10 +37,10 @@ jobs:
 
       - name: 📦 Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
-        run: make install-dev CI=true
+        run: make install-dev CI=true VERBOSE=true
 
       - name: 🏃 Run Linter
-        run: make lint CI=true
+        run: make lint CI=true VERBOSE=true
 
       - name: 🫙 Store type coverage
         uses: actions/upload-artifact@v4.6.2

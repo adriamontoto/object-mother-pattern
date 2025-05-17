@@ -29,6 +29,17 @@ help: # It displays this help message
 	@printf "\n"
 
 
+.PHONY: setup
+setup: # It setups the project, creates the virtual environment and installs the dependencies
+	@echo -e "\n⌛ Setting up the project...\n"
+
+	$(call quiet, python$(PYTHON_VERSION) -m venv $(PYTHON_VIRTUAL_ENVIRONMENT))
+	$(call quiet, $(PYTHON_VIRTUAL_ENVIRONMENT)/bin/pip$(PYTHON_VERSION) install --upgrade pip)
+	$(call quiet, make install-dev)
+	$(call quiet, $(PYTHON_VIRTUAL_ENVIRONMENT)/bin/pre-commit install --hook-type pre-commit --hook-type pre-push --hook-type commit-msg)
+
+	@echo -e "\n✅ Run 'source $(PYTHON_VIRTUAL_ENVIRONMENT)/bin/activate' to activate the virtual environment.\n"
+
 
 .PHONY: install-dev
 install-dev: # It installs development dependencies

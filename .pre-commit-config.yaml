@@ -11,7 +11,7 @@ repos:
     rev: v5.0.0
     hooks:
       - id: no-commit-to-branch
-        name: 🛡️ Protected Branches Checker
+        name: 🚧 Protected Branches Checker
         args:
           - --branch=master
         pass_filenames: false
@@ -53,3 +53,11 @@ repos:
         stages:
           - pre-commit
           - pre-push
+
+  - repo: https://github.com/commitizen-tools/commitizen
+    rev: v4.7.1
+    hooks:
+      - id: commitizen
+        name: 📝 Standard Commit Message Checker
+        stages:
+          - commit-msg

@@ -9,6 +9,15 @@ PYTHON_VERSION ?= 3.13
 PYTHON_VIRTUAL_ENVIRONMENT ?= .venv
 
 
+define quiet
+	@if [ "$(VERBOSE)" = "true" ]; then \
+		$(1); \
+	else \
+		$(1) > /dev/null; \
+	fi
+endef
+
+
 .PHONY: help
 help: # It displays this help message
 	@printf "\nUsage: make [COMMAND] [OPTIONS]...\n"
@@ -25,6 +34,7 @@ help: # It displays this help message
 install-dev: # It installs development dependencies
 	@echo -e "\n⌛ Installing development dependencies...\n"
 
+	$(call quiet, $(PYTHON_VIRTUAL_ENVIRONMENT)/bin/pip$(PYTHON_VERSION) install --requirement requirements_dev.txt)
 
 	@echo -e "\n✅ Development dependencies installed correctly.\n"
 
@@ -38,6 +48,7 @@ install: # An alias for 'make install-dev'
 install-prod: # It installs production dependencies
 	@echo -e "\n⌛ Installing production dependencies...\n"
 
+	$(call quiet, $(PYTHON_VIRTUAL_ENVIRONMENT)/bin/pip$(PYTHON_VERSION) install --requirement requirements.txt)
 
 	@echo -e "\n✅ Production dependencies installed correctly.\n"
 
@@ -88,6 +99,19 @@ coverage: # It gets the test coverage report
 clean: # It cleans up the project, removing the virtual environment and some files
 	@echo -e "\n⌛ Cleaning up the project...\n"
 
+	$(call quiet, $(PYTHON_VIRTUAL_ENVIRONMENT)/bin/pre-commit clean)
+	$(call quiet, $(PYTHON_VIRTUAL_ENVIRONMENT)/bin/pre-commit uninstall --hook-type pre-commit --hook-type pre-push --hook-type commit-msg)
+	$(call quiet, rm --force --recursive $(PYTHON_VIRTUAL_ENVIRONMENT))
+	$(call quiet, rm --force --recursive `find . -type f -name '*.py[co]'`)
+	$(call quiet, rm --force --recursive `find . -name __pycache__`)
+	$(call quiet, rm --force --recursive `find . -name .ruff_cache`)
+	$(call quiet, rm --force --recursive `find . -name .mypy_cache`)
+	$(call quiet, rm --force --recursive `find . -name .pytest_cache`)
+	$(call quiet, rm --force --recursive `find . -name index.txt`)
+	$(call quiet, rm --force --recursive .coverage)
+	$(call quiet, rm --force --recursive .coverage.*)
+	$(call quiet, rm --force --recursive coverage.xml)
+	$(call quiet, rm --force --recursive htmlcov)
 
 	@echo -e "\n✅ Run 'deactivate' to deactivate the virtual environment.\n"
 

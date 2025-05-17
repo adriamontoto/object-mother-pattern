@@ -117,6 +117,15 @@ coverage: # It gets the test coverage report
 	exit $${coverage_exit:-0}
 
 
+.PHONY: build
+build: # It builds the project
+	@echo -e "\n⌛ Building project...\n"
+
+	$(call quiet, $(PYTHON_BIN) -m build)
+
+	@echo -e "\n✅ Project built correctly.\n"
+
+
 .PHONY: clean
 clean: # It cleans up the project, removing the virtual environment and some files
 	@echo -e "\n⌛ Cleaning up the project...\n"

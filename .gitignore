@@ -4,15 +4,11 @@
 index.txt
 
 ################### Folders to exclude ###################
-# IDE folders
-**vscode**
-**idea**
-
 # cache folders
 **cache**
 
 # environment folders
-**env**
+**.venv**
 
 ################## Files not to exclude ##################
 

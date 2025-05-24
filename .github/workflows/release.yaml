@@ -10,9 +10,9 @@ permissions:
   contents: write      # needed to commit changelog, push tag & create Release
   pull-requests: write # optional – lets semantic‑release reference PRs in log
 
-concurrency:
-  group: release-pipeline
-  cancel-in-progress: true
+# concurrency:
+#   group: release-pipeline
+#   cancel-in-progress: true
 
 jobs:
   release:

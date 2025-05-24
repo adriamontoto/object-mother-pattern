@@ -35,6 +35,6 @@ jobs:
       # the CHANGELOG.md, (4) commits & pushes it, (5) tags the commit,
       # and (6) opens a GitHub Release with the per‑release notes.
       - name: 🔖 Semantic Release
-        uses: python-semantic-release/python-semantic-release
+        uses: python-semantic-release/python-semantic-release@v9.21.1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}

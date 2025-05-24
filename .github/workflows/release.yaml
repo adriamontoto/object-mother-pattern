@@ -1,0 +1,40 @@
+name: Release Pipeline
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+permissions:
+  contents: write      # needed to commit changelog, push tag & create Release
+  pull-requests: write # optional – lets semantic‑release reference PRs in log
+
+concurrency:
+  group: release-pipeline
+  cancel-in-progress: true
+
+jobs:
+  release:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        python-version: [3.13]
+
+    timeout-minutes: 5
+    steps:
+      - name: 📥 Checkout the repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          fetch-depth: 0
+
+      # The official action wraps `semantic-release version` which
+      # (1) determines next version, (2) bumps/stamps it, (3) builds
+      # the CHANGELOG.md, (4) commits & pushes it, (5) tags the commit,
+      # and (6) opens a GitHub Release with the per‑release notes.
+      - name: 🔖 Semantic Release
+        uses: python-semantic-release/python-semantic-release
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}

@@ -1,6 +1,16 @@
 # CHANGELOG
 
 
+## v0.1.1 (2025-05-24)
+
+### Bug Fixes
+
+- Test
+  ([`36aa36b`](https://github.com/adriamontoto/object-mother-pattern/commit/36aa36b046c88468b058a1a652f87ed1af301349))
+
+Signed-off-by: Adria Montoto <75563346+adriamontoto@users.noreply.github.com>
+
+
 ## v0.1.0 (2025-05-24)
 
 ### Bug Fixes

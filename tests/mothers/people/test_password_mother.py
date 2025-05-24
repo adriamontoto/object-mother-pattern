@@ -68,6 +68,21 @@ def test_password_mother_create_with_custom_counts() -> None:
     assert len(value) == length
 
 
+# _____ test_password_mother_create_sample_size_greater_than_sequence_length _____
+
+#     @mark.unit_testing
+#     def test_password_mother_create_sample_size_greater_than_sequence_length() -> None:
+#         """
+#         Test PasswordMother create method with sample_size greater than sequence length.
+#         """
+#         lowercase_count = IntegerMother.create(min=len(ALPHABET_LOWERCASE_BASIC))
+
+
+# >       with assert_raises(
+#             expected_exception=ValueError,
+#             match='PasswordMother sample_size must be less than or equal to the length of the sequence.',
+#         ):
+# E       Failed: DID NOT RAISE <class 'ValueError'>
 @mark.unit_testing
 def test_password_mother_create_sample_size_greater_than_sequence_length() -> None:
     """

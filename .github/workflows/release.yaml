@@ -2,27 +2,27 @@ name: Release Pipeline
 
 on:
   push:
-    branches:
-      - master
+    branches: [master]
   workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: write
   pull-requests: write
 
-concurrency:
-  group: release-pipeline
-  cancel-in-progress: true
-
 jobs:
   release:
+    name: Release Pipeline
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 5
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
 
-    timeout-minutes: 5
     steps:
       - name: 📥 Checkout the repository
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
@@ -41,6 +41,6 @@ jobs:
           config_file: pyproject.toml
           git_committer_email: ${{ vars.GIT_COMMITTER_EMAIL }}
           git_committer_name: ${{ vars.GIT_COMMITTER_NAME }}
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.PAT_WITH_REPOSITORY_WRITE }}
           ssh_public_signing_key: ${{ vars.SSH_PUBLIC_SIGNING_KEY }}
           ssh_private_signing_key: ${{ secrets.SSH_PRIVATE_SIGNING_KEY }}

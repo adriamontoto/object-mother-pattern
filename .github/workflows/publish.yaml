@@ -1,17 +1,17 @@
 name: Publish Pipeline
 
 on:
-  workflow_run:
-    workflows: [Release Pipeline]
-    types: [completed]
+  release:
+    types: [published]
 
 permissions:
   id-token: write
 
 jobs:
   publish:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    name: Publish Pipeline
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 5
     strategy:
       fail-fast: false
       matrix:
@@ -22,8 +22,6 @@ jobs:
       name: pypi
       url: https://pypi.org/p/object-mother-pattern/
 
-    name: Publish Pipeline
-    timeout-minutes: 5
     steps:
       - name: 📥 Checkout the repository
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683

@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v0.1.1 (2025-05-25)
+
+### 🐛 Bug Fixes
+
+- Update password tests to create correct passwords
+  ([`b2548b7`](https://github.com/adriamontoto/object-mother-pattern/commit/b2548b72000bfbba674eab06e0c12b7f112e098e))
+
+
 ## v0.1.0 (2025-05-25)
 
 ### 🐛 Bug Fixes

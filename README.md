@@ -172,6 +172,7 @@ git clone git+ssh://git@github.com/<your-username>/object-mother-pattern
 
 Before starting development, set up your environment with:
 
+This command installs all necessary dependencies and configures the development environment. Ensure you have `make` installed on your system, along with Python and pip.
 ```bash
 make setup
 ```

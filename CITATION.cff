@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+title: Object Mother Pattern
+message: >
+  If you use this software, please cite it using the metadata below.
+type: software
+authors:
+  - given-names: Adrià
+    family-names: Montoto
+repository-code: https://github.com/adriamontoto/object-mother-pattern
+url: https://pypi.org/project/object-mother-pattern
+abstract: >
+  Object Mother Pattern is a Python library that simplifies and
+  standardises the creation of complex test fixtures by providing
+  reusable object mothers for common data types.
+keywords:
+  - python
+  - testing
+  - fixtures
+  - object-mother
+license: MIT

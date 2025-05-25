@@ -1,4 +1,5 @@
-# 📑 Description  
+# 📑 Description
+
 <!--
 > 📝 Please include a summary of your change.
 > - Please also include relevant motivation and context.
@@ -6,7 +7,8 @@
 > - List any dependencies that are required for this change.
 -->
 
-## 🔖 Type of change  
+## 🔖 Type of change
+
 - [ ] **✨ feat**: New feature (non-breaking change).
 - [ ] **🐛 fix**: Bug fix (non-breaking change).
 - [ ] **📚 docs**: Documentation update.
@@ -19,6 +21,7 @@
 - [ ] **🛠️ others**: Other type of change.
 
 ## 🔗 Related Issues / Discussions / Resources
+
 <!--
 > 📝 Please include a list of related issues, discussions, or resources.
 > - Closes: [#\<issue-number>](https://github.com/adriamontoto/object-mother-pattern/issues/<issue-number>), ...
@@ -26,6 +29,7 @@
 -->
 
 ## ✅ Pre-merge Checklist
+
 - [ ] I have read and followed the [Contributor Guidelines](https://github.com/adriamontoto/object-mother-pattern/blob/master/CONTRIBUTING.md).
 - [ ] I have read and followed the [Code of Conduct](https://github.com/adriamontoto/object-mother-pattern/blob/master/CODE_OF_CONDUCT.md).
 - [ ] My pull requests and commits follow the [Conventional Commits](https://www.conventionalcommits.org) and [Conventional Comments](https://conventionalcomments.org) guidelines.
@@ -36,6 +40,7 @@
 - [ ] I considered security & backwards-compatibility; if **breaking**, explain in the "Description" section above.
 
 ## 📃 Additional Resources
+
 - [Conventional Commits](https://www.conventionalcommits.org)
 - [Conventional Comments](https://conventionalcomments.org)
 - [The Anatomy of a Perfect Pull Request](https://hugooodias.medium.com/the-anatomy-of-a-perfect-pull-request-567382bb6067)

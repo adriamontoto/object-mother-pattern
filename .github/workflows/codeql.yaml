@@ -5,37 +5,64 @@ on:
     branches: [master]
   pull_request:
     branches: [master]
-    types: [opened, synchronize]
+    types: [opened, reopened, synchronize, ready_for_review]
   schedule:
-    - cron: '0 0 * * *' # Every day at 00:00 UTC
+    - cron: '14 3 * * *' # Every day at 03:14 UTC
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
 permissions:
+  contents: read
   security-events: write
 
 jobs:
   analyze:
     name: Code Quality Pipeline - ${{ matrix.language }} on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
         language: [python]
-        build-mode: [none]
+        python-version: [3.13]
+        build-mode: [autobuild]
 
     steps:
       - name: 📥 Checkout the repository
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+
+      - name: 🐍 Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - id: cache
+        name: 📦 Create cache
+        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684
+        with:
+          path: ${{ env.pythonLocation }}
+          key: ${{ matrix.os }}-python-${{ matrix.python-version }}-${{ hashFiles('pyproject.toml', 'requirements*') }}
+          restore-keys: ${{ matrix.os }}-python-${{ matrix.python-version }}-
+
+      - name: 📦 Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: make install-dev CI=true VERBOSE=true
 
       - name: ▶️ CodeQL Initialization
         uses: github/codeql-action/init@ff0a06e83cb2de871e5a09832bc6a81e7276941f
         with:
           languages: ${{ matrix.language }}
           build-mode: ${{ matrix.build-mode }}
-          queries: security-extended, security-and-quality
+          queries: +security-extended,security-and-quality
+
+      - name: 🛠️ CodeQL Autobuild
+        uses: github/codeql-action/autobuild@ff0a06e83cb2de871e5a09832bc6a81e7276941f
 
       - name: 🔬 CodeQL Analysis
         uses: github/codeql-action/analyze@ff0a06e83cb2de871e5a09832bc6a81e7276941f
         with:
-          category: '/language:${{matrix.language}}'
+          category: '/language:${{ matrix.language }}'

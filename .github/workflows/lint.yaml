@@ -5,22 +5,26 @@ on:
     branches: [master]
   pull_request:
     branches: [master]
-    types: [opened, synchronize]
+    types: [opened, reopened, synchronize, ready_for_review]
   schedule:
-    - cron: '0 0 * * *' # Every day at 00:00 UTC
+    - cron: '14 3 * * *' # Every day at 03:14 UTC
   workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   lint:
+    name: Lint Pipeline - Python ${{ matrix.python-version }} on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
         python-version: [3.13]
 
-    name: Lint Pipeline - Python ${{ matrix.python-version }} on ${{ matrix.os }}
-    timeout-minutes: 10
     steps:
       - name: 📥 Checkout the repository
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683

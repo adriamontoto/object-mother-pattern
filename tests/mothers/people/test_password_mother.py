@@ -73,7 +73,7 @@ def test_password_mother_create_sample_size_greater_than_sequence_length() -> No
     """
     Test PasswordMother create method with sample_size greater than sequence length.
     """
-    lowercase_count = IntegerMother.create(min=len(ALPHABET_LOWERCASE_BASIC))
+    lowercase_count = IntegerMother.create(min=len(ALPHABET_LOWERCASE_BASIC) + 1)
 
     with assert_raises(
         expected_exception=ValueError,

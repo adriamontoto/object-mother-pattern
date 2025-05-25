@@ -168,15 +168,23 @@ We welcome contributions to **Object Mother Pattern**! To ensure a smooth collab
 git clone git+ssh://git@github.com/<your-username>/object-mother-pattern
 ```
 
-**3. Create a Branch:**
+**3. Set Up Your Development Environment:**
+
+Before starting development, set up your environment with:
+
+```bash
+make setup
+```
+
+**4. Create a Branch:**
 
 ```bash
 git checkout -b feature/your-feature-name
 ```
 
-**4. Make Your Changes:** Implement your new feature or fix a bug.
+**5. Make Your Changes:** Implement your new feature or fix a bug.
 
-**5. Run Tests:** Ensure all the following tests pass before submitting your changes.
+**6. Run Quality Checks:** Ensure all the following checks pass before submitting your changes:
 
 - Run tests:
 
@@ -202,21 +210,21 @@ make lint
 make format
 ```
 
-**6. Commit Your Changes:**
+**7. Commit Your Changes:**
 
 ```bash
-git commit -m "✨ feature: your feature description"
+git commit -m "feat: your feature description"
 ```
 
-**7. Push to Your Fork:**
+**8. Push to Your Fork:**
 
 ```bash
 git push origin feature/your-feature-name
 ```
 
-**8. Create a Pull Request:** Navigate to the original repository and create a pull request from your fork.
+**9. Create a Pull Request:** Navigate to the original repository and create a pull request from your fork, using the template provided in the repository.
 
-**9. Wait for Review:** Your pull request will be reviewed by the maintainers. Make any necessary changes based on their feedback.
+**10. Wait for Review:** Your pull request will be reviewed by the maintainers. Make any necessary changes based on their feedback.
 
 <p align="right">
     <a href="#readme-top">🔼 Back to top</a>

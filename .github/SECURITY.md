@@ -10,13 +10,13 @@ We take security issues seriously and appreciate responsible disclosures.
 
 | Channel                      | How it works                                                                                                                  |
 | ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| **GitHub Security Advisory** | 1. Navigate to the repository’s **“Security → Advisories”** tab<br>2. Click **“Report a vulnerability”** and fill in the form |
+| **GitHub Security Advisory** | 1. Navigate to the repository's **“Security → Advisories”** tab<br>2. Click **“Report a vulnerability”** and fill in the form |
 
 Include the following, if possible:
 
 1. A **concise description** of the issue and its impact.
 2. **Reproduction steps** or a proof-of-concept script.
-3. Any **mitigation** ideas you’ve identified.
+3. Any **mitigation** ideas you've identified.
 
 ## ⌛ Our Disclosure Process
 

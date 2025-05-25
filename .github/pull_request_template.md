@@ -30,8 +30,8 @@
 
 ## ✅ Pre-merge Checklist
 
-- [ ] I have read and followed the [Contributor Guidelines](https://github.com/adriamontoto/object-mother-pattern/blob/master/CONTRIBUTING.md).
-- [ ] I have read and followed the [Code of Conduct](https://github.com/adriamontoto/object-mother-pattern/blob/master/CODE_OF_CONDUCT.md).
+- [ ] I have read and followed the [Contributor Guidelines](https://github.com/adriamontoto/object-mother-pattern/blob/master/.github/CONTRIBUTING.md).
+- [ ] I have read and followed the [Code of Conduct](https://github.com/adriamontoto/object-mother-pattern/blob/master/.github/CODE_OF_CONDUCT.md).
 - [ ] My pull requests and commits follow the [Conventional Commits](https://www.conventionalcommits.org) and [Conventional Comments](https://conventionalcomments.org) guidelines.
 - [ ] My code follows the coding guidelines of the project ([PEP 8](https://peps.python.org/pep-0008), [PEP 257](https://peps.python.org/pep-0257), ...).
 - [ ] My changes generate no new warnings (execution, linter, formatter, ...).

@@ -3,27 +3,25 @@ name: Format Pipeline
 on:
   push:
     branches: [master]
-  pull_request:
-    branches: [master]
-    types: [opened, synchronize]
-  schedule:
-    - cron: '0 0 * * *' # Every day at 00:00 UTC
-  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: write
 
 jobs:
   format:
+    name: Format Pipeline - Python ${{ matrix.python-version }} on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 5
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
         python-version: [3.13]
 
-    name: Format Pipeline - Python ${{ matrix.python-version }} on ${{ matrix.os }}
-    timeout-minutes: 5
     steps:
       - name: 📥 Checkout the repository
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
@@ -48,10 +46,33 @@ jobs:
       - name: 🏃 Run Formatter
         run: make format CI=true VERBOSE=true
 
+      - name: Detect changed files
+        id: changed
+        run: |
+          if [[ -n "$(git status --porcelain)" ]]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: 🔐 Import SSH Key
+        if: steps.changed.outputs.changed == 'true'
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          echo '${{ secrets.SSH_SIGNING_KEY }}' > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+
+      - name: ⚙️ Configure Git
+        if: steps.changed.outputs.changed == 'true'
+        run: |
+          git config --global user.name ${{ vars.GIT_COMMITTER_NAME }}
+          git config --global user.email ${{ vars.GIT_COMMITTER_EMAIL }}
+          git config --global gpg.format ssh
+          git config --global user.signingkey ~/.ssh/id_ed25519
+          git config --global commit.gpgsign true
+
       - name: 📤 Commit & Push Changes
-        uses: EndBug/add-and-commit@a94899bca583c204427a224a7af87c02f9b325d5
-        with:
-          add: .
-          message: '🔨 refactor: run automatic formatter'
-          commit: --signoff
-          default_author: github_actions
+        if: steps.changed.outputs.changed == 'true'
+        run: |
+          git add .
+          git commit -m "refactor: run automatic formatter" --signoff
+          git push

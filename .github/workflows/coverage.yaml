@@ -5,21 +5,25 @@ on:
     workflows: [Test Pipeline]
     types: [completed]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
 permissions:
   statuses: write
 
 jobs:
   smokeshow:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    name: Smokeshow Pipeline
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 5
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
         python-version: [3.13]
 
-    name: Smokeshow Pipeline
-    timeout-minutes: 5
     steps:
       - name: 📥 Checkout the repository
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683

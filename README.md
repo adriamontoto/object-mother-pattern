@@ -223,7 +223,7 @@ git commit -m "feat: your feature description"
 git push origin feature/your-feature-name
 ```
 
-**9. Create a Pull Request:** Navigate to the original repository and create a pull request from your fork, using the template provided in the repository.
+**9. Create a Pull Request:** Navigate to the original repository and create a pull request from your fork, using the [template provided in the repository](https://github.com/adriamontoto/object-mother-pattern/blob/master/.github/PULL_REQUEST_TEMPLATE.md).
 
 **10. Wait for Review:** Your pull request will be reviewed by the maintainers. Make any necessary changes based on their feedback.
 

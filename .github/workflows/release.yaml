@@ -1,0 +1,46 @@
+name: Release Pipeline
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: release-pipeline
+  cancel-in-progress: true
+
+jobs:
+  release:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+
+    timeout-minutes: 5
+    steps:
+      - name: 📥 Checkout the repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          fetch-depth: 0
+
+      - name: 🔖 Semantic Release
+        uses: python-semantic-release/python-semantic-release@0dc72ac9058a62054a45f6344c83a423d7f906a8
+        with:
+          build: false
+          push: true
+          changelog: true
+          commit: true
+          tag: true
+          vcs_release: true
+          config_file: pyproject.toml
+          git_committer_email: ${{ vars.GIT_COMMITTER_EMAIL }}
+          git_committer_name: ${{ vars.GIT_COMMITTER_NAME }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          ssh_public_signing_key: ${{ vars.SSH_PUBLIC_SIGNING_KEY }}
+          ssh_private_signing_key: ${{ secrets.SSH_PRIVATE_SIGNING_KEY }}

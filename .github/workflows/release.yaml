@@ -30,7 +30,7 @@ jobs:
           fetch-depth: 0
 
       - name: 🔖 Semantic Release
-        uses: python-semantic-release/python-semantic-release@0dc72ac9058a62054a45f6344c83a423d7f906a8
+        uses: python-semantic-release/python-semantic-release@1a324000f2251a9e722e77b128bf72712653813f
         with:
           build: false
           push: true

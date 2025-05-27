@@ -1,8 +1,8 @@
-# Contributor Code of Conduct
+# 🧭 Contributor Code of Conduct
 
-In the interest of fostering an open and welcoming environment, we pledge to make participation in **Object Mother Pattern** package a harassment-free experience for everyone, regardless of age, body size, disability, ethnicity, gender identity or expression, level of experience, nationality, personal appearance, race, religion, or sexual identity and orientation.
+In the interest of fostering an open and welcoming environment, we pledge to make participation in **⚒️ Object Mother Pattern** package a harassment-free experience for everyone, regardless of age, body size, disability, ethnicity, gender identity or expression, level of experience, nationality, personal appearance, race, religion, or sexual identity and orientation.
 
-## 🧭 Our Standards
+## 📑 Our Standards
 
 Examples of behavior that contributes to creating a positive environment include:
 
@@ -32,3 +32,5 @@ This Code of Conduct applies within all project spaces, GitHub issues, pull requ
 ## 📜 Attribution
 
 This Code of Conduct is adapted from the [Contributor Covenant](https://www.contributor-covenant.org), version 2.1.
+
+_Thank you for helping make **⚒️ Object Mother Pattern** package a harassment-free experience for everyone! 🌟_

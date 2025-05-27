@@ -1,6 +1,6 @@
 # 🔐 Security Policy
 
-Thank you for helping keep **Object Mother Pattern** package and its users safe.
+Thank you for helping keep **⚒️ Object Mother Pattern** package and its users safe.
 We take security issues seriously and appreciate responsible disclosures.
 
 ## 📣 Reporting a Vulnerability
@@ -39,4 +39,4 @@ We kindly ask you to:
 
 We are committed to keeping this project and its users safe and will strive to resolve all legitimate reports swiftly and transparently.
 
-_Thank you for keeping the community secure!_ 🔐
+_Thank you for keeping the **⚒️ Object Mother Pattern** package community secure!_ 🔐

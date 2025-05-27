@@ -4,9 +4,9 @@ First off, **thank you** for wanting to improve **⚒️ Object Mother Pattern**
 
 ## 🏃🏻‍➡️ Before You Start
 
-1. **Be kind, inclusive, and patient**: we follow our [🧭 Code of Conduct](https://github.com/adriamontoto/object-mother-pattern/blob/master/.github/CODE_OF_CONDUCT.md).
+1. **Be kind, inclusive, and patient**: we follow our [`🧭 Code of Conduct`](https://github.com/adriamontoto/object-mother-pattern/blob/master/.github/CODE_OF_CONDUCT.md).
 2. **Search first**: check for existing [issues](https://github.com/adriamontoto/object-mother-pattern/issues) before opening a new one.
-3. **Security issues**: report privately via our [🔐 Security Policy](https://github.com/adriamontoto/object-mother-pattern/blob/master/.github/SECURITY.md); **do not** raise a public issue for vulnerabilities.
+3. **Security issues**: report privately via our [`🔐 Security Policy`](https://github.com/adriamontoto/object-mother-pattern/blob/master/.github/SECURITY.md); **do not** raise a public issue for vulnerabilities.
 
 ## 🚀 Quick-Start Workflow
 
@@ -57,8 +57,10 @@ git commit -m "feat(primitives): implement IntegerMother min/max validation" -S 
 git push -u origin feat/<branch-name>
 ```
 
-9. **Open a Pull Request**: Open a pull request against the `master` branch and fill out our [pull request template](https://github.com/adriamontoto/object-mother-pattern/blob/master/.github/pull_request_template.md).
+9. **Open a Pull Request**: Open a pull request against the `master` branch and fill out our [`pull request template`](https://github.com/adriamontoto/object-mother-pattern/blob/master/.github/pull_request_template.md).
    > More information about our pull request guidelines and feedback can be found in the [✍️ Pull Request Guidelines](#pull-request-guidelines) section.
+
+<a name="commit-message-guidelines"></a>
 
 ## ✍️ Commit Message Guidelines
 
@@ -83,11 +85,13 @@ This repository follows **[Conventional Commits](https://www.conventionalcommits
 - **Body (optional)**: Explain what and why vs. how. Reference issues if relevant.
 - **Breaking Changes**: Append `!` to the commit type or start the body with `BREAKING CHANGE:` if the commit introduces an API or behavioral change (major release).
 
+<a name="pull-request-guidelines"></a>
+
 ## ✍️ Pull Request Guidelines
 
 > Only code owners are allowed to merge a pull request.
 
-- Use our [pull request template](https://github.com/adriamontoto/object-mother-pattern/blob/master/.github/pull_request_template.md).
+- Use our [`pull request template`](https://github.com/adriamontoto/object-mother-pattern/blob/master/.github/pull_request_template.md).
 - **Keep PRs Focused**: Submit one logical change per pull request. Avoid bundling unrelated changes together.
 - **Descriptive Titles and Summaries**: Use clear, descriptive PR titles and fill out all sections of the PR template, especially the motivation and context.
 - **Reference Issues**: Link related issues by number (e.g., `Closes #123`) to enable automatic closing and better tracking.
@@ -109,11 +113,13 @@ We follow [Conventional Comments](https://conventionalcomments.org) to keep revi
 - **Stay constructive & courteous**: focus on the code, not the coder.
 - **Offer alternatives when pointing out issues**.
 
+<a name="tooling"></a>
+
 ## 🛠️ Tooling
 
 > All default project commands require **GNU Make** and are intended to be run on a **Linux system**.
 
-The project provides a [Makefile](https://github.com/adriamontoto/object-mother-pattern/blob/master/Makefile) with some helpful commands, this commands must be run from the root of the project. For more details on each command, run `make help`.
+The project provides a [`Makefile`](https://github.com/adriamontoto/object-mother-pattern/blob/master/Makefile) with some helpful commands, this commands must be run from the root of the project. For more details on each command, run `make help`.
 
 - **Environment Setup:** Run `make setup` to create a virtual environment, install all dependencies (development + production), and install pre-commit hooks.
 - **Install Development Dependencies:** Run `make install-dev` to install all development dependencies and production dependencies.

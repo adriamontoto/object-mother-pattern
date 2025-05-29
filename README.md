@@ -3,13 +3,10 @@
 # ⚒️ Object Mother Pattern
 
 <p align="center">
-    <a href="https://github.com/adriamontoto/object-mother-pattern/actions/workflows/test.yaml?event=push&branch=master" target="_blank">
-        <img src="https://github.com/adriamontoto/object-mother-pattern/actions/workflows/test.yaml/badge.svg?event=push&branch=master" alt="Test Pipeline">
+    <a href="https://github.com/adriamontoto/object-mother-pattern/actions/workflows/ci.yaml?event=push&branch=master" target="_blank">
+        <img src="https://github.com/adriamontoto/object-mother-pattern/actions/workflows/ci.yaml/badge.svg?event=push&branch=master" alt="CI Pipeline">
     </a>
-    <a href="https://github.com/adriamontoto/object-mother-pattern/actions/workflows/lint.yaml?event=push&branch=master" target="_blank">
-        <img src="https://github.com/adriamontoto/object-mother-pattern/actions/workflows/lint.yaml/badge.svg?event=push&branch=master" alt="Lint Pipeline">
-    </a>
-        <a href="https://coverage-badge.samuelcolvin.workers.dev/redirect/adriamontoto/object-mother-pattern" target="_blank">
+    <a href="https://coverage-badge.samuelcolvin.workers.dev/redirect/adriamontoto/object-mother-pattern" target="_blank">
         <img src="https://coverage-badge.samuelcolvin.workers.dev/adriamontoto/object-mother-pattern.svg" alt="Coverage Pipeline">
     </a>
     <a href="https://pypi.org/project/object-mother-pattern" target="_blank">

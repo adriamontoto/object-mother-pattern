@@ -89,7 +89,7 @@ lint: # It automatically lints code
 	mypy_exit=0; \
 	ruff_exit=0; \
 	$(PYTHON_BIN) -m mypy $(FULL_SOURCES) --txt-report . --config-file $(CONFIGURATION_FILE) || mypy_exit=$$?; \
-	$(PYTHON_BIN) -m ruff check $(FULL_SOURCES) || ruff_exit=$$?; \
+	$(PYTHON_BIN) -m ruff check $(FULL_SOURCES) --config $(CONFIGURATION_FILE) || ruff_exit=$$?; \
 	exit $$(( mypy_exit || ruff_exit ))
 
  

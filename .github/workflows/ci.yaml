@@ -39,16 +39,7 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - id: cache
-        name: 📦 Create cache
-        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684
-        with:
-          path: ${{ env.pythonLocation }}
-          key: ${{ matrix.os }}-python-${{ matrix.python-version }}-${{ hashFiles('pyproject.toml', 'requirements*') }}
-          restore-keys: ${{ matrix.os }}-python-${{ matrix.python-version }}-
-
       - name: 📦 Install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
         run: make install-dev CI=true VERBOSE=true
 
       - name: 📂 Create coverage directory
@@ -92,16 +83,7 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - id: cache
-        name: 📦 Create cache
-        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684
-        with:
-          path: ${{ env.pythonLocation }}
-          key: ${{ matrix.os }}-python-${{ matrix.python-version }}-${{ hashFiles('pyproject.toml', 'requirements*') }}
-          restore-keys: ${{ matrix.os }}-python-${{ matrix.python-version }}-
-
       - name: 📦 Install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
         run: make install-dev CI=true VERBOSE=true
 
       - name: 📥 Download coverage files
@@ -150,16 +132,7 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - id: cache
-        name: 📦 Create cache
-        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684
-        with:
-          path: ${{ env.pythonLocation }}
-          key: ${{ matrix.os }}-python-${{ matrix.python-version }}-${{ hashFiles('pyproject.toml', 'requirements*') }}
-          restore-keys: ${{ matrix.os }}-python-${{ matrix.python-version }}-
-
       - name: 📦 Install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
         run: make install-dev CI=true VERBOSE=true
 
       - name: 📥 Download coverage files
@@ -200,16 +173,7 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - id: cache
-        name: 📦 Create cache
-        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684
-        with:
-          path: ${{ env.pythonLocation }}
-          key: ${{ matrix.os }}-python-${{ matrix.python-version }}-${{ hashFiles('pyproject.toml', 'requirements*') }}
-          restore-keys: ${{ matrix.os }}-python-${{ matrix.python-version }}-
-
       - name: 📦 Install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
         run: make install-dev CI=true VERBOSE=true
 
       - name: 🏃 Run Linter
@@ -338,16 +302,7 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - id: cache
-        name: 📦 Create cache
-        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684
-        with:
-          path: ${{ env.pythonLocation }}
-          key: ${{ matrix.os }}-python-${{ matrix.python-version }}-${{ hashFiles('pyproject.toml', 'requirements*') }}
-          restore-keys: ${{ matrix.os }}-python-${{ matrix.python-version }}-
-
       - name: 📦 Install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
         run: make install-dev CI=true VERBOSE=true
 
       - name: 🛠️ Build distribution

@@ -175,6 +175,7 @@ enable_error_code = [
 
 [tool.semantic_release]
 allow_zero_version = true
+build_command = 'make build CI=true VERBOSE=true'
 commit_message = 'bump: new version {version} released'
 commit_parser = 'conventional'
 major_on_zero = true

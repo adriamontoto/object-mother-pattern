@@ -126,6 +126,19 @@ build: # It builds the project
 	@echo -e "\n✅ Project built correctly.\n"
 
 
+.PHONY: audit
+audit: # It audits dependencies and source code
+	@echo -e "\n⌛ Running security audit...\n"
+
+ifeq ($(CI), true)
+	@$(PYTHON_BIN) -m pip_audit --progress-spinner off --requirement requirements_dev.txt
+else
+	@$(PYTHON_BIN) -m pip_audit --progress-spinner off --requirement requirements_dev.txt
+endif
+
+	@echo -e "\n✅ Security audit completed correctly.\n"
+
+
 .PHONY: clean
 clean: # It cleans up the project, removing the virtual environment and some files
 	@echo -e "\n⌛ Cleaning up the project...\n"

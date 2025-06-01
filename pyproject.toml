@@ -51,6 +51,7 @@ tests = [
     'mypy[reports]>=1.0.0',
     'pre-commit>=3.0.0',
     'build>=1.2.2',
+    'pip-audit>=2.9.0',
     'types-python-dateutil>=2.9.0.20241206',
 ]
 

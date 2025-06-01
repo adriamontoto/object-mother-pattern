@@ -2,3 +2,4 @@
 
 Faker>=29.0.0  # https://faker.readthedocs.io/en/master
 python-dateutil>=2.9.0  # https://dateutil.readthedocs.io/en/stable
+requests==2.19.1

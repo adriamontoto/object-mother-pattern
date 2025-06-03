@@ -32,20 +32,20 @@ class BooleanMother(BaseMother[bool]):
 
     @classmethod
     @override
-    def create(cls, *, value: bool | None = None, probabilty_true: float = 0.5) -> bool:
+    def create(cls, *, value: bool | None = None, probability_true: float = 0.5) -> bool:
         """
         Create a boolean value. If a specific boolean value is provided via `value`, it is returned after validation.
-        Otherwise, a random boolean is generated with a probabiblity of returning True defined by `probabilty_true`.
+        Otherwise, a random boolean is generated with a probability of returning True defined by `probability_true`.
 
         Args:
             value (bool | None, optional): A specific boolean value to return. Defaults to None.
-            probabilty_true (float, optional): Probability of returning True. Must be >= 0.0 and <= 1.0. Defaults to
+            probability_true (float, optional): Probability of returning True. Must be >= 0.0 and <= 1.0. Defaults to
             0.5.
 
         Raises:
             TypeError: If the provided `value` is not a boolean.
-            TypeError: If `probabilty_true` is not a float.
-            ValueError: If `probabilty_true` is less than 0.0.
+            TypeError: If `probability_true` is not a float.
+            ValueError: If `probability_true` is less than 0.0.
             ValueError: If `probability_true` is more than 1.0.
 
         Returns:
@@ -66,17 +66,17 @@ class BooleanMother(BaseMother[bool]):
 
             return value
 
-        if type(probabilty_true) is not float:
-            raise TypeError('BooleanMother probabilty_true must be a float.')
+        if type(probability_true) is not float:
+            raise TypeError('BooleanMother probability_true must be a float.')
 
-        if probabilty_true < 0.0:
-            raise ValueError('BooleanMother probabilty_true must be greater than or equal to 0.0.')
+        if probability_true < 0.0:
+            raise ValueError('BooleanMother probability_true must be greater than or equal to 0.0.')
 
-        if probabilty_true > 1.0:
-            raise ValueError('BooleanMother probabilty_true must be less than or equal to 1.0.')
+        if probability_true > 1.0:
+            raise ValueError('BooleanMother probability_true must be less than or equal to 1.0.')
 
         return sample(
-            population=(True, False), k=1, counts=(int(probabilty_true * 100), int(100 - probabilty_true * 100))
+            population=(True, False), k=1, counts=(int(probability_true * 100), int(100 - probability_true * 100))
         )[0]  # noqa: S311
 
     @classmethod

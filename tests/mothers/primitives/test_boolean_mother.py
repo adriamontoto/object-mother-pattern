@@ -46,7 +46,7 @@ def test_boolean_mother_create_method_probability_true_hundred_percent() -> None
     """
     Check that BooleanMother create method returns True when the probability of True is 1.0.
     """
-    value = BooleanMother.create(probabilty_true=1.0)
+    value = BooleanMother.create(probability_true=1.0)
 
     assert value
 
@@ -56,7 +56,7 @@ def test_boolean_mother_create_method_probability_true_zero_percent() -> None:
     """
     Check that BooleanMother create method returns True when the probability of True is 0.0.
     """
-    value = BooleanMother.create(probabilty_true=0.0)
+    value = BooleanMother.create(probability_true=0.0)
 
     assert not value
 
@@ -68,9 +68,9 @@ def test_boolean_mother_create_method_invalid_probability_true_type() -> None:
     """
     with assert_raises(
         expected_exception=TypeError,
-        match='BooleanMother probabilty_true must be a float.',
+        match='BooleanMother probability_true must be a float.',
     ):
-        BooleanMother.create(probabilty_true=FloatMother.invalid_type())
+        BooleanMother.create(probability_true=FloatMother.invalid_type())
 
 
 @mark.unit_testing
@@ -80,9 +80,9 @@ def test_boolean_mother_create_method_negative_probability_true() -> None:
     """
     with assert_raises(
         expected_exception=ValueError,
-        match='BooleanMother probabilty_true must be greater than or equal to 0.0.',
+        match='BooleanMother probability_true must be greater than or equal to 0.0.',
     ):
-        BooleanMother.create(probabilty_true=nextafter(0.0, -inf))
+        BooleanMother.create(probability_true=nextafter(0.0, -inf))
 
 
 @mark.unit_testing
@@ -92,9 +92,9 @@ def test_boolean_mother_create_method_random_negative_probability_true() -> None
     """
     with assert_raises(
         expected_exception=ValueError,
-        match='BooleanMother probabilty_true must be greater than or equal to 0.0.',
+        match='BooleanMother probability_true must be greater than or equal to 0.0.',
     ):
-        BooleanMother.create(probabilty_true=FloatMother.create(max=nextafter(0.0, -inf)))
+        BooleanMother.create(probability_true=FloatMother.create(max=nextafter(0.0, -inf)))
 
 
 @mark.unit_testing
@@ -104,9 +104,9 @@ def test_boolean_mother_create_method_greater_than_one_probability_true() -> Non
     """
     with assert_raises(
         expected_exception=ValueError,
-        match='BooleanMother probabilty_true must be less than or equal to 1.0.',
+        match='BooleanMother probability_true must be less than or equal to 1.0.',
     ):
-        BooleanMother.create(probabilty_true=nextafter(1.0, inf))
+        BooleanMother.create(probability_true=nextafter(1.0, inf))
 
 
 @mark.unit_testing
@@ -116,9 +116,9 @@ def test_boolean_mother_create_method_random_positive_probability_true() -> None
     """
     with assert_raises(
         expected_exception=ValueError,
-        match='BooleanMother probabilty_true must be less than or equal to 1.0.',
+        match='BooleanMother probability_true must be less than or equal to 1.0.',
     ):
-        BooleanMother.create(probabilty_true=FloatMother.create(min=nextafter(1.0, inf), max=inf))
+        BooleanMother.create(probability_true=FloatMother.create(min=nextafter(1.0, inf), max=inf))
 
 
 @mark.unit_testing

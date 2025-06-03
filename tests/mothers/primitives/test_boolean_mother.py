@@ -54,7 +54,7 @@ def test_boolean_mother_create_method_probability_true_hundred_percent() -> None
 @mark.unit_testing
 def test_boolean_mother_create_method_probability_true_zero_percent() -> None:
     """
-    Check that BooleanMother create method returns True when the probability of True is 0.0.
+    Check that BooleanMother create method returns False when the probability of True is 0.0.
     """
     value = BooleanMother.create(probability_true=0.0)
 

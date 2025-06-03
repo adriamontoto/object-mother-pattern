@@ -9,7 +9,7 @@ if version_info >= (3, 12):
 else:
     from typing_extensions import override  # pragma: no cover
 
-from random import sample
+from random import uniform
 
 from object_mother_pattern.mothers.base_mother import BaseMother
 
@@ -75,9 +75,7 @@ class BooleanMother(BaseMother[bool]):
         if probability_true > 1.0:
             raise ValueError('BooleanMother probability_true must be less than or equal to 1.0.')
 
-        return sample(
-            population=(True, False), k=1, counts=(int(probability_true * 100), int(100 - probability_true * 100))
-        )[0]  # noqa: S311
+        return uniform(a=0.0, b=1.0) < probability_true  # noqa: S311
 
     @classmethod
     def true(cls) -> bool:

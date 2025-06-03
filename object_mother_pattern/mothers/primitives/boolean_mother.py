@@ -9,7 +9,7 @@ if version_info >= (3, 12):
 else:
     from typing_extensions import override  # pragma: no cover
 
-from random import choice
+from random import uniform
 
 from object_mother_pattern.mothers.base_mother import BaseMother
 
@@ -32,16 +32,21 @@ class BooleanMother(BaseMother[bool]):
 
     @classmethod
     @override
-    def create(cls, *, value: bool | None = None) -> bool:
+    def create(cls, *, value: bool | None = None, probability_true: float = 0.5) -> bool:
         """
         Create a boolean value. If a specific boolean value is provided via `value`, it is returned after validation.
-        Otherwise, a random boolean is generated.
+        Otherwise, a random boolean is generated with a probability of returning True defined by `probability_true`.
 
         Args:
             value (bool | None, optional): A specific boolean value to return. Defaults to None.
+            probability_true (float, optional): Probability of returning True. Must be >= 0.0 and <= 1.0. Defaults to
+            0.5.
 
         Raises:
             TypeError: If the provided `value` is not a boolean.
+            TypeError: If `probability_true` is not a float.
+            ValueError: If `probability_true` is less than 0.0.
+            ValueError: If `probability_true` is more than 1.0.
 
         Returns:
             bool: A randomly generated boolean value.
@@ -61,7 +66,16 @@ class BooleanMother(BaseMother[bool]):
 
             return value
 
-        return choice(seq=(True, False))  # noqa: S311
+        if type(probability_true) is not float:
+            raise TypeError('BooleanMother probability_true must be a float.')
+
+        if probability_true < 0.0:
+            raise ValueError('BooleanMother probability_true must be greater than or equal to 0.0.')
+
+        if probability_true > 1.0:
+            raise ValueError('BooleanMother probability_true must be less than or equal to 1.0.')
+
+        return uniform(a=0.0, b=1.0) < probability_true  # noqa: S311
 
     @classmethod
     def true(cls) -> bool:

@@ -9,7 +9,7 @@ if version_info >= (3, 12):
 else:
     from typing_extensions import override  # pragma: no cover
 
-from random import choice
+from random import sample
 
 from object_mother_pattern.mothers.base_mother import BaseMother
 
@@ -32,16 +32,21 @@ class BooleanMother(BaseMother[bool]):
 
     @classmethod
     @override
-    def create(cls, *, value: bool | None = None) -> bool:
+    def create(cls, *, value: bool | None = None, probabilty_true: float = 0.5) -> bool:
         """
         Create a boolean value. If a specific boolean value is provided via `value`, it is returned after validation.
-        Otherwise, a random boolean is generated.
+        Otherwise, a random boolean is generated with a probabiblity of returning True defined by `probabilty_true`.
 
         Args:
             value (bool | None, optional): A specific boolean value to return. Defaults to None.
+            probabilty_true (float, optional): Probability of returning True. Must be >= 0.0 and <= 1.0. Defaults to
+            0.5.
 
         Raises:
             TypeError: If the provided `value` is not a boolean.
+            TypeError: If `probabilty_true` is not a float.
+            ValueError: If `probabilty_true` is less than 0.0.
+            ValueError: If `probability_true` is more than 1.0.
 
         Returns:
             bool: A randomly generated boolean value.
@@ -61,7 +66,18 @@ class BooleanMother(BaseMother[bool]):
 
             return value
 
-        return choice(seq=(True, False))  # noqa: S311
+        if type(probabilty_true) is not float:
+            raise TypeError('BooleanMother probabilty_true must be a float.')
+
+        if probabilty_true < 0.0:
+            raise ValueError('BooleanMother probabilty_true must be greater than or equal to 0.0.')
+
+        if probabilty_true > 1.0:
+            raise ValueError('BooleanMother probabilty_true must be less than or equal to 1.0.')
+
+        return sample(
+            population=(True, False), k=1, counts=(int(probabilty_true * 100), int(100 - probabilty_true * 100))
+        )[0]  # noqa: S311
 
     @classmethod
     def true(cls) -> bool:

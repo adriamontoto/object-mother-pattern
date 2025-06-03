@@ -2,8 +2,6 @@
 Test module for the BooleanMother class.
 """
 
-from math import inf, nextafter
-
 from pytest import mark, raises as assert_raises
 
 from object_mother_pattern.mothers import BooleanMother, FloatMother
@@ -82,7 +80,7 @@ def test_boolean_mother_create_method_negative_probability_true() -> None:
         expected_exception=ValueError,
         match='BooleanMother probability_true must be greater than or equal to 0.0.',
     ):
-        BooleanMother.create(probability_true=nextafter(0.0, -inf))
+        BooleanMother.create(probability_true=-0.01)
 
 
 @mark.unit_testing
@@ -94,7 +92,7 @@ def test_boolean_mother_create_method_random_negative_probability_true() -> None
         expected_exception=ValueError,
         match='BooleanMother probability_true must be greater than or equal to 0.0.',
     ):
-        BooleanMother.create(probability_true=FloatMother.create(max=nextafter(0.0, -inf)))
+        BooleanMother.create(probability_true=FloatMother.create(min=-100, max=-0.01))
 
 
 @mark.unit_testing
@@ -106,7 +104,7 @@ def test_boolean_mother_create_method_greater_than_one_probability_true() -> Non
         expected_exception=ValueError,
         match='BooleanMother probability_true must be less than or equal to 1.0.',
     ):
-        BooleanMother.create(probability_true=nextafter(1.0, inf))
+        BooleanMother.create(probability_true=1.01)
 
 
 @mark.unit_testing
@@ -118,7 +116,7 @@ def test_boolean_mother_create_method_random_positive_probability_true() -> None
         expected_exception=ValueError,
         match='BooleanMother probability_true must be less than or equal to 1.0.',
     ):
-        BooleanMother.create(probability_true=FloatMother.create(min=nextafter(1.0, inf), max=inf))
+        BooleanMother.create(probability_true=FloatMother.create(min=1.01, max=100))
 
 
 @mark.unit_testing

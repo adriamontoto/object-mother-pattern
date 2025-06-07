@@ -2,6 +2,23 @@
 
 <!-- version list -->
 
+## v0.2.0 (2025-06-07)
+
+### 🐛 Bug Fixes
+
+- Remove build when creating a new version
+  ([`8e3a17b`](https://github.com/adriamontoto/object-mother-pattern/commit/8e3a17bdeaf3b8c4c9fccae92fafeaa338fc8a7d))
+
+- Remove nextafter function and inf
+  ([`24a4f52`](https://github.com/adriamontoto/object-mother-pattern/commit/24a4f52103296a6a0132d7a9b340a139100deaf7))
+
+### ✨ Features
+
+- Implement adjustable probability of true boolean creation
+  ([#49](https://github.com/adriamontoto/object-mother-pattern/pull/49),
+  [`04e54a0`](https://github.com/adriamontoto/object-mother-pattern/commit/04e54a0091a0eb930709a2d190614c74ee6f3d96))
+
+
 ## v0.1.1 (2025-05-25)
 
 ### 🐛 Bug Fixes

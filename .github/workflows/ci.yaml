@@ -483,7 +483,7 @@ jobs:
         id: released
         uses: python-semantic-release/python-semantic-release@0dc72ac9058a62054a45f6344c83a423d7f906a8 # v10.0.2
         with:
-          build: true
+          build: false
           push: true
           changelog: true
           commit: true
@@ -513,7 +513,7 @@ jobs:
 
     environment:
       name: pypi
-      url: https://pypi.org/p/object-mother-pattern
+      url: https://pypi.org/p/object-mother-pattern/
 
     steps:
       - name: 🛡️ Harden runner

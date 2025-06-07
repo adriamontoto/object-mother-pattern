@@ -95,12 +95,13 @@ def test_string_mother_create_method_min_length_negative_value() -> None:
 
 
 @mark.unit_testing
-def test_string_mother_create_method_invalid_min_length_value() -> None:
+def test_string_mother_create_method_invalid_min_length_random_negative_value() -> None:
     """
     Check that StringMother create method raises a ValueError when the provided min_length is negative.
     """
     with assert_raises(
-        expected_exception=ValueError, match='StringMother min_length must be greater than or equal to 0.'
+        expected_exception=ValueError,
+        match='StringMother min_length must be greater than or equal to 0.',
     ):
         StringMother.create(min_length=IntegerMother.negative())
 
@@ -144,7 +145,7 @@ def test_string_mother_create_method_max_length_negative_value() -> None:
 
 
 @mark.unit_testing
-def test_string_mother_create_method_invalid_max_length_value() -> None:
+def test_string_mother_create_method_max_random_length_value() -> None:
     """
     Check that StringMother create method raises a ValueError when the provided max_length is negative.
     """

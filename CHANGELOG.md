@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v0.3.0 (2025-06-07)
+
+### ✨ Features
+
+- Implement text mother ([#52](https://github.com/adriamontoto/object-mother-pattern/pull/52),
+  [`9ddf1f4`](https://github.com/adriamontoto/object-mother-pattern/commit/9ddf1f48150c97dedc4af2c6b2da4d2863f88f07))
+
+
 ## v0.2.0 (2025-06-07)
 
 ### 🐛 Bug Fixes

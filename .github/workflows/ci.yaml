@@ -343,14 +343,6 @@ jobs:
       - name: 🏃 Run Linter
         run: make lint CI=true VERBOSE=true
 
-      - name: 🫙 Store type coverage
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
-        if: always() && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
-        with:
-          name: type_coverage_report_${{ matrix.os }}_${{ matrix.python-version }}
-          path: index.txt
-          retention-days: 10
-
   analyze:
     name: Code Quality Workflow - ${{ matrix.language }} on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}

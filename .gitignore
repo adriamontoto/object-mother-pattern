@@ -1,6 +1,5 @@
 # linting files
 .coverage
-index.txt
 
 # cache files/folders
 **cache**

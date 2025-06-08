@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v0.3.2 (2025-06-08)
+
+### 📦 Build System
+
+- Use uv tool to create venv and install dependencies
+  ([`e87e725`](https://github.com/adriamontoto/object-mother-pattern/commit/e87e725b2dceacb1fd2fe07ae02117c9d53fc1b9))
+
+
 ## v0.3.1 (2025-06-08)
 
 ### 📦 Build System

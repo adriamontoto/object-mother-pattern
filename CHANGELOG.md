@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v0.3.3 (2025-06-08)
+
+### 📦 Build System
+
+- Remove tests from the build process
+  ([`57aa91a`](https://github.com/adriamontoto/object-mother-pattern/commit/57aa91a059f90245223c24b6395a19693132e807))
+
+
 ## v0.3.2 (2025-06-08)
 
 ### 📦 Build System

@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v0.3.1 (2025-06-08)
+
+### 📦 Build System
+
+- Remove requirements files to only use pyproject
+  ([`fc4f877`](https://github.com/adriamontoto/object-mother-pattern/commit/fc4f877f12f5526ed65f88715d701db0eae88bf9))
+
+
 ## v0.3.0 (2025-06-07)
 
 ### ✨ Features

@@ -8,7 +8,7 @@ CI ?= false
 VERBOSE ?= false
 PYTHON_VERSION ?= 3.13
 PYTHON_VIRTUAL_ENVIRONMENT ?= .venv
-
+GROUP ?= all
 
 ifeq ($(CI), true)
     PYTHON_BIN = python
@@ -35,6 +35,7 @@ help: # It displays this help message
 	@printf "  %-40s %s\n" "CI=$(CI)"                       	  "Indicates if the script is running in a CI environment (true/false)"
 	@printf "  %-40s %s\n" "PYTHON_VERSION=$(PYTHON_VERSION)"     "Used python interpreter for creating the virtual environment"
 	@printf "  %-40s %s\n" "PYTHON_VIRTUAL_ENVIRONMENT=$(PYTHON_VIRTUAL_ENVIRONMENT)" "Name of the virtual environment folder"
+	@printf "  %-40s %s\n" "GROUP=$(GROUP)"                       "Group of dependencies to install (all, audit, coverage, format, lint, release, test, types)"
 	@printf "\n"
 
 
@@ -44,33 +45,21 @@ setup: # It setups the project, creates the virtual environment and installs the
 
 	$(call quiet, python$(PYTHON_VERSION) -m venv $(PYTHON_VIRTUAL_ENVIRONMENT))
 	$(call quiet, $(PYTHON_BIN) -m pip install --upgrade pip)
-	$(call quiet, make install-dev)
+	$(call quiet, make install GROUP=$(GROUP))
+	$(call quiet, make install GROUP=develop)
 	$(call quiet, $(PYTHON_BIN) -m pre_commit install --hook-type pre-commit --hook-type commit-msg)
 
 	@echo -e "\n✅ Run 'source $(PYTHON_VIRTUAL_ENVIRONMENT)/bin/activate' to activate the virtual environment.\n"
 
 
-.PHONY: install-dev
-install-dev: # It installs development dependencies
-	@echo -e "\n⌛ Installing development dependencies...\n"
-
-	$(call quiet, $(PYTHON_BIN) -m pip install --requirement requirements_dev.txt)
-
-	@echo -e "\n✅ Development dependencies installed correctly.\n"
-
-
 .PHONY: install
-install: # An alias for 'make install-dev'
-	@$(MAKE) --no-print-directory install-dev
+install: # Installs the project dependencies, use the GROUP variable to install only a specific group of dependencies
+	@echo -e "\n⌛ Installing dependencies...\n"
 
+	$(call quiet, $(PYTHON_BIN) -m pip install .)
+	$(call quiet, $(PYTHON_BIN) -m pip install --group $(GROUP))
 
-.PHONY: install-prod
-install-prod: # It installs production dependencies
-	@echo -e "\n⌛ Installing production dependencies...\n"
-
-	$(call quiet, $(PYTHON_BIN) -m pip install --requirement requirements.txt)
-
-	@echo -e "\n✅ Production dependencies installed correctly.\n"
+	@echo -e "\n✅ Dependencies installed correctly.\n"
 
 
 .PHONY: format
@@ -131,9 +120,9 @@ audit: # It audits dependencies and source code
 	@echo -e "\n⌛ Running security audit...\n"
 
 ifeq ($(CI), true)
-	@$(PYTHON_BIN) -m pip_audit --progress-spinner off --requirement requirements_dev.txt
+	@$(PYTHON_BIN) -m pip_audit --progress-spinner off
 else
-	@$(PYTHON_BIN) -m pip_audit --progress-spinner off --requirement requirements_dev.txt
+	@$(PYTHON_BIN) -m pip_audit --progress-spinner off
 endif
 
 	@echo -e "\n✅ Security audit completed correctly.\n"

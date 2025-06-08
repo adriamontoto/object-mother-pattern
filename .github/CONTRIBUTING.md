@@ -122,12 +122,11 @@ We follow [Conventional Comments](https://conventionalcomments.org) to keep revi
 The project provides a [`Makefile`](https://github.com/adriamontoto/object-mother-pattern/blob/master/Makefile) with some helpful commands, this commands must be run from the root of the project. For more details on each command, run `make help`.
 
 - **Environment Setup:** Run `make setup` to create a virtual environment, install all dependencies (development + production), and install pre-commit hooks.
-- **Install Development Dependencies:** Run `make install-dev` to install all development dependencies and production dependencies.
-- **Install Production Dependencies:** Run `make install-prod` to install only production dependencies.
+- **Install Dependencies:** Run `make install` to install all dependencies (development + production), use the `GROUP` variable to install only a specific group of dependencies (all, audit, coverage, format, lint, release, test, types).
 - **Code Formatting:** Run `make format` to automatically format code using Ruff ([PEP 8](https://peps.python.org/pep-0008) and [PEP 257](https://peps.python.org/pep-0257) compliance), most style issues are auto-corrected.
 - **Linting:** Run `make lint` to check code quality using Ruff and mypy for static analysis and type checking.
 - **Testing:** Run `make test` to execute all tests with pytest.
 - **Coverage:** Run `make coverage` to generate a test coverage report using pytest-cov.
-- **Environment cleanup:** Run `make clean` to remove the virtual environment, caches, and all generated files.
+- **Environment Cleanup:** Run `make clean` to remove the virtual environment, caches, and all generated files.
 
 _Thank you for helping make **⚒️ Object Mother Pattern** package awesome! 🌟_

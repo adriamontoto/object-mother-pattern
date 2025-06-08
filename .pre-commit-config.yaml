@@ -46,6 +46,7 @@ repos:
     hooks:
       - id: gitleaks
         name: 🔍 Secrets Checker
+        entry: gitleaks detect --no-git --redact --verbose
         stages:
           - pre-commit
 

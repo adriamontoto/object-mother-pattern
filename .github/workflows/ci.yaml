@@ -431,12 +431,7 @@ jobs:
         run: make install GROUP=develop CI=true VERBOSE=true
 
       - name: 🏃 Run secrets scanner
-        uses: gitleaks/gitleaks-action@ff98106e4c7b2bc287b24eaf42907196329070c7 # v2.3.9
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITLEAKS_ENABLE_COMMENTS: true
-          GITLEAKS_ENABLE_SUMMARY: true
-          GITLEAKS_ENABLE_UPLOAD_ARTIFACT: true
+        run: make secrets CI=true VERBOSE=true
 
   audit:
     name: Audit Workflow - Python ${{ matrix.python-version }} on ${{ matrix.os }}

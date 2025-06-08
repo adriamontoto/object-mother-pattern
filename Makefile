@@ -133,6 +133,15 @@ endif
 	@echo -e "\n✅ Security audit completed correctly.\n"
 
 
+.PHONY: secrets
+secrets: # It checks for secrets in the source code
+	@echo -e "\n⌛ Checking secrets...\n"
+
+	@$(PYTHON_BIN) -m pre_commit run gitleaks --all-files
+
+	@echo -e "\n✅ Secrets checked correctly.\n"
+
+
 .PHONY: clean
 clean: # It cleans up the project, removing the virtual environment and some files
 	@echo -e "\n⌛ Cleaning up the project...\n"

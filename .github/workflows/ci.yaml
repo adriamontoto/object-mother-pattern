@@ -8,7 +8,6 @@ on:
     types: [opened, reopened, synchronize, ready_for_review]
   schedule:
     - cron: '14 3 * * *' # Every day at 03:14 UTC
-  workflow_dispatch:
 
 permissions: {}
 

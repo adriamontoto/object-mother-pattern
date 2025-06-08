@@ -119,6 +119,8 @@ We follow [Conventional Comments](https://conventionalcomments.org) to keep revi
 
 > All default project commands require **GNU Make** and are intended to be run on a **Linux system**.
 
+> You must have **UV** installed to use the most of the default project commands.
+
 The project provides a [`Makefile`](https://github.com/adriamontoto/object-mother-pattern/blob/master/Makefile) with some helpful commands, this commands must be run from the root of the project. For more details on each command, run `make help`.
 
 - **Environment Setup:** Run `make setup` to create a virtual environment, install all dependencies (development + production), and install pre-commit hooks.

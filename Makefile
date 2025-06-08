@@ -8,6 +8,7 @@ CI ?= false
 VERBOSE ?= false
 PYTHON_VERSION ?= 3.13
 PYTHON_VIRTUAL_ENVIRONMENT ?= .venv
+UV_BIN ?= uv
 GROUP ?= all
 
 ifeq ($(CI), true)
@@ -43,8 +44,7 @@ help: # It displays this help message
 setup: # It setups the project, creates the virtual environment and installs the dependencies
 	@echo -e "\n⌛ Setting up the project...\n"
 
-	$(call quiet, python$(PYTHON_VERSION) -m venv $(PYTHON_VIRTUAL_ENVIRONMENT))
-	$(call quiet, $(PYTHON_BIN) -m pip install --upgrade pip)
+	$(call quiet, $(UV_BIN) venv $(PYTHON_VIRTUAL_ENVIRONMENT) --python $(PYTHON_VERSION))
 	$(call quiet, make install GROUP=$(GROUP))
 	$(call quiet, make install GROUP=develop)
 	$(call quiet, $(PYTHON_BIN) -m pre_commit install --hook-type pre-commit --hook-type commit-msg)
@@ -56,8 +56,13 @@ setup: # It setups the project, creates the virtual environment and installs the
 install: # Installs the project dependencies, use the GROUP variable to install only a specific group of dependencies
 	@echo -e "\n⌛ Installing dependencies...\n"
 
-	$(call quiet, $(PYTHON_BIN) -m pip install .)
-	$(call quiet, $(PYTHON_BIN) -m pip install --group $(GROUP))
+ifeq ($(CI), true)
+	$(call quiet, $(UV_BIN) pip install --system -r pyproject.toml)
+	$(call quiet, $(UV_BIN) pip install --system --group $(GROUP))
+else
+	$(call quiet, $(UV_BIN) pip install -r pyproject.toml)
+	$(call quiet, $(UV_BIN) pip install --group $(GROUP))
+endif
 
 	@echo -e "\n✅ Dependencies installed correctly.\n"
 
@@ -81,7 +86,7 @@ lint: # It automatically lints code
 	$(PYTHON_BIN) -m ruff check $(FULL_SOURCES) --config $(CONFIGURATION_FILE) || ruff_exit=$$?; \
 	exit $$(( mypy_exit || ruff_exit ))
 
- 
+
 .PHONY: test
 test: # It runs all tests
 	@echo -e "\n⌛ Running tests...\n"

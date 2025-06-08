@@ -71,7 +71,7 @@ endif
 format: # It automatically formats code
 	@echo -e "\n⌛ Formatting project code...\n"
 
-	@$(PYTHON_BIN) -m ruff check $(FULL_SOURCES) --fix-only --config $(CONFIGURATION_FILE)
+	@$(PYTHON_BIN) -m ruff check $(FULL_SOURCES) --config $(CONFIGURATION_FILE) --fix-only
 	@$(PYTHON_BIN) -m ruff format $(FULL_SOURCES) --config $(CONFIGURATION_FILE)
 
 
@@ -83,7 +83,7 @@ lint: # It automatically lints code
 	mypy_exit=0; \
 	ruff_exit=0; \
 	$(PYTHON_BIN) -m mypy $(FULL_SOURCES) --txt-report . --config-file $(CONFIGURATION_FILE) || mypy_exit=$$?; \
-	$(PYTHON_BIN) -m ruff check $(FULL_SOURCES) --config $(CONFIGURATION_FILE) || ruff_exit=$$?; \
+	$(PYTHON_BIN) -m ruff check $(FULL_SOURCES) --config $(CONFIGURATION_FILE) --no-fix || ruff_exit=$$?; \
 	exit $$(( mypy_exit || ruff_exit ))
 
 

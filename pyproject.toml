@@ -114,10 +114,10 @@ source = ['object_mother_pattern']
 
 
 [tool.ruff]
-fix = true
 indent-width = 4
 line-length = 120
 target-version = 'py313'
+output-format = 'grouped'
 
 [tool.ruff.format]
 docstring-code-format = true
@@ -128,19 +128,21 @@ skip-magic-trailing-comma = false
 
 [tool.ruff.lint]
 select = [
-    'F',   # pyflakes
-    'E',   # pycodestyle
-    'W',   # pycodestyle
-    'D',   # pydocstyle
-    'C90', # mccabe
-    'I',   # isort
-    'N',   # pep8-naming
-    'UP',  # pyupgrade
-    'B',   # flake8-bugbear
-    'C4',  # flake8-comprehensions
-    'DTZ', # flake8-datetimez
-    'SIM', # flake8-simplify
-    'RUF', # ruff
+    'F',    # pyflakes
+    'S',    # flake8-bandit
+    'B',    # flake8-bugbear
+    'DTZ',  # flake8-datetimez
+    'C4',   # flake8-comprehensions
+    'SIM',  # flake8-simplify
+    'I',    # isort
+    'C90',  # mccabe
+    'N',    # pep8-naming
+    'PERF', # perflint
+    'E',    # pycodestyle
+    'W',    # pycodestyle
+    'D',    # pydocstyle
+    'UP',   # pyupgrade
+    'RUF',  # ruff
 ]
 ignore = [
     'UP035',  # Checks for uses of deprecated imports based on the minimum supported Python version.

@@ -124,11 +124,7 @@ build: # It builds the project
 audit: # It audits dependencies and source code
 	@echo -e "\n⌛ Running security audit...\n"
 
-ifeq ($(CI), true)
 	@$(PYTHON_BIN) -m pip_audit --progress-spinner off
-else
-	@$(PYTHON_BIN) -m pip_audit --progress-spinner off
-endif
 
 	@echo -e "\n✅ Security audit completed correctly.\n"
 

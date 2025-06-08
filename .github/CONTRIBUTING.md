@@ -129,6 +129,8 @@ The project provides a [`Makefile`](https://github.com/adriamontoto/object-mothe
 - **Linting:** Run `make lint` to check code quality using Ruff and mypy for static analysis and type checking.
 - **Testing:** Run `make test` to execute all tests.
 - **Coverage:** Run `make coverage` to generate a test coverage report.
+- **Build:** Run `make build` to build the project.
+- **Audit:** Run `make audit` to audit dependencies for known vulnerabilities.
 - **Secrets Scanning:** Run `make secrets` to scan for secrets in the hole codebase.
 - **Environment Cleanup:** Run `make clean` to remove the virtual environment, caches, and all generated files.
 

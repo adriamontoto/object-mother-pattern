@@ -7,7 +7,7 @@ build-backend = 'hatchling.build'
 path = 'object_mother_pattern/__init__.py'
 
 [tool.hatch.build.targets.sdist]
-include = ['object_mother_pattern/', 'tests/']
+include = ['object_mother_pattern/']
 
 
 [project]

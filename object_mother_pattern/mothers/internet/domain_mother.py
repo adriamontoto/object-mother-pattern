@@ -341,7 +341,6 @@ class DomainMother(BaseMother[str]):
 
         total_noise = min(total_noise, len(legal_slots))
         number_of_hyphens = min(number_of_hyphens, total_noise)
-        number_of_numbers = total_noise - number_of_hyphens
 
         chosen_slots = sample(population=legal_slots, k=total_noise)  # noqa: S311
         hyphen_slots = set(sample(population=chosen_slots, k=number_of_hyphens)) if number_of_hyphens else set()

@@ -176,6 +176,28 @@ class DomainMother(BaseMother[str]):
         return domain
 
     @classmethod
+    def of_length(cls, *, length: int) -> str:
+        """
+        Create a random domain value of a specific length.
+
+        Args:
+            length (int): The length of the domain.
+
+        Returns:
+            str: A randomly generated domain value of the specified length.
+
+        Example:
+        ```python
+        from object_mother_pattern.mothers.internet import DomainMother
+
+        domain = DomainMother.of_length(length=16)
+        print(domain)
+        # >>> seen.dip.home.si
+        ```
+        """
+        return cls.create(min_length=length, max_length=length)
+
+    @classmethod
     def _generate_domain_format(  # noqa: C901
         cls,
         *,

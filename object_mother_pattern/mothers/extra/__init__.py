@@ -1,6 +1,3 @@
-from .text_mother import TextCase, TextMother
+from .text_mother import TextMother
 
-__all__ = (
-    'TextCase',
-    'TextMother',
-)
+__all__ = ('TextMother',)

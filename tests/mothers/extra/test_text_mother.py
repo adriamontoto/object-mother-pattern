@@ -5,7 +5,8 @@ Test module for the TextMother class.
 from pytest import mark, raises as assert_raises
 
 from object_mother_pattern.mothers import IntegerMother, StringMother
-from object_mother_pattern.mothers.extra import TextCase, TextMother
+from object_mother_pattern.mothers.extra import TextMother
+from object_mother_pattern.mothers.extra.text_mother import TextCase
 
 
 @mark.unit_testing

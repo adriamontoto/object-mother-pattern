@@ -14,9 +14,9 @@ def get_aws_cloud_regions() -> tuple[str, ...]:
     """
     with open(file='object_mother_pattern/mothers/internet/utils/aws_regions.txt') as file:
         lines = file.read().splitlines()
-        filtered_lines = tuple(line for line in lines if line.strip() and not line.strip().startswith('#'))
+        filtered_lines = tuple(line for line in lines if not line.startswith('#') and (_line := line.strip().lower()))
 
-        return filtered_lines
+    return filtered_lines
 
 
 @lru_cache(maxsize=1)
@@ -35,7 +35,7 @@ def get_tld_dict() -> dict[int, tuple[str, ...]]:
         lines = file.read().splitlines()
 
     temp: dict[int, list[str]] = {}
-    tlds = [line.strip().lower() for line in lines if not line.startswith('#')]
+    tlds = tuple(line for line in lines if not line.startswith('#') and (_line := line.strip().lower()))
     for tld in tlds:
         key = len(tld)
         temp.setdefault(key, []).append(tld)
@@ -59,7 +59,7 @@ def get_label_dict() -> dict[int, tuple[str, ...]]:
         lines = file.read().splitlines()
 
     temp: dict[int, list[str]] = {}
-    labels = [line.strip().lower() for line in lines if not line.startswith('#')]
+    labels = tuple(line for line in lines if not line.startswith('#') and (_line := line.strip().lower()))
     for label in labels:
         key = len(label)
         temp.setdefault(key, []).append(label)

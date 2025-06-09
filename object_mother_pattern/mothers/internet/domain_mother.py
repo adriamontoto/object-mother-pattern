@@ -2,8 +2,10 @@
 DomainMother module.
 """
 
+from enum import StrEnum, unique
 from random import choice, randint
 from sys import version_info
+from typing import assert_never
 
 if version_info >= (3, 12):
     from typing import override  # pragma: no cover
@@ -14,6 +16,17 @@ from object_mother_pattern.mothers import StringMother
 from object_mother_pattern.mothers.base_mother import BaseMother
 
 from .utils import get_label_dict, get_tld_dict
+
+
+@unique
+class DomainCase(StrEnum):
+    """
+    Type of Domain cases.
+    """
+
+    LOWERCASE = 'lowercase'
+    UPPERCASE = 'uppercase'
+    MIXEDCASE = 'mixedcase'
 
 
 class DomainMother(BaseMother[str]):
@@ -42,10 +55,13 @@ class DomainMother(BaseMother[str]):
         max_length: int = 30,
         min_labels: int = 2,
         max_labels: int = 4,
+        domain_case: DomainCase | None = None,
     ) -> str:
         """
-        Create a random domain value. If a specific domain value is provided via `value`, it is returned after validation. Otherwise, a random domain value is generated within the provided range of `min_labels` and
-        `max_labels` (both included).
+        Create a random domain value. If a specific domain value is provided via `value`, it is returned after
+        validation. Otherwise, a random domain value is generated within the provided range of `min_length` and
+        `max_length` (both included) and with the provided range of `min_labels` and `max_labels` (both included). If
+        `domain_case` is None, a random case is chosen from the available DomainCase options.
 
         Args:
             value (str | None, optional): Specific value to return. Defaults to None.
@@ -55,6 +71,7 @@ class DomainMother(BaseMother[str]):
             min_labels (int, optional): The minimum number of labels in the domain. Must be >= 2. Defaults to 2.
             max_labels (int, optional): The maximum number of labels in the domain. Must be <= 127 and >= `min_labels`.
             Defaults to 4.
+            domain_case (DomainCase | None, optional): The case of the domain. Defaults to None.
 
         Raises:
             TypeError: If `min_length` is not an integer.
@@ -68,6 +85,7 @@ class DomainMother(BaseMother[str]):
             ValueError: If `max_labels` is less than 2.
             ValueError: If `max_labels` is more than 127.
             ValueError: If `min_labels` is greater than `max_labels`.
+            TypeError: If `domain_case` is not a DomainCase.
             ValueError: If the total letters are not in the feasible range for given labels and constraints.
 
         Returns:
@@ -89,34 +107,40 @@ class DomainMother(BaseMother[str]):
             return value
 
         if type(min_length) is not int:
-            raise TypeError('min_length must be an integer.')
+            raise TypeError('DomainMother min_length must be an integer.')
 
         if type(max_length) is not int:
-            raise TypeError('max_length must be an integer.')
+            raise TypeError('DomainMother max_length must be an integer.')
 
         if type(min_labels) is not int:
-            raise TypeError('min_labels must be an integer.')
+            raise TypeError('DomainMother min_labels must be an integer.')
 
         if type(max_labels) is not int:
-            raise TypeError('max_labels must be an integer.')
+            raise TypeError('DomainMother max_labels must be an integer.')
 
         if min_length < 4:
-            raise ValueError('min_length must be at least 4.')
+            raise ValueError('DomainMother min_length must be at least 4.')
 
         if max_length > 253:
-            raise ValueError('max_length must be at most 253.')
+            raise ValueError('DomainMother max_length must be at most 253.')
 
         if min_length > max_length:
-            raise ValueError('min_length must be less than or equal to max_length.')
+            raise ValueError('DomainMother min_length must be less than or equal to max_length.')
 
         if min_labels < 2:
-            raise ValueError('min_labels must be at least 2.')
+            raise ValueError('DomainMother min_labels must be at least 2.')
 
         if max_labels > 127:
-            raise ValueError('max_labels must be at most 127.')
+            raise ValueError('DomainMother max_labels must be at most 127.')
 
         if min_labels > max_labels:
-            raise ValueError('min_labels must be less than or equal to max_labels.')
+            raise ValueError('DomainMother min_labels must be less than or equal to max_labels.')
+
+        if domain_case is None:
+            domain_case = DomainCase(value=choice(seq=tuple(DomainCase)))  # noqa: S311
+
+        if type(domain_case) is not DomainCase:
+            raise TypeError('DomainMother domain_case must be a DomainCase.')
 
         tld_domains = get_tld_dict()
         labels = get_label_dict()
@@ -135,6 +159,19 @@ class DomainMother(BaseMother[str]):
 
             except KeyError:
                 continue
+
+        match domain_case:
+            case DomainCase.LOWERCASE:
+                domain = domain.lower()
+
+            case DomainCase.UPPERCASE:
+                domain = domain.upper()
+
+            case DomainCase.MIXEDCASE:
+                domain = ''.join(choice(seq=(char.upper(), char.lower())) for char in domain)  # noqa: S311
+
+            case _:  # pragma: no cover
+                assert_never(domain_case)
 
         return domain
 

@@ -84,7 +84,28 @@ def update_tld_domains() -> None:
     add_updated_date_comment(file_path=path)
 
 
+def update_word_list() -> None:
+    """
+    Retrieve a list of 10000 words.
+
+    References:
+        Words: https://www.mit.edu/~ecprice/wordlist.10000
+    """
+    url = 'https://www.mit.edu/~ecprice/wordlist.10000'
+    with urlopen(url=url) as response:  # noqa: S310
+        lines = response.read().decode('utf-8').splitlines()
+
+    words = tuple(line.strip().lower() for line in lines if line)
+
+    path = 'object_mother_pattern/mothers/internet/utils/words.txt'
+    with open(file=path, mode='w', encoding='utf-8') as file:
+        file.writelines(f'{word}\n' for word in words)
+
+    add_updated_date_comment(file_path=path)
+
+
 if __name__ == '__main__':
     update_aws_cloud_regions()
     update_bip39_words()
     update_tld_domains()
+    update_word_list()

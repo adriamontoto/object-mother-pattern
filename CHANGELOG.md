@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v1.0.0 (2025-06-09)
+
+### ✨ Features
+
+- Unify cases between mothers ([#56](https://github.com/adriamontoto/object-mother-pattern/pull/56),
+  [`f5b58ff`](https://github.com/adriamontoto/object-mother-pattern/commit/f5b58ff0fe311907eeba7909b061509ed2e8bc76))
+
+
 ## v0.4.1 (2025-06-09)
 
 ### 🐛 Bug Fixes

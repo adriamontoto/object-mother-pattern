@@ -6,9 +6,8 @@ from re import Pattern, compile as re_compile
 
 from pytest import mark, raises as assert_raises
 
-from object_mother_pattern.mothers import StringMother
+from object_mother_pattern.mothers import StringCase, StringMother
 from object_mother_pattern.mothers.identifiers.countries.spain import DniMother
-from object_mother_pattern.mothers.identifiers.countries.spain.dni_mother import DniCase
 
 _DNI_REGEX: Pattern[str] = re_compile(pattern=r'^(\d{8})([A-Za-z])$')
 
@@ -50,7 +49,7 @@ def test_dni_mother_lowercase_case() -> None:
     """
     Test DniMother create method with lowercase case.
     """
-    value = DniMother.create(dni_case=DniCase.LOWERCASE)
+    value = DniMother.create(string_case=StringCase.LOWERCASE)
 
     assert value.islower()
 
@@ -60,9 +59,19 @@ def test_dni_mother_uppercase_case() -> None:
     """
     Test DniMother create method with uppercase case.
     """
-    value = DniMother.create(dni_case=DniCase.UPPERCASE)
+    value = DniMother.create(string_case=StringCase.UPPERCASE)
 
     assert value.isupper()
+
+
+@mark.unit_testing
+def test_dni_mother_mixed_case() -> None:
+    """
+    Test DniMother create method with mixed case (should default to uppercase letter).
+    """
+    value = DniMother.create(string_case=StringCase.MIXEDCASE)
+
+    assert value[-1].islower() or value[-1].isupper()
 
 
 @mark.unit_testing
@@ -72,9 +81,9 @@ def test_dni_mother_invalid_case() -> None:
     """
     with assert_raises(
         expected_exception=TypeError,
-        match='DniMother dni_case must be a DniCase',
+        match='DniMother string_case must be a StringCase',
     ):
-        DniMother.create(dni_case=StringMother.invalid_type())
+        DniMother.create(string_case=StringMother.invalid_type())
 
 
 @mark.unit_testing

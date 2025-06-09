@@ -4,9 +4,8 @@ Test module for the BtcWalletMother class.
 
 from pytest import mark, raises as assert_raises
 
-from object_mother_pattern.mothers import IntegerMother, StringMother
+from object_mother_pattern.mothers import IntegerMother, StringCase, StringMother
 from object_mother_pattern.mothers.money.cryptocurrencies import BtcWalletMother
-from object_mother_pattern.mothers.money.cryptocurrencies.btc_wallet_mother import BtcWalletCase
 
 
 @mark.unit_testing
@@ -102,7 +101,7 @@ def test_btc_wallet_mother_lowercase_case() -> None:
     """
     Test BtcWalletMother create method with lowercase case.
     """
-    value = BtcWalletMother.create(wallet_case=BtcWalletCase.LOWERCASE)
+    value = BtcWalletMother.create(string_case=StringCase.LOWERCASE)
 
     assert value.islower()
 
@@ -112,7 +111,7 @@ def test_btc_wallet_mother_uppercase_case() -> None:
     """
     Test BtcWalletMother create method with uppercase case.
     """
-    value = BtcWalletMother.create(wallet_case=BtcWalletCase.UPPERCASE)
+    value = BtcWalletMother.create(string_case=StringCase.UPPERCASE)
 
     assert value.isupper()
 
@@ -122,9 +121,9 @@ def test_btc_wallet_mother_mixed_case() -> None:
     """
     Test BtcWalletMother create method with mixed case.
     """
-    value = BtcWalletMother.create(wallet_case=BtcWalletCase.MIXEDCASE)
+    value = BtcWalletMother.create(string_case=StringCase.MIXEDCASE)
 
-    assert any(char.islower() or char.isupper() for char in value)
+    assert all(char.islower() or char.isupper() or char.isspace() for char in value)
 
 
 @mark.unit_testing
@@ -134,6 +133,6 @@ def test_btc_wallet_mother_invalid_case() -> None:
     """
     with assert_raises(
         expected_exception=TypeError,
-        match='BtcWalletMother wallet_case must be a BtcWalletCase.',
+        match='BtcWalletMother string_case must be a StringCase.',
     ):
-        BtcWalletMother.create(wallet_case=StringMother.invalid_type())
+        BtcWalletMother.create(string_case=StringMother.invalid_type())

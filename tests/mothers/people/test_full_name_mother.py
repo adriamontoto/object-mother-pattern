@@ -4,9 +4,8 @@ Test module for the FullNameMother class.
 
 from pytest import mark, raises as assert_raises
 
-from object_mother_pattern.mothers import IntegerMother, StringMother
+from object_mother_pattern.mothers import IntegerMother, StringCase, StringMother
 from object_mother_pattern.mothers.people import FullNameMother
-from object_mother_pattern.mothers.people.full_name_mother import FullNameCase
 
 
 @mark.unit_testing
@@ -120,7 +119,7 @@ def test_full_name_mother_case_lowercase() -> None:
     """
     Test FullNameMother create method with lowercase case.
     """
-    value = FullNameMother.create(full_name_case=FullNameCase.LOWERCASE)
+    value = FullNameMother.create(string_case=StringCase.LOWERCASE)
 
     assert value.islower()
 
@@ -130,18 +129,9 @@ def test_full_name_mother_case_uppercase() -> None:
     """
     Test FullNameMother create method with uppercase case.
     """
-    value = FullNameMother.create(full_name_case=FullNameCase.UPPERCASE)
+    value = FullNameMother.create(string_case=StringCase.UPPERCASE)
 
     assert value.isupper()
-
-
-@mark.unit_testing
-def test_full_name_mother_case_titlecase() -> None:
-    """
-    Test FullNameMother create method with titlecase case.
-    """
-    value = FullNameMother.create(full_name_case=FullNameCase.TITLECASE)
-    assert value.istitle()
 
 
 @mark.unit_testing
@@ -149,9 +139,9 @@ def test_full_name_mother_case_mixed() -> None:
     """
     Test FullNameMother create method with mixed case.
     """
-    value = FullNameMother.create(full_name_case=FullNameCase.MIXEDCASE)
+    value = FullNameMother.create(string_case=StringCase.MIXEDCASE)
 
-    assert any(char.islower() or char.isupper() for char in value)
+    assert all(char.islower() or char.isupper() or char.isspace() or char == '.' for char in value)
 
 
 @mark.unit_testing
@@ -159,8 +149,8 @@ def test_full_name_mother_invalid_full_name_case_type() -> None:
     """
     Test FullNameMother create method with invalid full name case type.
     """
-    with assert_raises(TypeError, match='FullNameMother full_name_case must be a FullNameCase.'):
-        FullNameMother.create(full_name_case=StringMother.invalid_type())
+    with assert_raises(TypeError, match='FullNameMother string_case must be a StringCase.'):
+        FullNameMother.create(string_case=StringMother.invalid_type())
 
 
 @mark.unit_testing

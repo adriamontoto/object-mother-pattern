@@ -4,9 +4,9 @@ Test module for the MacAddressMother class.
 
 from pytest import mark, raises as assert_raises
 
-from object_mother_pattern.mothers import StringMother
+from object_mother_pattern.mothers import StringCase, StringMother
 from object_mother_pattern.mothers.internet import MacAddressMother
-from object_mother_pattern.mothers.internet.mac_address_mother import MacAddressCase, MacAddressFormat
+from object_mother_pattern.mothers.internet.mac_address_mother import MacAddressFormat
 
 
 @mark.unit_testing
@@ -47,9 +47,10 @@ def test_mac_address_mother_lowercase_case() -> None:
     """
     Test MacAddressMother create method with lowercase case.
     """
-    value = MacAddressMother.create(mac_case=MacAddressCase.LOWERCASE)
+    value = MacAddressMother.create(string_case=StringCase.LOWERCASE)
 
-    assert value.islower() or value == '00:00:00:00:00:00'
+    value = ''.join(char for char in value if char not in (':', '-', ' ', '.', ' '))
+    assert value.islower() or value.isdigit() or value == '000000000000'
 
 
 @mark.unit_testing
@@ -57,9 +58,10 @@ def test_mac_address_mother_uppercase_case() -> None:
     """
     Test MacAddressMother create method with uppercase case.
     """
-    value = MacAddressMother.create(mac_case=MacAddressCase.UPPERCASE)
+    value = MacAddressMother.create(string_case=StringCase.UPPERCASE)
 
-    assert value.isupper() or value == '00:00:00:00:00:00'
+    value = ''.join(char for char in value if char not in (':', '-', ' ', '.', ' '))
+    assert value.isupper() or value.isdigit() or value == '000000000000'
 
 
 @mark.unit_testing
@@ -67,9 +69,10 @@ def test_mac_address_mother_mixed_case() -> None:
     """
     Test MacAddressMother create method with mixed case.
     """
-    value = MacAddressMother.create(mac_case=MacAddressCase.MIXEDCASE)
+    value = MacAddressMother.create(string_case=StringCase.MIXEDCASE)
 
-    assert any(char.islower() or char.isupper() for char in value) or value == '00:00:00:00:00:00'
+    value = ''.join(char for char in value if char not in (':', '-', ' ', '.', ' '))
+    assert all(char.islower() or char.isupper() or char.isdigit() for char in value) or value == '000000000000'
 
 
 @mark.unit_testing
@@ -79,9 +82,9 @@ def test_mac_address_mother_invalid_case() -> None:
     """
     with assert_raises(
         expected_exception=ValueError,
-        match='MacAddressMother mac_case must be a MacAddressCase.',
+        match='MacAddressMother string_case must be a StringCase.',
     ):
-        MacAddressMother.create(mac_case=StringMother.invalid_type())
+        MacAddressMother.create(string_case=StringMother.invalid_type())
 
 
 @mark.unit_testing
@@ -105,7 +108,8 @@ def test_mac_address_mother_universal_format() -> None:
 
     assert len(value) == 17
     assert value.count(':') == 5
-    assert all(char.isalnum() or char == ':' for char in value)
+    value = ''.join(char for char in value if char not in (':', '-', ' ', '.', ' '))
+    assert all(char.isalnum() for char in value)
 
 
 @mark.unit_testing
@@ -117,7 +121,8 @@ def test_mac_address_mother_windows_format() -> None:
 
     assert len(value) == 17
     assert value.count('-') == 5
-    assert all(char.isalnum() or char == '-' for char in value)
+    value = ''.join(char for char in value if char not in (':', '-', ' ', '.', ' '))
+    assert all(char.isalnum() for char in value)
 
 
 @mark.unit_testing
@@ -128,7 +133,8 @@ def test_mac_address_mother_cisco_format() -> None:
     value = MacAddressMother.create(mac_format=MacAddressFormat.CISCO)
 
     assert value.count('.') == 2
-    assert all(char.isalnum() or char == '.' for char in value)
+    value = ''.join(char for char in value if char not in (':', '-', ' ', '.', ' '))
+    assert all(char.isalnum() for char in value)
 
 
 @mark.unit_testing
@@ -140,7 +146,8 @@ def test_mac_address_mother_space_format() -> None:
 
     assert len(value) == 17
     assert value.count(' ') == 5
-    assert all(char.isalnum() or char == ' ' for char in value)
+    value = ''.join(char for char in value if char not in (':', '-', ' ', '.', ' '))
+    assert all(char.isalnum() for char in value)
 
 
 @mark.unit_testing
@@ -183,7 +190,8 @@ def test_mac_address_mother_lowercase_method() -> None:
     value = MacAddressMother.lowercase()
 
     assert type(value) is str
-    assert value.islower() or value == '00:00:00:00:00:00'
+    value = ''.join(char for char in value if char not in (':', '-', ' ', '.', ' '))
+    assert value.islower() or value.isdigit() or value == '000000000000'
 
 
 @mark.unit_testing
@@ -194,7 +202,8 @@ def test_mac_address_mother_uppercase_method() -> None:
     value = MacAddressMother.uppercase()
 
     assert type(value) is str
-    assert value.isupper() or value == '00:00:00:00:00:00'
+    value = ''.join(char for char in value if char not in (':', '-', ' ', '.', ' '))
+    assert value.isupper() or value.isdigit() or value == '000000000000'
 
 
 @mark.unit_testing
@@ -205,7 +214,8 @@ def test_mac_address_mother_mixed_method() -> None:
     value = MacAddressMother.mixed()
 
     assert type(value) is str
-    assert any(char.islower() or char.isupper() for char in value) or value == '00:00:00:00:00:00'
+    value = ''.join(char for char in value if char not in (':', '-', ' ', '.', ' '))
+    assert all(char.islower() or char.isupper() or char.isdigit() for char in value) or value == '000000000000'
 
 
 @mark.unit_testing

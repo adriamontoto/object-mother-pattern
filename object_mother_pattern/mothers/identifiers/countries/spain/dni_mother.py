@@ -2,7 +2,6 @@
 DniMother module for Spanish National Identity Document (DNI).
 """
 
-from enum import StrEnum, unique
 from random import choice, randint
 from sys import version_info
 from typing import assert_never
@@ -12,17 +11,7 @@ if version_info >= (3, 12):
 else:
     from typing_extensions import override  # pragma: no cover
 
-from object_mother_pattern.mothers import BaseMother, StringMother
-
-
-@unique
-class DniCase(StrEnum):
-    """
-    Type of DNI letter cases.
-    """
-
-    LOWERCASE = 'lowercase'
-    UPPERCASE = 'uppercase'
+from object_mother_pattern.mothers import BaseMother, StringCase, StringMother
 
 
 class DniMother(BaseMother[str]):
@@ -48,18 +37,18 @@ class DniMother(BaseMother[str]):
 
     @classmethod
     @override
-    def create(cls, *, value: str | None = None, dni_case: DniCase | None = None) -> str:
+    def create(cls, *, value: str | None = None, string_case: StringCase | None = None) -> str:
         """
         Create a random valid Spanish DNI. If a specific DNI value is provided via `value`, it is returned after
         validation. Otherwise, a random valid DNI is generated.
 
         Args:
             value (str | None, optional): Specific DNI value to return. Defaults to None.
-            dni_case (DniCase | None, optional): The case of the DNI letter. Defaults to None (random case).
+            string_case (StringCase | None, optional): The case of the DNI letter. Defaults to None (random case).
 
         Raises:
             TypeError: If the provided `value` is not a string.
-            TypeError: If the provided `dni_case` is not a DniCase.
+            TypeError: If the provided `string_case` is not a StringCase.
 
         Returns:
             str: A valid Spanish DNI.
@@ -79,24 +68,27 @@ class DniMother(BaseMother[str]):
 
             return value
 
-        if dni_case is None:
-            dni_case = DniCase(value=choice(seq=tuple(DniCase)))  # noqa: S311
+        if string_case is None:
+            string_case = StringCase(value=choice(seq=tuple(StringCase)))  # noqa: S311
 
-        if type(dni_case) is not DniCase:
-            raise TypeError('DniMother dni_case must be a DniCase')
+        if type(string_case) is not StringCase:
+            raise TypeError('DniMother string_case must be a StringCase')
 
         number = randint(a=cls._MIN_NUMBER, b=cls._MAX_NUMBER)  # noqa: S311
         letter = cls._DNI_LETTERS[number % 23]
 
-        match dni_case:
-            case DniCase.LOWERCASE:
+        match string_case:
+            case StringCase.LOWERCASE:
                 letter = letter.lower()
 
-            case DniCase.UPPERCASE:
+            case StringCase.UPPERCASE:
                 letter = letter.upper()
 
+            case StringCase.MIXEDCASE:
+                letter = ''.join(choice(seq=(char.upper(), char.lower())) for char in letter)  # noqa: S311
+
             case _:  # pragma: no cover
-                assert_never(dni_case)
+                assert_never(string_case)
 
         return f'{number:08d}{letter}'
 

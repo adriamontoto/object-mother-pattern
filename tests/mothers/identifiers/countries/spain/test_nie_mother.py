@@ -6,9 +6,8 @@ from re import Pattern, compile as re_compile
 
 from pytest import mark, raises as assert_raises
 
-from object_mother_pattern.mothers import StringMother
+from object_mother_pattern.mothers import StringCase, StringMother
 from object_mother_pattern.mothers.identifiers.countries.spain import NieMother
-from object_mother_pattern.mothers.identifiers.countries.spain.nie_mother import NieCase
 
 _NIE_REGEX: Pattern[str] = re_compile(pattern=r'^([XYZxyz])(\d{7})([A-Za-z])$')
 
@@ -50,7 +49,7 @@ def test_nie_mother_lowercase_case() -> None:
     """
     Test NieMother create method with lowercase case.
     """
-    value = NieMother.create(nie_case=NieCase.LOWERCASE)
+    value = NieMother.create(string_case=StringCase.LOWERCASE)
 
     assert value.islower()
 
@@ -60,7 +59,7 @@ def test_nie_mother_uppercase_case() -> None:
     """
     Test NieMother create method with uppercase case.
     """
-    value = NieMother.create(nie_case=NieCase.UPPERCASE)
+    value = NieMother.create(string_case=StringCase.UPPERCASE)
 
     assert value.isupper()
 
@@ -70,9 +69,9 @@ def test_nie_mother_mixed_case() -> None:
     """
     Test NieMother create method with mixed case.
     """
-    value = NieMother.create(nie_case=NieCase.MIXEDCASE)
+    value = NieMother.create(string_case=StringCase.MIXEDCASE)
 
-    assert any(char.islower() or char.isupper() for char in value)
+    assert all(char.islower() or char.isupper() or char.isdigit() for char in value)
 
 
 @mark.unit_testing
@@ -82,9 +81,9 @@ def test_nie_mother_invalid_case() -> None:
     """
     with assert_raises(
         expected_exception=TypeError,
-        match='NieMother nie_case must be a NieCase',
+        match='NieMother string_case must be a StringCase',
     ):
-        NieMother.create(nie_case=StringMother.invalid_type())
+        NieMother.create(string_case=StringMother.invalid_type())
 
 
 @mark.unit_testing

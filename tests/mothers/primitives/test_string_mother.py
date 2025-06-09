@@ -709,7 +709,7 @@ def test_string_mother_mixedcase_method_happy_path() -> None:
 
     assert type(value) is str
     assert 1 <= len(value) <= 128
-    assert any(char.islower() or char.isupper() for char in value)
+    assert all(char.islower() or char.isupper() or char.isdigit() for char in value)
 
 
 @mark.unit_testing

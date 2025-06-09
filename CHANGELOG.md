@@ -2,6 +2,15 @@
 
 <!-- version list -->
 
+## v0.4.0 (2025-06-09)
+
+### ✨ Features
+
+- **internet**: Implement domain mother
+  ([#55](https://github.com/adriamontoto/object-mother-pattern/pull/55),
+  [`dc8145e`](https://github.com/adriamontoto/object-mother-pattern/commit/dc8145eafaead747edcfa1f9186acb687f9cc48e))
+
+
 ## v0.3.3 (2025-06-08)
 
 ### 📦 Build System

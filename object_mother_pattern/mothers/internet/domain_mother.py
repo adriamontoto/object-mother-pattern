@@ -145,7 +145,7 @@ class DomainMother(BaseMother[str]):
         tld_domains = get_tld_dict()
         labels = get_label_dict()
 
-        for _ in range(10):
+        for _ in range(100):  # pragma: no cover
             try:
                 domain_format = cls._generate_domain_format(
                     min_length=min_length,
@@ -157,7 +157,7 @@ class DomainMother(BaseMother[str]):
                 domain = cls._generate_domain(tld_domains=tld_domains, labels=labels, domain_format=domain_format)
                 break
 
-            except KeyError:
+            except (ValueError, KeyError):
                 continue
 
         match domain_case:
@@ -195,7 +195,7 @@ class DomainMother(BaseMother[str]):
         # >>> seen.dip.home.si
         ```
         """
-        return cls.create(min_length=length, max_length=length)
+        return cls.create(min_length=length, max_length=length, min_labels=2, max_labels=127)
 
     @classmethod
     def _generate_domain_format(  # noqa: C901

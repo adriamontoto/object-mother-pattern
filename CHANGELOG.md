@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v0.4.1 (2025-06-09)
+
+### 🐛 Bug Fixes
+
+- Remove those vales that has length 0
+  ([`799c488`](https://github.com/adriamontoto/object-mother-pattern/commit/799c4889dec2db930b91a57ab0f5dffeea84bd18))
+
+
 ## v0.4.0 (2025-06-09)
 
 ### ✨ Features

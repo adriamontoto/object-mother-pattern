@@ -13,6 +13,7 @@ from enum import StrEnum, unique
 from random import choice
 from typing import assert_never
 
+from object_mother_pattern.mothers import StringCase
 from object_mother_pattern.mothers.base_mother import BaseMother
 from object_mother_pattern.mothers.primitives.string_mother import StringMother
 
@@ -30,17 +31,6 @@ class MacAddressFormat(StrEnum):
     SPACE = 'space'
     NULL = 'null'
     BROADCAST = 'broadcast'
-
-
-@unique
-class MacAddressCase(StrEnum):
-    """
-    Type of MAC address cases.
-    """
-
-    LOWERCASE = 'lowercase'
-    UPPERCASE = 'uppercase'
-    MIXEDCASE = 'mixedcase'
 
 
 class MacAddressMother(BaseMother[str]):
@@ -73,7 +63,7 @@ class MacAddressMother(BaseMother[str]):
         *,
         value: str | None = None,
         mac_format: MacAddressFormat | None = None,
-        mac_case: MacAddressCase | None = None,
+        string_case: StringCase | None = None,
     ) -> str:
         """
         Create a random MAC address value with a random format and random case (lowercase, uppercase, mixed). If a
@@ -82,12 +72,12 @@ class MacAddressMother(BaseMother[str]):
         Args:
             value (str | None, optional): A specific MAC address value to return. Defaults to None.
             mac_format (MacAddressFormat | None, optional): A specific MAC address format to use. Defaults to None.
-            mac_case (MacAddressCase | None, optional): A specific MAC address case to use. Defaults to None.
+            string_case (StringCase | None, optional): A specific MAC address case to use. Defaults to None.
 
         Raises:
             TypeError: If the provided `value` is not a string.
             ValueError: If the provided `mac_format` is not a valid MAC address format.
-            ValueError: If the provided `mac_case` is not a valid MAC address case.
+            ValueError: If the provided `string_case` is not a valid StringCase.
 
         Returns:
             str: A randomly generated MAC address value.
@@ -113,11 +103,11 @@ class MacAddressMother(BaseMother[str]):
         if type(mac_format) is not MacAddressFormat:
             raise ValueError('MacAddressMother mac_format must be a MacAddressFormat.')
 
-        if mac_case is None:
-            mac_case = MacAddressCase(value=choice(seq=tuple(MacAddressCase)))  # noqa: S311
+        if string_case is None:
+            string_case = StringCase(value=choice(seq=tuple(StringCase)))  # noqa: S311
 
-        if type(mac_case) is not MacAddressCase:
-            raise ValueError('MacAddressMother mac_case must be a MacAddressCase.')
+        if type(string_case) is not StringCase:
+            raise ValueError('MacAddressMother string_case must be a StringCase.')
 
         match mac_format:
             case MacAddressFormat.RAW:
@@ -144,18 +134,18 @@ class MacAddressMother(BaseMother[str]):
             case _:  # pragma: no cover
                 assert_never(mac_format)
 
-        match mac_case:
-            case MacAddressCase.LOWERCASE:
+        match string_case:
+            case StringCase.LOWERCASE:
                 mac_address = mac_address.lower()
 
-            case MacAddressCase.UPPERCASE:
+            case StringCase.UPPERCASE:
                 mac_address = mac_address.upper()
 
-            case MacAddressCase.MIXEDCASE:
+            case StringCase.MIXEDCASE:
                 mac_address = ''.join(choice(seq=(char.upper(), char.lower())) for char in mac_address)  # noqa: S311
 
             case _:  # pragma: no cover
-                assert_never(mac_case)
+                assert_never(string_case)
 
         return mac_address
 

@@ -2,7 +2,6 @@
 TextMother module.
 """
 
-from enum import StrEnum, unique
 from random import choice, randint
 from sys import version_info
 from typing import assert_never
@@ -12,19 +11,9 @@ if version_info >= (3, 12):
 else:
     from typing_extensions import override  # pragma: no cover
 
+from object_mother_pattern.mothers import StringCase
 from object_mother_pattern.mothers.base_mother import BaseMother
 from object_mother_pattern.mothers.primitives.string_mother import StringMother
-
-
-@unique
-class TextCase(StrEnum):
-    """
-    Type of Text cases.
-    """
-
-    LOWERCASE = 'lowercase'
-    UPPERCASE = 'uppercase'
-    MIXEDCASE = 'mixedcase'
 
 
 class TextMother(BaseMother[str]):
@@ -60,18 +49,18 @@ class TextMother(BaseMother[str]):
         value: str | None = None,
         min_length: int = 1,
         max_length: int = 1024,
-        text_case: TextCase | None = None,
+        string_case: StringCase | None = None,
     ) -> str:
         """
         Create a random text. If a specific text value is provided via `value`, it is returned after
         validation. Otherwise, a random string value is generated with the provided `min_length`, `max_length` (both
-        included). If `text_case` is None, a random case is chosen from the available TextCase options.
+        included). If `string_case` is None, a random case is chosen from the available StringCase options.
 
         Args:
             value (str | None, optional): Text value. Defaults to None.
             min_length (int, optional): Minimum length of the text. Must be >= 1. Defaults to 1.
             max_length (int, optional): Maximum length of the text. Must be >= 1 and >= `min_length`. Defaults to 1024.
-            text_case (TextCase | None, optional): The case of the text. Defaults to None.
+            string_case (StringCase | None, optional): The case of the text. Defaults to None.
 
         Raises:
             TypeError: If `value` is not a string.
@@ -80,7 +69,7 @@ class TextMother(BaseMother[str]):
             ValueError: If `min_length` is less than 1.
             ValueError: If `max_length` is less than 1.
             ValueError: If `min_length` is greater than `max_length`.
-            TypeError: If `text_case` is not a TextCase.
+            TypeError: If `string_case` is not a StringCase.
 
         Returns:
             str: Random text value of length between `min_length` and `max_length` (inclusive).
@@ -124,11 +113,11 @@ class TextMother(BaseMother[str]):
         if min_length > max_length:
             raise ValueError('TextMother min_length must be less than or equal to max_length.')
 
-        if text_case is None:
-            text_case = TextCase(value=choice(seq=tuple(TextCase)))  # noqa: S311
+        if string_case is None:
+            string_case = StringCase(value=choice(seq=tuple(StringCase)))  # noqa: S311
 
-        if type(text_case) is not TextCase:
-            raise TypeError('TextMother text_case must be a TextCase.')
+        if type(string_case) is not StringCase:
+            raise TypeError('TextMother string_case must be a StringCase.')
 
         length = randint(a=min_length, b=max_length)  # noqa: S311
 
@@ -144,18 +133,18 @@ class TextMother(BaseMother[str]):
 
         text = text[:-1] + '.'
 
-        match text_case:
-            case TextCase.LOWERCASE:
+        match string_case:
+            case StringCase.LOWERCASE:
                 text = text.lower()
 
-            case TextCase.UPPERCASE:
+            case StringCase.UPPERCASE:
                 text = text.upper()
 
-            case TextCase.MIXEDCASE:
+            case StringCase.MIXEDCASE:
                 text = ''.join(choice(seq=(char.upper(), char.lower())) for char in text)  # noqa: S311
 
             case _:  # pragma: no cover
-                assert_never(text_case)
+                assert_never(string_case)
 
         return text  # noqa: S311
 

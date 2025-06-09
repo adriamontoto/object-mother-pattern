@@ -2,7 +2,6 @@
 DomainMother module.
 """
 
-from enum import StrEnum, unique
 from random import choice, randint, sample
 from sys import version_info
 from typing import assert_never
@@ -12,21 +11,10 @@ if version_info >= (3, 12):
 else:
     from typing_extensions import override  # pragma: no cover
 
-from object_mother_pattern.mothers import StringMother
+from object_mother_pattern.mothers import StringCase, StringMother
 from object_mother_pattern.mothers.base_mother import BaseMother
 
 from .utils import get_label_dict, get_tld_dict
-
-
-@unique
-class DomainCase(StrEnum):
-    """
-    Type of Domain cases.
-    """
-
-    LOWERCASE = 'lowercase'
-    UPPERCASE = 'uppercase'
-    MIXEDCASE = 'mixedcase'
 
 
 class DomainMother(BaseMother[str]):
@@ -55,7 +43,7 @@ class DomainMother(BaseMother[str]):
         max_length: int = 30,
         min_labels: int = 2,
         max_labels: int = 4,
-        domain_case: DomainCase | None = None,
+        string_case: StringCase | None = None,
         include_hyphens: bool = True,
         include_numbers: bool = True,
     ) -> str:
@@ -73,7 +61,7 @@ class DomainMother(BaseMother[str]):
             min_labels (int, optional): The minimum number of labels in the domain. Must be >= 2. Defaults to 2.
             max_labels (int, optional): The maximum number of labels in the domain. Must be <= 127 and >= `min_labels`.
             Defaults to 4.
-            domain_case (DomainCase | None, optional): The case of the domain. Defaults to None.
+            string_case (StringCase | None, optional): The case of the domain. Defaults to None.
             include_hyphens (bool, optional): Whether to include hyphens in the domain. Defaults to True.
             include_numbers (bool, optional): Whether to include numbers in the domain. Defaults to True.
 
@@ -89,7 +77,7 @@ class DomainMother(BaseMother[str]):
             ValueError: If `max_labels` is less than 2.
             ValueError: If `max_labels` is more than 127.
             ValueError: If `min_labels` is greater than `max_labels`.
-            TypeError: If `domain_case` is not a DomainCase.
+            TypeError: If `string_case` is not a StringCase.
             TypeError: If `include_hyphens` is not a boolean.
             TypeError: If `include_numbers` is not a boolean.
             ValueError: If the total letters are not in the feasible range for given labels and constraints.
@@ -142,11 +130,11 @@ class DomainMother(BaseMother[str]):
         if min_labels > max_labels:
             raise ValueError('DomainMother min_labels must be less than or equal to max_labels.')
 
-        if domain_case is None:
-            domain_case = DomainCase(value=choice(seq=tuple(DomainCase)))  # noqa: S311
+        if string_case is None:
+            string_case = StringCase(value=choice(seq=tuple(StringCase)))  # noqa: S311
 
-        if type(domain_case) is not DomainCase:
-            raise TypeError('DomainMother domain_case must be a DomainCase.')
+        if type(string_case) is not StringCase:
+            raise TypeError('DomainMother string_case must be a StringCase.')
 
         if type(include_hyphens) is not bool:
             raise TypeError('DomainMother include_hyphens must be a boolean.')
@@ -173,18 +161,19 @@ class DomainMother(BaseMother[str]):
                 continue
 
         domain = cls._noisy_domain(domain=domain, include_hyphens=include_hyphens, include_numbers=include_numbers)
-        match domain_case:
-            case DomainCase.LOWERCASE:
+
+        match string_case:
+            case StringCase.LOWERCASE:
                 domain = domain.lower()
 
-            case DomainCase.UPPERCASE:
+            case StringCase.UPPERCASE:
                 domain = domain.upper()
 
-            case DomainCase.MIXEDCASE:
+            case StringCase.MIXEDCASE:
                 domain = ''.join(choice(seq=(char.upper(), char.lower())) for char in domain)  # noqa: S311
 
             case _:  # pragma: no cover
-                assert_never(domain_case)
+                assert_never(string_case)
 
         return domain
 

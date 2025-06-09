@@ -2,7 +2,6 @@
 NieMother module for Spanish Foreign Identity Number (NIE).
 """
 
-from enum import StrEnum, unique
 from random import choice, randint
 from sys import version_info
 from typing import ClassVar, assert_never
@@ -12,18 +11,7 @@ if version_info >= (3, 12):
 else:
     from typing_extensions import override  # pragma: no cover
 
-from object_mother_pattern.mothers import BaseMother, StringMother
-
-
-@unique
-class NieCase(StrEnum):
-    """
-    Type of NIE letter cases.
-    """
-
-    LOWERCASE = 'lowercase'
-    UPPERCASE = 'uppercase'
-    MIXEDCASE = 'mixedcase'
+from object_mother_pattern.mothers import BaseMother, StringCase, StringMother
 
 
 class NieMother(BaseMother[str]):
@@ -50,18 +38,18 @@ class NieMother(BaseMother[str]):
 
     @classmethod
     @override
-    def create(cls, *, value: str | None = None, nie_case: NieCase | None = None) -> str:
+    def create(cls, *, value: str | None = None, string_case: StringCase | None = None) -> str:
         """
         Create a random valid Spanish NIE. If a specific NIE value is provided via `value`,
         it is returned after validation. Otherwise, a random valid NIE is generated.
 
         Args:
             value (str | None, optional): Specific NIE value to return. Defaults to None.
-            nie_case (NieCase | None, optional): The case of the NIE letters. Defaults to None (random case).
+            string_case (StringCase | None, optional): The case of the NIE letters. Defaults to None (random case).
 
         Raises:
             TypeError: If the provided `value` is not a string.
-            TypeError: If the provided `nie_case` is not a NieCase.
+            TypeError: If the provided `string_case` is not a StringCase.
 
         Returns:
             str: A valid Spanish NIE.
@@ -81,11 +69,11 @@ class NieMother(BaseMother[str]):
 
             return value
 
-        if nie_case is None:
-            nie_case = NieCase(value=choice(seq=tuple(NieCase)))  # noqa: S311
+        if string_case is None:
+            string_case = StringCase(value=choice(seq=tuple(StringCase)))  # noqa: S311
 
-        if type(nie_case) is not NieCase:
-            raise TypeError('NieMother nie_case must be a NieCase')
+        if type(string_case) is not StringCase:
+            raise TypeError('NieMother string_case must be a StringCase')
 
         prefix = choice(seq=tuple(cls._NIE_PREFIXES.keys()))  # noqa: S311
         prefix_num = cls._NIE_PREFIXES[prefix]
@@ -93,18 +81,18 @@ class NieMother(BaseMother[str]):
         letter = cls._NIE_LETTERS[(prefix_num * 10000000 + number) % 23]
 
         nie = f'{prefix}{number:07d}{letter}'
-        match nie_case:
-            case NieCase.LOWERCASE:
+        match string_case:
+            case StringCase.LOWERCASE:
                 nie = nie.lower()
 
-            case NieCase.UPPERCASE:
+            case StringCase.UPPERCASE:
                 nie = nie.upper()
 
-            case NieCase.MIXEDCASE:
+            case StringCase.MIXEDCASE:
                 nie = ''.join(choice(seq=(char.upper(), char.lower())) for char in nie)  # noqa: S311
 
             case _:  # pragma: no cover
-                assert_never(nie_case)
+                assert_never(string_case)
 
         return nie
 

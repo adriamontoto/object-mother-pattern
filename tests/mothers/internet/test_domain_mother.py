@@ -4,9 +4,8 @@ Test module for the DomainMother class.
 
 from pytest import mark, raises as assert_raises
 
-from object_mother_pattern.mothers import BooleanMother, IntegerMother, StringMother
+from object_mother_pattern.mothers import BooleanMother, IntegerMother, StringCase, StringMother
 from object_mother_pattern.mothers.internet import DomainMother
-from object_mother_pattern.mothers.internet.domain_mother import DomainCase
 from object_mother_pattern.mothers.internet.utils import get_label_dict, get_tld_dict
 
 
@@ -404,7 +403,7 @@ def test_domain_mother_lowercase_case() -> None:
     """
     Test DomainMother create method with lowercase case.
     """
-    value = DomainMother.create(domain_case=DomainCase.LOWERCASE)
+    value = DomainMother.create(string_case=StringCase.LOWERCASE)
 
     assert value.islower()
 
@@ -414,7 +413,7 @@ def test_domain_mother_uppercase_case() -> None:
     """
     Test DomainMother create method with uppercase case.
     """
-    value = DomainMother.create(domain_case=DomainCase.UPPERCASE)
+    value = DomainMother.create(string_case=StringCase.UPPERCASE)
 
     assert value.isupper()
 
@@ -424,9 +423,9 @@ def test_domain_mother_mixed_case() -> None:
     """
     Test DomainMother create method with mixed case.
     """
-    value = DomainMother.create(domain_case=DomainCase.MIXEDCASE)
+    value = DomainMother.create(string_case=StringCase.MIXEDCASE)
 
-    assert any(char.islower() or char.isupper() for char in value)
+    assert all(char.islower() or char.isupper() or char.isdigit() or char == '-' or char == '.' for char in value)
 
 
 @mark.unit_testing
@@ -436,9 +435,9 @@ def test_domain_mother_invalid_case() -> None:
     """
     with assert_raises(
         expected_exception=TypeError,
-        match='DomainMother domain_case must be a DomainCase.',
+        match='DomainMother string_case must be a StringCase.',
     ):
-        DomainMother.create(domain_case=StringMother.invalid_type())
+        DomainMother.create(string_case=StringMother.invalid_type())
 
 
 @mark.unit_testing

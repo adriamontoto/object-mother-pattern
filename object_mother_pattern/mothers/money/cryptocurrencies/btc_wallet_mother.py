@@ -10,24 +10,12 @@ if version_info >= (3, 12):
 else:
     from typing_extensions import override  # pragma: no cover
 
-from enum import StrEnum, unique
 from random import choice
 from typing import assert_never
 
-from object_mother_pattern.mothers import BaseMother, StringMother
+from object_mother_pattern.mothers import BaseMother, StringCase, StringMother
 
 from .utils import get_bip39_words
-
-
-@unique
-class BtcWalletCase(StrEnum):
-    """
-    Type of BTC wallet address cases.
-    """
-
-    LOWERCASE = 'lowercase'
-    UPPERCASE = 'uppercase'
-    MIXEDCASE = 'mixedcase'
 
 
 class BtcWalletMother(BaseMother[str]):
@@ -53,7 +41,7 @@ class BtcWalletMother(BaseMother[str]):
         *,
         value: str | None = None,
         word_number: int = 12,
-        wallet_case: BtcWalletCase | None = None,
+        string_case: StringCase | None = None,
     ) -> str:
         """
         Create a random BTC wallet address value. If a specific wallet address value is provided via `value`, it is
@@ -63,13 +51,13 @@ class BtcWalletMother(BaseMother[str]):
         Args:
             value (str | None, optional): Specific value to return. Defaults to None.
             word_number (int, optional): The number of words of the wallet address. Must be >= 1. Defaults to 12.
-            wallet_case (BtcWalletCase | None, optional): The case of the wallet address. Defaults to None.
+            string_case (StringCase | None, optional): The case of the wallet address. Defaults to None.
 
         Raises:
             TypeError: If the provided `value` is not a string.
             TypeError: If `word_number` is not an integer.
             TypeError: If `word_number` is not greater than 0.
-            TypeError: If `wallet_case` is not a BtcWalletCase.
+            TypeError: If `string_case` is not a StringCase.
 
         Returns:
             str: A randomly generated BTC wallet address value (separated by spaces).
@@ -95,26 +83,26 @@ class BtcWalletMother(BaseMother[str]):
         if word_number < 1:
             raise ValueError('BtcWalletMother word_number must be greater than or equal to 1.')
 
-        if wallet_case is None:
-            wallet_case = BtcWalletCase(value=choice(seq=tuple(BtcWalletCase)))  # noqa: S311
+        if string_case is None:
+            string_case = StringCase(value=choice(seq=tuple(StringCase)))  # noqa: S311
 
-        if type(wallet_case) is not BtcWalletCase:
-            raise TypeError('BtcWalletMother wallet_case must be a BtcWalletCase.')
+        if type(string_case) is not StringCase:
+            raise TypeError('BtcWalletMother string_case must be a StringCase.')
 
         wallet = ' '.join(choices(population=get_bip39_words(), k=word_number))  # noqa: S311
 
-        match wallet_case:
-            case BtcWalletCase.LOWERCASE:
+        match string_case:
+            case StringCase.LOWERCASE:
                 wallet = wallet.lower()
 
-            case BtcWalletCase.UPPERCASE:
+            case StringCase.UPPERCASE:
                 wallet = wallet.upper()
 
-            case BtcWalletCase.MIXEDCASE:
+            case StringCase.MIXEDCASE:
                 wallet = ''.join(choice(seq=(char.upper(), char.lower())) for char in wallet)  # noqa: S311
 
             case _:  # pragma: no cover
-                assert_never(wallet_case)
+                assert_never(string_case)
 
         return wallet
 

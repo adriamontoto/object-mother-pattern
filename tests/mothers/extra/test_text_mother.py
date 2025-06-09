@@ -4,9 +4,8 @@ Test module for the TextMother class.
 
 from pytest import mark, raises as assert_raises
 
-from object_mother_pattern.mothers import IntegerMother, StringMother
+from object_mother_pattern.mothers import IntegerMother, StringCase, StringMother
 from object_mother_pattern.mothers.extra import TextMother
-from object_mother_pattern.mothers.extra.text_mother import TextCase
 
 
 @mark.unit_testing
@@ -170,7 +169,7 @@ def test_text_mother_create_method_lowercase_case() -> None:
     """
     Test TextMother create method with lowercase case.
     """
-    value = TextMother.create(text_case=TextCase.LOWERCASE)
+    value = TextMother.create(string_case=StringCase.LOWERCASE)
 
     assert value.islower()
 
@@ -180,7 +179,7 @@ def test_text_mother_create_method_uppercase_case() -> None:
     """
     Test TextMother create method with uppercase case.
     """
-    value = TextMother.create(text_case=TextCase.UPPERCASE)
+    value = TextMother.create(string_case=StringCase.UPPERCASE)
 
     assert value.isupper()
 
@@ -190,9 +189,9 @@ def test_text_mother_create_method_mixed_case() -> None:
     """
     Test TextMother create method with mixed case.
     """
-    value = TextMother.create(text_case=TextCase.MIXEDCASE)
+    value = TextMother.create(string_case=StringCase.MIXEDCASE)
 
-    assert any(char.islower() or char.isupper() for char in value)
+    assert all(char.islower() or char.isupper() or char.isdigit() or char.isspace() or char == '.' for char in value)
 
 
 @mark.unit_testing
@@ -202,9 +201,9 @@ def test_text_mother_create_method_invalid_case() -> None:
     """
     with assert_raises(
         expected_exception=TypeError,
-        match='TextMother text_case must be a TextCase.',
+        match='TextMother string_case must be a StringCase.',
     ):
-        TextMother.create(text_case=StringMother.invalid_type())
+        TextMother.create(string_case=StringMother.invalid_type())
 
 
 @mark.unit_testing

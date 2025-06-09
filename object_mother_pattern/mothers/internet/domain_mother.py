@@ -3,7 +3,7 @@ DomainMother module.
 """
 
 from enum import StrEnum, unique
-from random import choice, randint
+from random import choice, randint, sample
 from sys import version_info
 from typing import assert_never
 
@@ -56,6 +56,8 @@ class DomainMother(BaseMother[str]):
         min_labels: int = 2,
         max_labels: int = 4,
         domain_case: DomainCase | None = None,
+        include_hyphens: bool = True,
+        include_numbers: bool = True,
     ) -> str:
         """
         Create a random domain value. If a specific domain value is provided via `value`, it is returned after
@@ -72,6 +74,8 @@ class DomainMother(BaseMother[str]):
             max_labels (int, optional): The maximum number of labels in the domain. Must be <= 127 and >= `min_labels`.
             Defaults to 4.
             domain_case (DomainCase | None, optional): The case of the domain. Defaults to None.
+            include_hyphens (bool, optional): Whether to include hyphens in the domain. Defaults to True.
+            include_numbers (bool, optional): Whether to include numbers in the domain. Defaults to True.
 
         Raises:
             TypeError: If `min_length` is not an integer.
@@ -86,6 +90,8 @@ class DomainMother(BaseMother[str]):
             ValueError: If `max_labels` is more than 127.
             ValueError: If `min_labels` is greater than `max_labels`.
             TypeError: If `domain_case` is not a DomainCase.
+            TypeError: If `include_hyphens` is not a boolean.
+            TypeError: If `include_numbers` is not a boolean.
             ValueError: If the total letters are not in the feasible range for given labels and constraints.
 
         Returns:
@@ -142,10 +148,16 @@ class DomainMother(BaseMother[str]):
         if type(domain_case) is not DomainCase:
             raise TypeError('DomainMother domain_case must be a DomainCase.')
 
+        if type(include_hyphens) is not bool:
+            raise TypeError('DomainMother include_hyphens must be a boolean.')
+
+        if type(include_numbers) is not bool:
+            raise TypeError('DomainMother include_numbers must be a boolean.')
+
         tld_domains = get_tld_dict()
         labels = get_label_dict()
 
-        for _ in range(100):  # pragma: no cover
+        for _ in range(1000):  # pragma: no cover
             try:
                 domain_format = cls._generate_domain_format(
                     min_length=min_length,
@@ -160,6 +172,7 @@ class DomainMother(BaseMother[str]):
             except (ValueError, KeyError):
                 continue
 
+        domain = cls._noisy_domain(domain=domain, include_hyphens=include_hyphens, include_numbers=include_numbers)
         match domain_case:
             case DomainCase.LOWERCASE:
                 domain = domain.lower()
@@ -280,6 +293,75 @@ class DomainMother(BaseMother[str]):
             domain.append(choice(seq=labels[length]))  # noqa: S311, PERF401
 
         return '.'.join(reversed(domain))
+
+    @classmethod
+    def _noisy_domain(cls, *, domain: str, include_hyphens: bool, include_numbers: bool) -> str:  # noqa: C901
+        """
+        Add noise to a domain by adding some random hyphens and numbers.
+
+        Args:
+            domain (str): The domain to add noise to.
+            include_hyphens (bool): Whether to include hyphens in the domain.
+            include_numbers (bool): Whether to include numbers in the domain.
+
+        Returns:
+            str: The domain with noise added.
+        """
+        *labels, tld = domain.split('.')
+        domain_without_tld_length = len('.'.join(labels))
+
+        max_noise = max(1, domain_without_tld_length // 4)
+
+        number_of_hyphens = 0
+        if include_hyphens:
+            number_of_hyphens = randint(a=0, b=max_noise)  # noqa: S311
+
+        number_of_numbers = 0
+        if include_numbers:
+            number_of_numbers = randint(a=0, b=max_noise)  # noqa: S311
+
+        total_noise = number_of_hyphens + number_of_numbers
+        if total_noise == 0:
+            return domain
+
+        legal_slots: list[tuple[int, int]] = []
+        for idx, label in enumerate(labels):
+            label_len = len(label)
+            if label_len < 2:
+                continue
+
+            for position in range(1, label_len - 1):  # skip first/last char
+                if label.startswith('xn--') and position in (2, 3):  # extra guard for Punycode A-labels
+                    continue  # pragma: no cover
+
+                legal_slots.append((idx, position))
+
+        if not legal_slots:
+            return domain
+
+        total_noise = min(total_noise, len(legal_slots))
+        number_of_hyphens = min(number_of_hyphens, total_noise)
+        number_of_numbers = total_noise - number_of_hyphens
+
+        chosen_slots = sample(population=legal_slots, k=total_noise)  # noqa: S311
+        hyphen_slots = set(sample(population=chosen_slots, k=number_of_hyphens)) if number_of_hyphens else set()
+        digit_slots = set(chosen_slots) - hyphen_slots
+
+        for idx, label in enumerate(labels):
+            if all(idx != slot_idx for (slot_idx, _) in chosen_slots):
+                continue
+
+            chars = list(label)
+            for position in range(len(chars)):
+                if (idx, position) in hyphen_slots:
+                    chars[position] = '-'
+
+                elif (idx, position) in digit_slots:
+                    chars[position] = str(randint(a=0, b=9))  # noqa: S311
+
+            labels[idx] = ''.join(chars)
+
+        return '.'.join([*labels, tld])
 
     @classmethod
     def invalid_value(cls) -> str:

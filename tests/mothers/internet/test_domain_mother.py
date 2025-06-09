@@ -4,7 +4,7 @@ Test module for the DomainMother class.
 
 from pytest import mark, raises as assert_raises
 
-from object_mother_pattern.mothers import IntegerMother, StringMother
+from object_mother_pattern.mothers import BooleanMother, IntegerMother, StringMother
 from object_mother_pattern.mothers.internet import DomainMother
 from object_mother_pattern.mothers.internet.domain_mother import DomainCase
 from object_mother_pattern.mothers.internet.utils import get_label_dict, get_tld_dict
@@ -31,8 +31,96 @@ def test_domain_mother_create_method_happy_path() -> None:
     assert domain_tld in tlds
     assert len(domain_labels) >= 1
     assert len(domain_labels) <= 127
+    for domain_label in domain_labels:
+        assert domain_label == domain_label.strip()
+        assert len(domain_label) >= 1
+        assert len(domain_label) <= 63
+        assert domain_label in all_labels or '-' in domain_label or domain_label.isalnum()
+
+
+@mark.unit_testing
+def test_domain_mother_create_method_happy_path_without_hyphens() -> None:
+    """
+    Check that DomainMother create method returns a string value that is a valid domain without hyphens.
+    """
+    value = DomainMother.create(include_hyphens=False)
+
+    domain_tld = value.lower().split('.')[-1]
+    domain_labels = value.lower().split('.')[:-1]
+    tlds = {tld for tlds in get_tld_dict().values() for tld in tlds}
+    all_labels = {label for labels in get_label_dict().values() for label in labels}
+
+    assert type(value) is str
+    assert len(value) >= 4
+    assert len(value) <= 253
+    assert value == value.strip()
+    assert not value.startswith('.') and not value.endswith('.')
+    assert '..' not in value
+    assert domain_tld in tlds
+    assert len(domain_labels) >= 1
+    assert len(domain_labels) <= 127
+    for domain_label in domain_labels:
+        assert domain_label in all_labels or domain_label.isalnum()
+        assert domain_label == domain_label.strip()
+        assert len(domain_label) >= 1
+        assert len(domain_label) <= 63
+        assert '-' not in domain_label
+
+
+@mark.unit_testing
+def test_domain_mother_create_method_happy_path_without_numbers() -> None:
+    """
+    Check that DomainMother create method returns a string value that is a valid domain without numbers.
+    """
+    value = DomainMother.create(include_numbers=False)
+
+    domain_tld = value.lower().split('.')[-1]
+    domain_labels = value.lower().split('.')[:-1]
+    tlds = {tld for tlds in get_tld_dict().values() for tld in tlds}
+    all_labels = {label for labels in get_label_dict().values() for label in labels}
+
+    assert type(value) is str
+    assert len(value) >= 4
+    assert len(value) <= 253
+    assert value == value.strip()
+    assert not value.startswith('.') and not value.endswith('.')
+    assert '..' not in value
+    assert domain_tld in tlds
+    assert len(domain_labels) >= 1
+    assert len(domain_labels) <= 127
+    for domain_label in domain_labels:
+        assert domain_label in all_labels or '-' in domain_label
+        assert domain_label == domain_label.strip()
+        assert len(domain_label) >= 1
+        assert len(domain_label) <= 63
+        for char in domain_label:
+            assert char.isalpha() or char == '-'
+
+
+@mark.unit_testing
+def test_domain_mother_create_method_happy_path_without_hyphens_and_numbers() -> None:
+    """
+    Check that DomainMother create method returns a string value that is a valid domain without hyphens and numbers.
+    """
+    value = DomainMother.create(include_hyphens=False, include_numbers=False)
+
+    domain_tld = value.lower().split('.')[-1]
+    domain_labels = value.lower().split('.')[:-1]
+    tlds = {tld for tlds in get_tld_dict().values() for tld in tlds}
+    all_labels = {label for labels in get_label_dict().values() for label in labels}
+
+    assert type(value) is str
+    assert len(value) >= 4
+    assert len(value) <= 253
+    assert value == value.strip()
+    assert not value.startswith('.') and not value.endswith('.')
+    assert '..' not in value
+    assert domain_tld in tlds
+    assert len(domain_labels) >= 1
+    assert len(domain_labels) <= 127
     assert all(domain_label in all_labels for domain_label in domain_labels)
     for domain_label in domain_labels:
+        assert domain_label == domain_label.strip()
         assert len(domain_label) >= 1
         assert len(domain_label) <= 63
 
@@ -354,6 +442,30 @@ def test_domain_mother_invalid_case() -> None:
 
 
 @mark.unit_testing
+def test_domain_mother_invalid_include_hyphens() -> None:
+    """
+    Test DomainMother create method with invalid include_hyphens.
+    """
+    with assert_raises(
+        expected_exception=TypeError,
+        match='DomainMother include_hyphens must be a boolean.',
+    ):
+        DomainMother.create(include_hyphens=BooleanMother.invalid_type())
+
+
+@mark.unit_testing
+def test_domain_mother_invalid_include_numbers() -> None:
+    """
+    Test DomainMother create method with invalid include_numbers.
+    """
+    with assert_raises(
+        expected_exception=TypeError,
+        match='DomainMother include_numbers must be a boolean.',
+    ):
+        DomainMother.create(include_numbers=BooleanMother.invalid_type())
+
+
+@mark.unit_testing
 def test_domain_mother_of_length_method_happy_path() -> None:
     """
     Test DomainMother of_length method happy path.
@@ -374,10 +486,11 @@ def test_domain_mother_of_length_method_happy_path() -> None:
     assert domain_tld in tlds
     assert len(domain_labels) >= 1
     assert len(domain_labels) <= 127
-    assert all(domain_label in all_labels for domain_label in domain_labels)
     for domain_label in domain_labels:
+        assert domain_label == domain_label.strip()
         assert len(domain_label) >= 1
         assert len(domain_label) <= 63
+        assert domain_label in all_labels or '-' in domain_label or domain_label.isalnum()
 
 
 @mark.unit_testing

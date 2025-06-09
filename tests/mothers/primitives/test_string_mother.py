@@ -401,7 +401,7 @@ def test_string_mother_lowercase_method_invalid_max_length_value() -> None:
 @mark.unit_testing
 def test_string_mother_lowercase_method_min_length_greater_than_max_length() -> None:
     """
-    Check that StringMother lowercase method raises a ValueError when the provided min_length is greater tha
+    Check that StringMother lowercase method raises a ValueError when the provided min_length is greater than
     max_length.
     """
     min_length = IntegerMother.create(min=0, max=15)

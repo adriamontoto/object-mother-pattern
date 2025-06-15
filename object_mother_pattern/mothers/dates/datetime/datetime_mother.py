@@ -30,8 +30,6 @@ class DatetimeMother(BaseMother[datetime]):
     ```
     """
 
-    _type: type = datetime
-
     @classmethod
     @override
     def create(

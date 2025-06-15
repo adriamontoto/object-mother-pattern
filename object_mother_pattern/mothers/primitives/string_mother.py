@@ -34,8 +34,6 @@ class StringMother(BaseMother[str]):
     ```
     """
 
-    _type: type = str
-
     @classmethod
     @override
     def create(

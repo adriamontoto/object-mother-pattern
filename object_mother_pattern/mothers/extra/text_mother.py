@@ -39,8 +39,6 @@ class TextMother(BaseMother[str]):
     ```
     """
 
-    _type: type = str
-
     @classmethod
     @override
     def create(  # noqa: C901

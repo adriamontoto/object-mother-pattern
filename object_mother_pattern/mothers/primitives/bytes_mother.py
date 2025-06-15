@@ -28,8 +28,6 @@ class BytesMother(BaseMother[bytes]):
     ```
     """
 
-    _type: type = bytes
-
     @classmethod
     @override
     def create(cls, *, value: bytes | None = None, min_length: int = 0, max_length: int = 128) -> bytes:

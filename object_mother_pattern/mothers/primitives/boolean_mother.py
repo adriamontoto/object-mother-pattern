@@ -28,8 +28,6 @@ class BooleanMother(BaseMother[bool]):
     ```
     """
 
-    _type: type = bool
-
     @classmethod
     @override
     def create(cls, *, value: bool | None = None, probability_true: float = 0.5) -> bool:

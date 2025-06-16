@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v1.1.0 (2025-06-16)
+
+### ✨ Features
+
+- Remove type attribute from child mothers
+  ([`6c97765`](https://github.com/adriamontoto/object-mother-pattern/commit/6c97765bf3b4d7dc41337e5dc89b90d73bd92d58))
+
+
 ## v1.0.0 (2025-06-09)
 
 ### ✨ Features

@@ -2,6 +2,19 @@
 
 <!-- version list -->
 
+## v2.0.0 (2025-06-16)
+
+### 📦 Build System
+
+- Remove pyproject extra space
+  ([`7333621`](https://github.com/adriamontoto/object-mother-pattern/commit/7333621e659023409608a59be604dadf900e452c))
+
+### ✨ Features
+
+- Rework how enumeration works, now you have to create a new class of type Enum
+  ([`49dd756`](https://github.com/adriamontoto/object-mother-pattern/commit/49dd75634db4b0480c1563679f239d7eff3e7150))
+
+
 ## v1.1.0 (2025-06-16)
 
 ### ✨ Features

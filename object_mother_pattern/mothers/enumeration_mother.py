@@ -2,18 +2,26 @@
 EnumerationMother module.
 """
 
+from abc import ABC
 from datetime import date, datetime
 from enum import Enum
+from inspect import isclass
 from random import choice
-from typing import Any, Generic, Iterable, TypeVar
+from sys import version_info
+from typing import Any, Generic, Iterable, TypeVar, get_args, get_origin
 from uuid import UUID, uuid4
+
+if version_info >= (3, 12):
+    from typing import override  # pragma: no cover
+else:
+    from typing_extensions import override  # pragma: no cover
 
 from faker import Faker
 
 E = TypeVar('E', bound=Enum)
 
 
-class EnumerationMother(Generic[E]):
+class EnumerationMother(ABC, Generic[E]):
     """
     EnumerationMother class is responsible for creating random enum values.
 
@@ -33,7 +41,11 @@ class EnumerationMother(Generic[E]):
         BLUE = 3
 
 
-    color_mother = EnumerationMother(enumeration=ColorEnumeration)
+    class ColorMother(EnumerationMother[ColorEnumeration]):
+        pass
+
+
+    color_mother = ColorMother()
 
     color = color_mother.create()
     print(color)
@@ -43,43 +55,34 @@ class EnumerationMother(Generic[E]):
 
     _enumeration: type[E]
 
-    def __init__(self, *, enumeration: type[E]) -> None:
+    @override
+    def __init_subclass__(cls, **kwargs: Any) -> None:
         """
-        Initialize the EnumerationMother with the specified enumeration class `enumeration`.
+        Initializes the class.
 
         Args:
-            enumeration (type[E]): The enumeration class to generate values from.
+            **kwargs (Any): Keyword arguments.
 
         Raises:
-            TypeError: If the provided `enumeration` is not a subclass of Enum.
-
-        Example:
-        ```python
-        from enum import Enum, unique
-
-        from object_mother_pattern.mothers import EnumerationMother
-
-
-        @unique
-        class ColorEnumeration(Enum):
-            RED = 1
-            GREEN = 2
-            BLUE = 3
-
-
-        color_mother = EnumerationMother(enumeration=ColorEnumeration)
-
-        color = color_mother.create()
-        print(color)
-        # >>> Color.GREEN
-        ```
+            TypeError: If the class parameter is not an Enum subclass.
+            TypeError: If the class is not parameterized.
         """
-        if type(enumeration) is not type(Enum):
-            raise TypeError('EnumerationMother enumeration must be a subclass of Enum.')
+        super().__init_subclass__(**kwargs)
 
-        self._enumeration = enumeration
+        for base in getattr(cls, '__orig_bases__', ()):
+            if get_origin(tp=base) is EnumerationMother:
+                enumeration, *_ = get_args(tp=base)
 
-    def create(self, *, value: E | None = None) -> E:
+                if not (isclass(object=enumeration) and issubclass(enumeration, Enum)):
+                    raise TypeError(f'EnumerationMother[...] <<<{enumeration}>>> must be an Enum subclass. Got <<<{type(enumeration).__name__}>>> type.')  # noqa: E501  # fmt: skip
+
+                cls._enumeration = enumeration
+                return
+
+        raise TypeError('EnumerationMother must be parameterized, e.g. "class ColorMother(EnumerationMother[ColorEnumeration])".')  # noqa: E501  # fmt: skip
+
+    @classmethod
+    def create(cls, *, value: E | None = None) -> E:
         """
         Create a random enumeration value from the enumeration class. If a specific
         value is provided, it is returned after ensuring it is a member of the enumeration.
@@ -107,7 +110,11 @@ class EnumerationMother(Generic[E]):
             BLUE = 3
 
 
-        color_mother = EnumerationMother(enumeration=ColorEnumeration)
+        class ColorMother(EnumerationMother[ColorEnumeration]):
+            pass
+
+
+        color_mother = ColorMother()
 
         color = color_mother.create()
         print(color)
@@ -115,12 +122,12 @@ class EnumerationMother(Generic[E]):
         ```
         """
         if value is not None:
-            if type(value) is not self._enumeration:
-                raise TypeError(f'{self._enumeration.__name__}Mother value must be an instance of {self._enumeration.__name__}.')  # noqa: E501  # fmt: skip
+            if not isinstance(value, cls._enumeration):
+                raise TypeError(f'{cls._enumeration.__name__}Mother value must be an instance of <<<{cls._enumeration.__name__}>>> type.')  # noqa: E501  # fmt: skip
 
-            return value
+            return value  # type: ignore[no-any-return]
 
-        return choice(seq=tuple(self._enumeration))  # noqa: S311
+        return choice(seq=tuple(cls._enumeration))  # type: ignore[arg-type]  # noqa: S311
 
     @staticmethod
     def invalid_type(remove_types: Iterable[type[Any]] | None = None) -> Any:  # noqa: C901

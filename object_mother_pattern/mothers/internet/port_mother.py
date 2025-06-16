@@ -28,8 +28,6 @@ class PortMother(BaseMother[int]):
     ```
     """
 
-    _type: type = int
-
     @classmethod
     @override
     def create(cls, *, value: int | None = None) -> int:

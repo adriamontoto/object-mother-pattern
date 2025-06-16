@@ -27,8 +27,6 @@ class FloatMother(BaseMother[float]):
     ```
     """
 
-    _type: type = float
-
     @classmethod
     @override
     def create(  # noqa: C901

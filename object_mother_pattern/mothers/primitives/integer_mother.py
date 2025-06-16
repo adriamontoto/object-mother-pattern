@@ -28,8 +28,6 @@ class IntegerMother(BaseMother[int]):
     ```
     """
 
-    _type: type = int
-
     @classmethod
     @override
     def create(cls, *, value: int | None = None, min: int = -100, max: int = 100) -> int:

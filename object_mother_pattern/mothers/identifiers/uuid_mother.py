@@ -27,8 +27,6 @@ class UuidMother(BaseMother[UUID]):
     ```
     """
 
-    _type: type = UUID
-
     @classmethod
     @override
     def create(cls, *, value: UUID | None = None) -> UUID:

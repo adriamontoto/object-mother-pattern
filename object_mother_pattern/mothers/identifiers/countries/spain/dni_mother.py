@@ -30,7 +30,6 @@ class DniMother(BaseMother[str]):
     ```
     """
 
-    _type: type = str
     _DNI_LETTERS: str = 'TRWAGMYFPDXBNJZSQVHLCKE'
     _MIN_NUMBER: int = 0
     _MAX_NUMBER: int = 99999999

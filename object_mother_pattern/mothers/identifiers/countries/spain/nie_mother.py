@@ -30,7 +30,6 @@ class NieMother(BaseMother[str]):
     ```
     """
 
-    _type: type = str
     _NIE_LETTERS: str = 'TRWAGMYFPDXBNJZSQVHLCKE'
     _NIE_PREFIXES: ClassVar[dict[str, int]] = {'X': 0, 'Y': 1, 'Z': 2}
     _MIN_NUMBER: int = 0

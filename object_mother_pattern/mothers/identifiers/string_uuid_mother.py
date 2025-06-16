@@ -28,8 +28,6 @@ class StringUuidMother(BaseMother[str]):
     ```
     """
 
-    _type: type = str
-
     @classmethod
     @override
     def create(cls, *, value: str | None = None) -> str:

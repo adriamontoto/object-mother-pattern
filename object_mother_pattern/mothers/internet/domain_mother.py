@@ -31,8 +31,6 @@ class DomainMother(BaseMother[str]):
     ```
     """
 
-    _type: type = str
-
     @classmethod
     @override
     def create(  # noqa: C901

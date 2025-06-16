@@ -4,9 +4,16 @@ BaseMother module.
 
 from abc import ABC, abstractmethod
 from datetime import date, datetime
+from inspect import isclass
 from random import choice
-from typing import Any, Generic, Iterable, TypeVar
+from sys import version_info
+from typing import Any, Generic, Iterable, TypeVar, get_args, get_origin
 from uuid import UUID, uuid4
+
+if version_info >= (3, 12):
+    from typing import override  # pragma: no cover
+else:
+    from typing_extensions import override  # pragma: no cover
 
 from faker import Faker
 
@@ -21,6 +28,32 @@ class BaseMother(ABC, Generic[T]):
     """
 
     _type: type
+
+    @override
+    def __init_subclass__(cls, **kwargs: Any) -> None:
+        """
+        Initializes the class.
+
+        Args:
+            **kwargs (Any): Keyword arguments.
+
+        Raises:
+            TypeError: If the class parameter is not a type.
+            TypeError: If the class is not parameterized.
+        """
+        super().__init_subclass__(**kwargs)
+
+        for base in getattr(cls, '__orig_bases__', ()):
+            if get_origin(tp=base) is BaseMother:
+                mother_type, *_ = get_args(tp=base)
+
+                if not isclass(object=mother_type):
+                    raise TypeError(f'BaseMother[...] <<<{mother_type}>>> must be a type. Got <<<{type(mother_type).__name__}>>> type.')  # noqa: E501  # fmt: skip
+
+                cls._type = mother_type
+                return
+
+        raise TypeError('BaseMother must be parameterized, e.g. "class BooleanMother(BaseMother[bool])".')
 
     @classmethod
     def _random(cls) -> Faker:
@@ -60,7 +93,8 @@ class BaseMother(ABC, Generic[T]):
         faker = Faker()
 
         remove_types = set() if remove_types is None else set(remove_types)
-        remove_types.add(cls._type)
+        if hasattr(cls, '_type'):
+            remove_types.add(cls._type)
 
         types: list[Any] = []
         if int not in remove_types:

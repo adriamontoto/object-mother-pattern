@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v3.0.0 (2025-06-21)
+
+### ✨ Features
+
+- Move models folder and its imports
+  ([`d5e7140`](https://github.com/adriamontoto/object-mother-pattern/commit/d5e71408918cb07c12fa557b71d878a3e03832ef))
+
+
 ## v2.1.1 (2025-06-21)
 
 ### 🐛 Bug Fixes

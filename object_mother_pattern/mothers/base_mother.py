@@ -68,13 +68,13 @@ class BaseMother(ABC, Generic[T]):  # noqa: UP046
 
     @classmethod
     @abstractmethod
-    def create(cls, *, value: T | None = None) -> T:
+    def create(cls, *, value: Any | None = None) -> T:
         """
-        Create a random T value. If a specific T value is provided via `value`, it is returned after validation.
+        Create a random T value. If a specific value is provided via `value`, it is returned after validation.
         Otherwise, a random T value is generated.
 
         Args:
-            value (T | None, optional): A specific T value to return. Defaults to None.
+            value (Any | None, optional): A specific value to return. Defaults to None.
 
         Returns:
             T: A randomly generated T value.

@@ -2,14 +2,15 @@
 TextMother module.
 """
 
-from random import choice, randint
 from sys import version_info
-from typing import assert_never
 
 if version_info >= (3, 12):
     from typing import override  # pragma: no cover
 else:
     from typing_extensions import override  # pragma: no cover
+
+from random import choice, randint
+from typing import assert_never
 
 from object_mother_pattern.mothers import StringCase
 from object_mother_pattern.mothers.base_mother import BaseMother

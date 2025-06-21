@@ -2,7 +2,6 @@
 BtcWalletMother module.
 """
 
-from random import choices
 from sys import version_info
 
 if version_info >= (3, 12):
@@ -10,10 +9,12 @@ if version_info >= (3, 12):
 else:
     from typing_extensions import override  # pragma: no cover
 
-from random import choice
+from random import choice, choices
 from typing import assert_never
 
-from object_mother_pattern.mothers import BaseMother, StringCase, StringMother
+from object_mother_pattern.mothers import StringCase
+from object_mother_pattern.mothers.base_mother import BaseMother
+from object_mother_pattern.mothers.primitives.string_mother import StringMother
 
 from .utils import get_bip39_words
 

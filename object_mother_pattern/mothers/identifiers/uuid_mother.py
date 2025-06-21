@@ -3,12 +3,13 @@ UuidMother module.
 """
 
 from sys import version_info
-from uuid import UUID, uuid4
 
 if version_info >= (3, 12):
     from typing import override  # pragma: no cover
 else:
     from typing_extensions import override  # pragma: no cover
+
+from uuid import UUID, uuid4
 
 from object_mother_pattern.mothers.base_mother import BaseMother
 

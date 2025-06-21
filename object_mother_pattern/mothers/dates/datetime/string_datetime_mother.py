@@ -2,13 +2,14 @@
 StringDatetimeMother module.
 """
 
-from datetime import datetime
 from sys import version_info
 
 if version_info >= (3, 12):
     from typing import override  # pragma: no cover
 else:
     from typing_extensions import override  # pragma: no cover
+
+from datetime import datetime
 
 from object_mother_pattern.mothers.base_mother import BaseMother
 from object_mother_pattern.mothers.primitives.string_mother import StringMother

@@ -2,19 +2,20 @@
 EnumerationMother module.
 """
 
-from abc import ABC
-from datetime import date, datetime
-from enum import Enum
-from inspect import isclass
-from random import choice
 from sys import version_info
-from typing import Any, Generic, Iterable, TypeVar, get_args, get_origin
-from uuid import UUID, uuid4
 
 if version_info >= (3, 12):
     from typing import override  # pragma: no cover
 else:
     from typing_extensions import override  # pragma: no cover
+
+from abc import ABC
+from datetime import date, datetime
+from enum import Enum
+from inspect import isclass
+from random import choice
+from typing import Any, Generic, Iterable, TypeVar, get_args, get_origin
+from uuid import UUID, uuid4
 
 from faker import Faker
 

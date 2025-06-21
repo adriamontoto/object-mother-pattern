@@ -9,11 +9,10 @@ if version_info >= (3, 12):
 else:
     from typing_extensions import override  # pragma: no cover
 
-
 from random import choice, choices, randint, sample
 
 from object_mother_pattern.mothers.base_mother import BaseMother
-from object_mother_pattern.mothers.primitives import StringMother
+from object_mother_pattern.mothers.primitives.string_mother import StringMother
 from object_mother_pattern.mothers.primitives.utils.alphabets import (
     ALPHABET_LOWERCASE_BASIC,
     ALPHABET_UPPERCASE_BASIC,

@@ -9,7 +9,6 @@ if version_info >= (3, 12):
 else:
     from typing_extensions import override  # pragma: no cover
 
-
 from object_mother_pattern.mothers.base_mother import BaseMother
 
 from .timezone_mother import TimezoneMother

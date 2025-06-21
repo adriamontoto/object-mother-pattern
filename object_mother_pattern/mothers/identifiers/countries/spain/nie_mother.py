@@ -2,16 +2,19 @@
 NieMother module for Spanish Foreign Identity Number (NIE).
 """
 
-from random import choice, randint
 from sys import version_info
-from typing import ClassVar, assert_never
 
 if version_info >= (3, 12):
     from typing import override  # pragma: no cover
 else:
     from typing_extensions import override  # pragma: no cover
 
-from object_mother_pattern.mothers import BaseMother, StringCase, StringMother
+from random import choice, randint
+from typing import ClassVar, assert_never
+
+from object_mother_pattern.mothers import StringCase
+from object_mother_pattern.mothers.base_mother import BaseMother
+from object_mother_pattern.mothers.primitives.string_mother import StringMother
 
 
 class NieMother(BaseMother[str]):

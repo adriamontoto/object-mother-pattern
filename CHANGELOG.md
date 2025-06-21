@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v2.1.1 (2025-06-21)
+
+### 🐛 Bug Fixes
+
+- Improve base mother create method type
+  ([`d3cbcf3`](https://github.com/adriamontoto/object-mother-pattern/commit/d3cbcf34cd699b9f521cc2a221094cf74f76237c))
+
+
 ## v2.1.0 (2025-06-21)
 
 ### 🐛 Bug Fixes

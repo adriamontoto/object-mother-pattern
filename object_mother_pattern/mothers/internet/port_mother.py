@@ -10,8 +10,8 @@ else:
     from typing_extensions import override  # pragma: no cover
 
 
+from object_mother_pattern.mothers import IntegerMother
 from object_mother_pattern.mothers.base_mother import BaseMother
-from object_mother_pattern.mothers.primitives import IntegerMother
 
 
 class PortMother(BaseMother[int]):
@@ -59,7 +59,7 @@ class PortMother(BaseMother[int]):
 
             return value
 
-        return cls._random().port_number()
+        return IntegerMother.create(min=0, max=65535)
 
     @classmethod
     def ftp_data(cls) -> int:

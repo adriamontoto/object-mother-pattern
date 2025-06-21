@@ -20,7 +20,7 @@ from faker import Faker
 T = TypeVar('T')
 
 
-class BaseMother(ABC, Generic[T]):
+class BaseMother(ABC, Generic[T]):  # noqa: UP046
     """
     BaseMother class.
 
@@ -80,7 +80,7 @@ class BaseMother(ABC, Generic[T]):
         """
 
     @classmethod
-    def invalid_type(cls, remove_types: Iterable[type[Any]] | None = None) -> Any:  # noqa: C901
+    def invalid_type(cls, *, remove_types: Iterable[type[Any]] | None = None) -> Any:  # noqa: C901
         """
         Create an invalid type.
 

@@ -21,7 +21,7 @@ from faker import Faker
 E = TypeVar('E', bound=Enum)
 
 
-class EnumerationMother(ABC, Generic[E]):
+class EnumerationMother(ABC, Generic[E]):  # noqa: UP046
     """
     EnumerationMother class is responsible for creating random enum values.
 

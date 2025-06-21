@@ -2,6 +2,19 @@
 
 <!-- version list -->
 
+## v2.1.0 (2025-06-21)
+
+### 🐛 Bug Fixes
+
+- Add noqa statement to discard warnings
+  ([`7a525c0`](https://github.com/adriamontoto/object-mother-pattern/commit/7a525c0dc6ec513edfd81e0b7e57954ba3fae1e0))
+
+### ✨ Features
+
+- Implement timezone object mother
+  ([`0794635`](https://github.com/adriamontoto/object-mother-pattern/commit/07946352cd01d471137685e0b78470ae92739965))
+
+
 ## v2.0.0 (2025-06-16)
 
 ### 📦 Build System

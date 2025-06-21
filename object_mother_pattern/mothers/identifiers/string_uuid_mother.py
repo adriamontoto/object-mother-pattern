@@ -11,7 +11,7 @@ else:
 
 from uuid import uuid4
 
-from object_mother_pattern.mothers.base_mother import BaseMother
+from object_mother_pattern.models import BaseMother
 from object_mother_pattern.mothers.primitives.string_mother import StringMother
 
 
@@ -21,7 +21,7 @@ class StringUuidMother(BaseMother[str]):
 
     Example:
     ```python
-    from object_mother_pattern.mothers import StringUuidMother
+    from object_mother_pattern import StringUuidMother
 
     uuid = StringUuidMother.create()
     print(uuid)
@@ -47,7 +47,7 @@ class StringUuidMother(BaseMother[str]):
 
         Example:
         ```python
-        from object_mother_pattern.mothers import StringUuidMother
+        from object_mother_pattern import StringUuidMother
 
         uuid = StringUuidMother.create()
         print(uuid)

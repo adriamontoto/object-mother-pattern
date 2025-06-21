@@ -11,7 +11,7 @@ else:
 
 from random import choice
 
-from object_mother_pattern.mothers.base_mother import BaseMother
+from object_mother_pattern.models import BaseMother
 from object_mother_pattern.mothers.primitives.string_mother import StringMother
 
 from .utils import get_aws_cloud_regions

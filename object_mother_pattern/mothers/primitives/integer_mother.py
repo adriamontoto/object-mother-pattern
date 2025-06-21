@@ -11,7 +11,7 @@ else:
 
 from random import choice, randint
 
-from object_mother_pattern.mothers.base_mother import BaseMother
+from object_mother_pattern.models import BaseMother
 
 
 class IntegerMother(BaseMother[int]):
@@ -20,7 +20,7 @@ class IntegerMother(BaseMother[int]):
 
     Example:
     ```python
-    from object_mother_pattern.mothers import IntegerMother
+    from object_mother_pattern import IntegerMother
 
     number = IntegerMother.create(min=-4, max=15)
     print(number)
@@ -52,7 +52,7 @@ class IntegerMother(BaseMother[int]):
 
         Example:
         ```python
-        from object_mother_pattern.mothers import IntegerMother
+        from object_mother_pattern import IntegerMother
 
         number = IntegerMother.create(min=-4, max=15)
         print(number)
@@ -93,7 +93,7 @@ class IntegerMother(BaseMother[int]):
 
         Example:
         ```python
-        from object_mother_pattern.mothers import IntegerMother
+        from object_mother_pattern import IntegerMother
 
         positive = IntegerMother.positive(max=15)
         print(positive)
@@ -119,7 +119,7 @@ class IntegerMother(BaseMother[int]):
 
         Example:
         ```python
-        from object_mother_pattern.mothers import IntegerMother
+        from object_mother_pattern import IntegerMother
 
         positive = IntegerMother.positive_or_zero(max=15)
         print(positive)
@@ -145,7 +145,7 @@ class IntegerMother(BaseMother[int]):
 
         Example:
         ```python
-        from object_mother_pattern.mothers import IntegerMother
+        from object_mother_pattern import IntegerMother
 
         negative = IntegerMother.negative(min=-61)
         print(negative)
@@ -171,7 +171,7 @@ class IntegerMother(BaseMother[int]):
 
         Example:
         ```python
-        from object_mother_pattern.mothers import IntegerMother
+        from object_mother_pattern import IntegerMother
 
         negative = IntegerMother.negative_or_zero(min=-61)
         print(negative)
@@ -203,7 +203,7 @@ class IntegerMother(BaseMother[int]):
 
         Example:
         ```python
-        from object_mother_pattern.mothers import IntegerMother
+        from object_mother_pattern import IntegerMother
 
         number = IntegerMother.out_of_range(min=-10, max=10, range=20)
         print(number)

@@ -11,7 +11,7 @@ else:
 
 from random import randint, uniform
 
-from object_mother_pattern.mothers.base_mother import BaseMother
+from object_mother_pattern.models import BaseMother
 
 
 class FloatMother(BaseMother[float]):
@@ -20,7 +20,7 @@ class FloatMother(BaseMother[float]):
 
     Example:
     ```python
-    from object_mother_pattern.mothers import FloatMother
+    from object_mother_pattern import FloatMother
 
     number = FloatMother.create(min=-4, max=15, decimals=5)
     print(number)
@@ -65,7 +65,7 @@ class FloatMother(BaseMother[float]):
 
         Example:
         ```python
-        from object_mother_pattern.mothers import FloatMother
+        from object_mother_pattern import FloatMother
 
         number = FloatMother.create(min=-4, max=15, decimals=5)
         print(number)

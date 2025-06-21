@@ -11,7 +11,7 @@ else:
 
 from datetime import date
 
-from object_mother_pattern.mothers.base_mother import BaseMother
+from object_mother_pattern.models import BaseMother
 from object_mother_pattern.mothers.primitives import StringMother
 
 from .date_mother import DateMother
@@ -26,7 +26,7 @@ class StringDateMother(BaseMother[str]):
 
     Example:
     ```python
-    from object_mother_pattern.mothers import StringDateMother
+    from object_mother_pattern import StringDateMother
 
     date = StringDateMother.create()
     print(date)
@@ -65,7 +65,7 @@ class StringDateMother(BaseMother[str]):
 
         Example:
         ```python
-        from object_mother_pattern.mothers import StringDateMother
+        from object_mother_pattern import StringDateMother
 
         date = StringDateMother.create()
         print(date)
@@ -110,7 +110,7 @@ class StringDateMother(BaseMother[str]):
 
         Example:
         ```python
-        from object_mother_pattern.mothers import StringDateMother
+        from object_mother_pattern import StringDateMother
 
         date = StringDateMother.out_of_range()
         print(date)

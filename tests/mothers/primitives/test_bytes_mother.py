@@ -99,7 +99,7 @@ def test_bytes_mother_create_method_max_length_value() -> None:
     """
     Check that BytesMother create method max_length parameter is the minimum permitted value.
     """
-    BytesMother.create(max_length=0)
+    BytesMother.create(max_length=1)
 
 
 @mark.unit_testing
@@ -164,6 +164,17 @@ def test_bytes_mother_create_method_min_length_greater_than_max_length() -> None
 
 
 @mark.unit_testing
+def test_bytes_mother_empty_method_happy_path() -> None:
+    """
+    Check that BytesMother empty method returns an empty bytes value.
+    """
+    value = BytesMother.empty()
+
+    assert type(value) is bytes
+    assert len(value) == 0
+
+
+@mark.unit_testing
 def test_bytes_mother_of_length_method_happy_path() -> None:
     """
     Check that BytesMother of_length method returns a bytes value with a length equal to the provided length.
@@ -182,7 +193,7 @@ def test_bytes_mother_of_length_method_invalid_length_type() -> None:
     """
     with assert_raises(
         expected_exception=TypeError,
-        match='BytesMother min_length must be an integer.',
+        match='BytesMother length must be an integer.',
     ):
         BytesMother.of_length(length=IntegerMother.invalid_type())
 
@@ -190,9 +201,9 @@ def test_bytes_mother_of_length_method_invalid_length_type() -> None:
 @mark.unit_testing
 def test_bytes_mother_of_length_method_length_value() -> None:
     """
-    Check that BytesMother of_length method returns a bytes value with a length equal to 0.
+    Check that BytesMother of_length method returns a bytes value with a length equal to 1.
     """
-    BytesMother.of_length(length=0)
+    BytesMother.of_length(length=1)
 
 
 @mark.unit_testing
@@ -202,9 +213,9 @@ def test_bytes_mother_of_length_method_length_negative_value() -> None:
     """
     with assert_raises(
         expected_exception=ValueError,
-        match='BytesMother min_length must be greater than or equal to 0.',
+        match='BytesMother length must be greater than or equal to 1.',
     ):
-        BytesMother.of_length(length=-1)
+        BytesMother.of_length(length=0)
 
 
 @mark.unit_testing
@@ -214,7 +225,7 @@ def test_bytes_mother_of_length_method_length_value_random_negative() -> None:
     """
     with assert_raises(
         expected_exception=ValueError,
-        match='BytesMother min_length must be greater than or equal to 0.',
+        match='BytesMother length must be greater than or equal to 1.',
     ):
         BytesMother.of_length(length=IntegerMother.negative())
 

@@ -7,7 +7,7 @@ from re import escape
 
 from pytest import mark, raises as assert_raises
 
-from object_mother_pattern.mothers import EnumerationMother
+from object_mother_pattern.models import EnumerationMother
 
 
 @unique

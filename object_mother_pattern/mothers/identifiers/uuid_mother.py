@@ -11,7 +11,7 @@ else:
 
 from uuid import UUID, uuid4
 
-from object_mother_pattern.mothers.base_mother import BaseMother
+from object_mother_pattern.models import BaseMother
 
 
 class UuidMother(BaseMother[UUID]):
@@ -20,7 +20,7 @@ class UuidMother(BaseMother[UUID]):
 
     Example:
     ```python
-    from object_mother_pattern.mothers import UuidMother
+    from object_mother_pattern import UuidMother
 
     uuid = UuidMother.create()
     print(uuid)
@@ -46,7 +46,7 @@ class UuidMother(BaseMother[UUID]):
 
         Example:
         ```python
-        from object_mother_pattern.mothers import UuidMother
+        from object_mother_pattern import UuidMother
 
         uuid = UuidMother.create()
         print(uuid)

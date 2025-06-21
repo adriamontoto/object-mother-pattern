@@ -11,7 +11,7 @@ else:
 
 from random import uniform
 
-from object_mother_pattern.mothers.base_mother import BaseMother
+from object_mother_pattern.models import BaseMother
 
 
 class BooleanMother(BaseMother[bool]):
@@ -20,7 +20,7 @@ class BooleanMother(BaseMother[bool]):
 
     Example:
     ```python
-    from object_mother_pattern.mothers import BooleanMother
+    from object_mother_pattern import BooleanMother
 
     boolean = BooleanMother.create()
     print(boolean)
@@ -51,7 +51,7 @@ class BooleanMother(BaseMother[bool]):
 
         Example:
         ```python
-        from object_mother_pattern.mothers import BooleanMother
+        from object_mother_pattern import BooleanMother
 
         boolean = BooleanMother.create()
         print(boolean)
@@ -85,7 +85,7 @@ class BooleanMother(BaseMother[bool]):
 
         Example:
         ```python
-        from object_mother_pattern.mothers import BooleanMother
+        from object_mother_pattern import BooleanMother
 
         boolean = BooleanMother.true()
         print(boolean)
@@ -104,7 +104,7 @@ class BooleanMother(BaseMother[bool]):
 
         Example:
         ```python
-        from object_mother_pattern.mothers import BooleanMother
+        from object_mother_pattern import BooleanMother
 
         boolean = BooleanMother.false()
         print(boolean)

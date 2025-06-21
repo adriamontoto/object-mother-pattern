@@ -32,7 +32,7 @@ class EnumerationMother(ABC, Generic[E]):  # noqa: UP046
     ```python
     from enum import Enum, unique
 
-    from object_mother_pattern.mothers import EnumerationMother
+    from object_mother_pattern.models import EnumerationMother
 
 
     @unique
@@ -101,7 +101,7 @@ class EnumerationMother(ABC, Generic[E]):  # noqa: UP046
         ```python
         from enum import Enum, unique
 
-        from object_mother_pattern.mothers import EnumerationMother
+        from object_mother_pattern.models import EnumerationMother
 
 
         @unique

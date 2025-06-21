@@ -13,7 +13,7 @@ from datetime import tzinfo
 from random import choice
 from zoneinfo import ZoneInfo, available_timezones
 
-from object_mother_pattern.mothers.base_mother import BaseMother
+from object_mother_pattern.models import BaseMother
 
 
 class TimezoneMother(BaseMother[tzinfo]):

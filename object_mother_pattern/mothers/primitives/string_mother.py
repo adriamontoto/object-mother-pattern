@@ -1,5 +1,5 @@
 """
-StringMother module for generating string test data with various constraints.
+StringMother module.
 """
 
 from sys import version_info
@@ -11,14 +11,9 @@ else:
 
 from random import choice, randint
 
-from object_mother_pattern.mothers.base_mother import BaseMother
+from object_mother_pattern.models import BaseMother
 
-from .utils.alphabets import (
-    ALPHABET_BASIC,
-    ALPHABET_LOWERCASE_BASIC,
-    ALPHABET_UPPERCASE_BASIC,
-    DIGITS_BASIC,
-)
+from .utils.alphabets import ALPHABET_BASIC, ALPHABET_LOWERCASE_BASIC, ALPHABET_UPPERCASE_BASIC, DIGITS_BASIC
 
 
 class StringMother(BaseMother[str]):
@@ -27,7 +22,7 @@ class StringMother(BaseMother[str]):
 
     Example:
     ```python
-    from object_mother_pattern.mothers import StringMother
+    from object_mother_pattern import StringMother
 
     string = StringMother.create()
     print(string)
@@ -72,7 +67,7 @@ class StringMother(BaseMother[str]):
 
         Example:
         ```python
-        from object_mother_pattern.mothers import StringMother
+        from object_mother_pattern import StringMother
 
         string = StringMother.create()
         print(string)
@@ -119,7 +114,7 @@ class StringMother(BaseMother[str]):
 
         Example:
         ```python
-        from object_mother_pattern.mothers import StringMother
+        from object_mother_pattern import StringMother
 
         string = StringMother.empty()
         print(string)
@@ -149,7 +144,7 @@ class StringMother(BaseMother[str]):
 
         Example:
         ```python
-        from object_mother_pattern.mothers import StringMother
+        from object_mother_pattern import StringMother
 
         string = StringMother.lowercase(min_length=8, max_length=32)
         print(string)
@@ -179,7 +174,7 @@ class StringMother(BaseMother[str]):
 
         Example:
         ```python
-        from object_mother_pattern.mothers import StringMother
+        from object_mother_pattern import StringMother
 
         string = StringMother.uppercase(min_length=8, max_length=32)
         print(string)
@@ -209,7 +204,7 @@ class StringMother(BaseMother[str]):
 
         Example:
         ```python
-        from object_mother_pattern.mothers import StringMother
+        from object_mother_pattern import StringMother
 
         string = StringMother.titlecase(min_length=8, max_length=32)
         print(string)
@@ -243,7 +238,7 @@ class StringMother(BaseMother[str]):
 
         Example:
         ```python
-        from object_mother_pattern.mothers import StringMother
+        from object_mother_pattern import StringMother
 
         string = StringMother.mixedcase(min_length=8, max_length=32)
         print(string)
@@ -274,7 +269,7 @@ class StringMother(BaseMother[str]):
 
         Example:
         ```python
-        from object_mother_pattern.mothers import StringMother
+        from object_mother_pattern import StringMother
 
         string = StringMother.of_length(length=10)
         print(string)
@@ -305,7 +300,7 @@ class StringMother(BaseMother[str]):
 
         Example:
         ```python
-        from object_mother_pattern.mothers import StringMother
+        from object_mother_pattern import StringMother
 
         string = StringMother.alpha(min_length=8, max_length=32)
         print(string)
@@ -340,7 +335,7 @@ class StringMother(BaseMother[str]):
 
         Example:
         ```python
-        from object_mother_pattern.mothers import StringMother
+        from object_mother_pattern import StringMother
 
         string = StringMother.alphanumeric(min_length=8, max_length=32)
         print(string)
@@ -370,7 +365,7 @@ class StringMother(BaseMother[str]):
 
         Example:
         ```python
-        from object_mother_pattern.mothers import StringMother
+        from object_mother_pattern import StringMother
 
         string = StringMother.numeric(min_length=8, max_length=32)
         print(string)
@@ -401,7 +396,7 @@ class StringMother(BaseMother[str]):
 
         Example:
         ```python
-        from object_mother_pattern.mothers import StringMother
+        from object_mother_pattern import StringMother
 
         string = StringMother.not_trimmed(min_length=8, max_length=32)
         print(string)

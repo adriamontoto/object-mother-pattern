@@ -6,7 +6,7 @@ from re import escape
 
 from pytest import mark, raises as assert_raises
 
-from object_mother_pattern.mothers import BaseMother
+from object_mother_pattern.models import BaseMother
 
 
 @mark.unit_testing

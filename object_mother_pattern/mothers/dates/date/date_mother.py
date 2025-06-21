@@ -14,7 +14,7 @@ from random import choice
 
 from dateutil.relativedelta import relativedelta
 
-from object_mother_pattern.mothers.base_mother import BaseMother
+from object_mother_pattern.models import BaseMother
 
 
 class DateMother(BaseMother[date]):
@@ -23,7 +23,7 @@ class DateMother(BaseMother[date]):
 
     Example:
     ```python
-    from object_mother_pattern.mothers import DateMother
+    from object_mother_pattern import DateMother
 
     date = DateMother.create()
     print(date)
@@ -62,7 +62,7 @@ class DateMother(BaseMother[date]):
 
         Example:
         ```python
-        from object_mother_pattern.mothers import DateMother
+        from object_mother_pattern import DateMother
 
         date = DateMother.create()
         print(date)
@@ -123,7 +123,7 @@ class DateMother(BaseMother[date]):
 
         Example:
         ```python
-        from object_mother_pattern.mothers import DateMother
+        from object_mother_pattern import DateMother
 
         date = DateMother.out_of_range()
         print(date)

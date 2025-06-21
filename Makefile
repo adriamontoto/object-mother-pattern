@@ -74,6 +74,8 @@ format: # It automatically formats code
 	@$(PYTHON_BIN) -m ruff check $(FULL_SOURCES) --config $(CONFIGURATION_FILE) --fix-only
 	@$(PYTHON_BIN) -m ruff format $(FULL_SOURCES) --config $(CONFIGURATION_FILE)
 
+	@echo -e "\n✅ Code formatted correctly.\n"
+
 
 .PHONY: lint
 lint: # It automatically lints code
@@ -86,12 +88,16 @@ lint: # It automatically lints code
 	$(PYTHON_BIN) -m ruff check $(FULL_SOURCES) --config $(CONFIGURATION_FILE) --no-fix || ruff_exit=$$?; \
 	exit $$(( mypy_exit || ruff_exit ))
 
+	@echo -e "\n✅ Code linted correctly.\n"
+
 
 .PHONY: test
 test: # It runs all tests
 	@echo -e "\n⌛ Running tests...\n"
 
 	@$(PYTHON_BIN) -m pytest --config-file $(CONFIGURATION_FILE)
+
+	@echo -e "\n✅ Tests run correctly.\n"
 
 
 .PHONY: tests
@@ -109,6 +115,8 @@ coverage: # It gets the test coverage report
 	$(PYTHON_BIN) -m coverage combine; \
 	$(PYTHON_BIN) -m coverage report; \
 	exit $${coverage_exit:-0}
+
+	@echo -e "\n✅ Test coverage report generated correctly.\n"
 
 
 .PHONY: build
@@ -150,7 +158,6 @@ clean: # It cleans up the project, removing the virtual environment and some fil
 	$(call quiet, rm --force --recursive `find . -name .ruff_cache`)
 	$(call quiet, rm --force --recursive `find . -name .mypy_cache`)
 	$(call quiet, rm --force --recursive `find . -name .pytest_cache`)
-	$(call quiet, rm --force --recursive `find . -name index.txt`)
 	$(call quiet, rm --force --recursive .coverage)
 	$(call quiet, rm --force --recursive .coverage.*)
 	$(call quiet, rm --force --recursive coverage.xml)

@@ -2,6 +2,17 @@
 
 <!-- version list -->
 
+## v3.1.0 (2025-06-28)
+
+### ✨ Features
+
+- Implement length in StringMother.invalid_value
+  ([`786b202`](https://github.com/adriamontoto/object-mother-pattern/commit/786b202f5bc6be0ba8c36307a955088d685c0626))
+
+- Override FloatMother invalid type to remove integer as well
+  ([`515da32`](https://github.com/adriamontoto/object-mother-pattern/commit/515da321d72324dfbc73454105a8180c1c97650c))
+
+
 ## v3.0.0 (2025-06-21)
 
 ### ✨ Features

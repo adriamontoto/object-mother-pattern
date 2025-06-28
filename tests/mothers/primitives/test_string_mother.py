@@ -1413,3 +1413,68 @@ def test_string_mother_invalid_value_method_happy_path() -> None:
 
     assert type(value) is str
     assert not value.isprintable()
+
+
+@mark.unit_testing
+def test_string_mother_invalid_value_method_length_value() -> None:
+    """
+    Check that StringMother invalid_value method length parameter is the minimum permitted value.
+    """
+    StringMother.invalid_value(length=1)
+
+
+@mark.unit_testing
+def test_string_mother_invalid_value_method_length_value_random() -> None:
+    """
+    Check that StringMother invalid_value method length parameter is a random positive integer.
+    """
+    length = IntegerMother.create(min=IntegerMother.positive())
+
+    StringMother.invalid_value(length=length)
+
+
+@mark.unit_testing
+def test_string_mother_invalid_value_method_length_value_negative() -> None:
+    """
+    Check that StringMother invalid_value method raises a ValueError when the provided length is negative.
+    """
+    with assert_raises(
+        expected_exception=ValueError,
+        match='StringMother length must be greater than or equal to 0.',
+    ):
+        StringMother.invalid_value(length=-1)
+
+
+@mark.unit_testing
+def test_string_mother_invalid_value_method_length_value_negative_random() -> None:
+    """
+    Check that StringMother invalid_value method raises a ValueError when the provided length is a random negative
+    value.
+    """
+    with assert_raises(
+        expected_exception=ValueError,
+        match='StringMother length must be greater than or equal to 0.',
+    ):
+        StringMother.invalid_value(length=IntegerMother.negative())
+
+
+@mark.unit_testing
+def test_string_mother_invalid_value_method_invalid_length_type() -> None:
+    """
+    Check that StringMother invalid_value method raises a TypeError when the provided length is not an integer.
+    """
+    with assert_raises(
+        expected_exception=TypeError,
+        match='StringMother length must be an integer.',
+    ):
+        StringMother.invalid_value(length=IntegerMother.invalid_type())
+
+
+@mark.unit_testing
+def test_string_mother_invalid_value_method_no_spaces() -> None:
+    """
+    Check that StringMother invalid_value method returns a string value with no spaces.
+    """
+    value = StringMother.invalid_value()
+
+    assert value.strip() == value

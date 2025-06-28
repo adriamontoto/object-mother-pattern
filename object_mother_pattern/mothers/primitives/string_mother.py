@@ -429,12 +429,26 @@ class StringMother(BaseMother[str]):
         return (' ' * leading_spaces) + core_string + (' ' * trailing_spaces)
 
     @classmethod
-    def invalid_value(cls) -> str:
+    def invalid_value(cls, *, length: int = 8) -> str:
         """
         Create an invalid string value.
+
+        Args:
+            length (int, optional): Length of the string. Must be >= 0. Defaults to 8.
+
+        Raises:
+            TypeError: If `length` is not an integer.
+            ValueError: If `length` is less than 0.
 
         Returns:
             str: Invalid string.
         """
-        non_printable_chars = ''.join(chr(i) for i in range(32))
-        return ''.join(choice(seq=non_printable_chars) for _ in range(10))  # noqa: S311
+        if type(length) is not int:
+            raise TypeError('StringMother length must be an integer.')
+
+        if length < 0:
+            raise ValueError('StringMother length must be greater than or equal to 0.')
+
+        non_printable_chars = ''.join(chr(i) for i in range(0, 8))
+
+        return ''.join(choice(seq=non_printable_chars) for _ in range(length))  # noqa: S311

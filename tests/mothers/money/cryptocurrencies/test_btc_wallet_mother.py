@@ -62,7 +62,7 @@ def test_btc_wallet_mother_invalid_word_number_type() -> None:
         expected_exception=TypeError,
         match='BtcWalletMother word_number must be an integer.',
     ):
-        BtcWalletMother.create(word_number=IntegerMother.invalid_type(remove_types=(float,)))
+        BtcWalletMother.create(word_number=IntegerMother.invalid_type())
 
 
 @mark.unit_testing

@@ -39,7 +39,7 @@ def test_float_mother_create_method_invalid_value_type() -> None:
         expected_exception=TypeError,
         match='FloatMother value must be an integer or a float.',
     ):
-        FloatMother.create(value=FloatMother.invalid_type(remove_types=(int,)))
+        FloatMother.create(value=FloatMother.invalid_type())
 
 
 @mark.unit_testing
@@ -62,7 +62,7 @@ def test_float_mother_create_method_invalid_min_type() -> None:
         expected_exception=TypeError,
         match='FloatMother min value must be an integer or a float.',
     ):
-        FloatMother.create(min=FloatMother.invalid_type(remove_types=(int,)))
+        FloatMother.create(min=FloatMother.invalid_type())
 
 
 @mark.unit_testing
@@ -74,7 +74,7 @@ def test_float_mother_create_method_invalid_max_type() -> None:
         expected_exception=TypeError,
         match='FloatMother max value must be an integer or a float.',
     ):
-        FloatMother.create(max=FloatMother.invalid_type(remove_types=(int,)))
+        FloatMother.create(max=FloatMother.invalid_type())
 
 
 @mark.unit_testing

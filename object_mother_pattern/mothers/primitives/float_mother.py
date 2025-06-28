@@ -10,6 +10,7 @@ else:
     from typing_extensions import override  # pragma: no cover
 
 from random import randint, uniform
+from typing import Any, Iterable
 
 from object_mother_pattern.models import BaseMother
 
@@ -103,3 +104,20 @@ class FloatMother(BaseMother[float]):
             return round(number=min, ndigits=decimals)
 
         return round(number=uniform(a=min, b=max), ndigits=decimals)  # noqa: S311
+
+    @override
+    @classmethod
+    def invalid_type(cls, *, remove_types: Iterable[type[Any]] | None = None) -> Any:  # noqa: C901
+        """
+        Create an invalid type.
+
+        Args:
+            remove_types (Iterable[type[Any]] | None, optional): Iterable of types to remove. Defaults to None.
+
+        Returns:
+            Any: Invalid type.
+        """
+        remove_types = set() if remove_types is None else set(remove_types)
+        remove_types.add(int)
+
+        return super().invalid_type(remove_types=remove_types)

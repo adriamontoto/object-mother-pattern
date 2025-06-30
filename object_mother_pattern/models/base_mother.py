@@ -48,7 +48,7 @@ class BaseMother(ABC, Generic[T]):  # noqa: UP046
             if get_origin(tp=base) is BaseMother:
                 mother_type, *_ = get_args(tp=base)
 
-                if not isclass(object=mother_type):
+                if not isclass(object=mother_type) and get_origin(tp=mother_type) is None:
                     raise TypeError(f'BaseMother[...] <<<{mother_type}>>> must be a type. Got <<<{type(mother_type).__name__}>>> type.')  # noqa: E501  # fmt: skip
 
                 cls._type = mother_type

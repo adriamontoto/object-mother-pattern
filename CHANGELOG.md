@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v3.1.1 (2025-06-30)
+
+### 🐛 Bug Fixes
+
+- Accept GenericAliases as BaseMother type
+  ([`0d429fa`](https://github.com/adriamontoto/object-mother-pattern/commit/0d429fa6e64e458906ed6fb4f391b1131c54795c))
+
+
 ## v3.1.0 (2025-06-28)
 
 ### ✨ Features

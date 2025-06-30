@@ -179,7 +179,7 @@ def test_bytes_mother_of_length_method_happy_path() -> None:
     """
     Check that BytesMother of_length method returns a bytes value with a length equal to the provided length.
     """
-    length = IntegerMother.positive_or_zero()
+    length = IntegerMother.positive()
     value = BytesMother.of_length(length=length)
 
     assert type(value) is bytes

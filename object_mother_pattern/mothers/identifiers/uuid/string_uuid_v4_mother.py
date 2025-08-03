@@ -1,5 +1,5 @@
 """
-StringUuidMother module.
+StringUuidV4Mother module.
 """
 
 from sys import version_info
@@ -12,18 +12,18 @@ else:
 from uuid import uuid4
 
 from object_mother_pattern.models import BaseMother
-from object_mother_pattern.mothers.primitives.string_mother import StringMother
+from object_mother_pattern.mothers.primitives import StringMother
 
 
-class StringUuidMother(BaseMother[str]):
+class StringUuidV4Mother(BaseMother[str]):
     """
-    StringUuidMother class is responsible for creating random string universally unique identifier values.
+    StringUuidV4Mother class is responsible for creating random string UUID4 values.
 
     Example:
     ```python
-    from object_mother_pattern import StringUuidMother
+    from object_mother_pattern.mothers.identifiers import StringUuidV4Mother
 
-    uuid = StringUuidMother.create()
+    uuid = StringUuidV4Mother.create()
     print(uuid)
     # >>> 3e9e0f3a-64a3-474f-9127-368e723f389f
     ```
@@ -47,16 +47,16 @@ class StringUuidMother(BaseMother[str]):
 
         Example:
         ```python
-        from object_mother_pattern import StringUuidMother
+        from object_mother_pattern.mothers.identifiers import StringUuidV4Mother
 
-        uuid = StringUuidMother.create()
+        uuid = StringUuidV4Mother.create()
         print(uuid)
         # >>> 3e9e0f3a-64a3-474f-9127-368e723f389f
         ```
         """
         if value is not None:
             if type(value) is not str:
-                raise TypeError('StringUuidMother value must be a string.')
+                raise TypeError('StringUuidV4Mother value must be a string.')
 
             return value
 

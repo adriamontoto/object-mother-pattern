@@ -9,9 +9,12 @@ if version_info >= (3, 12):
 else:
     from typing_extensions import override  # pragma: no cover
 
-from uuid import UUID, uuid4
+from random import choice
+from uuid import UUID
 
 from object_mother_pattern.models import BaseMother
+
+from .uuid_v4_mother import UuidV4Mother
 
 
 class UuidMother(BaseMother[UUID]):
@@ -32,7 +35,7 @@ class UuidMother(BaseMother[UUID]):
     @override
     def create(cls, *, value: UUID | None = None) -> UUID:
         """
-        Create a random UUID value. If a specific UUID value is provided via `value`, it is returned after validation.
+        Create a random UUID value. If a specific UUID value is provided via `value`, it is returned after validation.\
         Otherwise, the method generates a random UUID.
 
         Args:
@@ -46,7 +49,7 @@ class UuidMother(BaseMother[UUID]):
 
         Example:
         ```python
-        from object_mother_pattern import UuidMother
+        from object_mother_pattern.mothers.identifiers import UuidMother
 
         uuid = UuidMother.create()
         print(uuid)
@@ -59,4 +62,8 @@ class UuidMother(BaseMother[UUID]):
 
             return value
 
-        return uuid4()
+        uuid_generators = [
+            UuidV4Mother.create,
+        ]
+
+        return choice(seq=uuid_generators)()  # noqa: S311

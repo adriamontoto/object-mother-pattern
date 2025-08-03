@@ -6,7 +6,7 @@ from uuid import UUID
 
 from pytest import mark, raises as assert_raises
 
-from object_mother_pattern.mothers import UuidMother
+from object_mother_pattern.mothers.identifiers import UuidMother
 
 
 @mark.unit_testing

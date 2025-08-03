@@ -1,7 +1,8 @@
-from .string_uuid_mother import StringUuidMother
-from .uuid_mother import UuidMother
+from .uuid import StringUuidMother, StringUuidV4Mother, UuidMother, UuidV4Mother
 
 __all__ = (
     'StringUuidMother',
+    'StringUuidV4Mother',
     'UuidMother',
+    'UuidV4Mother',
 )

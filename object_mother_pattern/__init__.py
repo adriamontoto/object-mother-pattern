@@ -11,8 +11,6 @@ from .mothers import (
     StringDateMother,
     StringDatetimeMother,
     StringMother,
-    StringUuidMother,
-    UuidMother,
 )
 
 __all__ = (
@@ -26,6 +24,4 @@ __all__ = (
     'StringDateMother',
     'StringDatetimeMother',
     'StringMother',
-    'StringUuidMother',
-    'UuidMother',
 )

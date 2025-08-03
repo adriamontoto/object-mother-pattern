@@ -6,7 +6,7 @@ from uuid import UUID
 
 from pytest import mark, raises as assert_raises
 
-from object_mother_pattern.mothers import StringUuidMother
+from object_mother_pattern.mothers.identifiers import StringUuidMother
 
 
 @mark.unit_testing
@@ -56,6 +56,6 @@ def test_string_uuid_mother_invalid_value_type() -> None:
     """
     with assert_raises(
         expected_exception=TypeError,
-        match='StringUuidMother value must be a string.',
+        match=r'StringUuidMother value must be a string.',
     ):
         StringUuidMother.create(value=StringUuidMother.invalid_type())

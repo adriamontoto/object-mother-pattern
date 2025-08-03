@@ -1,7 +1,6 @@
 from enum import StrEnum, unique
 
 from .dates import DateMother, DatetimeMother, StringDateMother, StringDatetimeMother
-from .identifiers import StringUuidMother, UuidMother
 from .primitives import BooleanMother, BytesMother, FloatMother, IntegerMother, StringMother
 
 
@@ -27,6 +26,4 @@ __all__ = (
     'StringDateMother',
     'StringDatetimeMother',
     'StringMother',
-    'StringUuidMother',
-    'UuidMother',
 )

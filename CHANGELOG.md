@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v3.2.0 (2025-08-03)
+
+### ✨ Features
+
+- Implement UUID v4 and String UUID v4 mothers
+  ([`7768bad`](https://github.com/adriamontoto/object-mother-pattern/commit/7768badd7f494a4c2e1d1fea9be78ddcddf71d52))
+
+
 ## v3.1.1 (2025-06-30)
 
 ### 🐛 Bug Fixes

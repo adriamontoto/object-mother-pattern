@@ -2,6 +2,17 @@
 
 <!-- version list -->
 
+## v3.3.0 (2025-08-25)
+
+### ✨ Features
+
+- Implement RFC-compliant domain generation
+  ([`9d17348`](https://github.com/adriamontoto/object-mother-pattern/commit/9d17348182e3afd0eaea2c0c081eb55b5d17bffe))
+
+- Integrate value-object library for obtaining value object primitive type
+  ([`79292c9`](https://github.com/adriamontoto/object-mother-pattern/commit/79292c9a9e7b589d3d65fb433a806f633afc1a84))
+
+
 ## v3.2.0 (2025-08-03)
 
 ### ✨ Features

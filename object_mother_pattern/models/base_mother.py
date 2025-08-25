@@ -60,8 +60,7 @@ class BaseMother(ABC, Generic[T]):  # noqa: UP046
                 if not isclass(object=mother_type) and get_origin(tp=mother_type) is None:
                     raise TypeError(f'BaseMother[...] <<<{mother_type}>>> must be a type. Got <<<{type(mother_type).__name__}>>> type.')  # noqa: E501  # fmt: skip
 
-                if HAS_VALUE_OBJECTS and issubclass(mother_type, ValueObject):
-                    print('Detected ValueObject subclass as mother type.')  # pragma: no cover
+                if HAS_VALUE_OBJECTS and isclass(object=mother_type) and issubclass(mother_type, ValueObject):
                     mother_type = mother_type.type()
 
                 cls._type = mother_type

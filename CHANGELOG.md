@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v3.3.1 (2025-08-25)
+
+### 🐛 Bug Fixes
+
+- Ensure mother_type is a class before checking for ValueObject subclass
+  ([`a7bd44e`](https://github.com/adriamontoto/object-mother-pattern/commit/a7bd44eac23eec9b81491b7496ffbcedf853b3e1))
+
+
 ## v3.3.0 (2025-08-25)
 
 ### ✨ Features

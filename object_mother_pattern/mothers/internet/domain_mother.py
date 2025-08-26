@@ -352,6 +352,54 @@ class DomainMother(BaseMother[str]):
         return '.'.join([*labels, tld])
 
     @classmethod
+    def rfc_create(cls) -> str:
+        """
+        Create a RFC 1035/1123 compliant domain name that strictly follows DNS specifications.
+
+        This method generates domain names that comply with:
+        - RFC 1035: Domain Names - Implementation and Specification
+        - RFC 1123: Requirements for Internet Hosts - Application and Support
+        - RFC 3696: Application Techniques for Checking and Transformation of Names
+
+        RFC Requirements Enforced:
+        - Total domain length ≤ 253 characters (presentation form)
+        - Each label: 1-63 characters
+        - Characters allowed: letters (a-z), digits (0-9), hyphens (-)
+        - Hyphens cannot be at the beginning or end of labels
+        - At least 2 labels (domain + TLD minimum)
+        - Case insensitive (generated in lowercase)
+        - Uses official IANA TLD list
+        - Domain structure: 2-127 labels total
+
+        Returns:
+            str: A randomly generated RFC-compliant domain name.
+
+        References:
+            RFC 1035: https://www.rfc-editor.org/rfc/rfc1035
+            RFC 1123: https://www.rfc-editor.org/rfc/rfc1123
+            RFC 3696: https://www.rfc-editor.org/rfc/rfc3696
+            IANA TLD List: https://data.iana.org/TLD/tlds-alpha-by-domain.txt
+
+        Example:
+            ```python
+            from object_mother_pattern.mothers.internet import DomainMother
+
+            domain = DomainMother.rfc_create()
+            print(domain)
+            # >>> q.e-------d.r------r.e.n.p.e.o.j.s.h.e.b.o.g.j.w.o.g.k.l.u.n.c.d.r.g.o.w.y.t.n.h.e.q.r.q.c.u.c.p.v.n.u.d.y.u.b.p.e.r.s.b.g.u.o.b.g.h.h.i.y.f.r.g.g.t.w.p.q.x.i.t.f.n.s.z.k.c.j.i.o.z.p.gh
+            ```
+        """  # noqa: E501
+        return cls.create(
+            min_length=4,
+            max_length=253,
+            min_labels=2,
+            max_labels=127,
+            string_case=StringCase.LOWERCASE,
+            include_hyphens=True,
+            include_numbers=True,
+        )
+
+    @classmethod
     def invalid_value(cls) -> str:
         """
         Create an invalid domain value.

@@ -521,3 +521,35 @@ def test_domain_mother_invalid_value_method_happy_path() -> None:
 
     assert type(value) is str
     assert not value.isprintable()
+
+
+@mark.unit_testing
+def test_domain_mother_rfc_create_method_happy_path() -> None:
+    """
+    Check that DomainMother rfc_create method returns a RFC-compliant domain.
+    """
+    value = DomainMother.rfc_create()
+
+    domain_tld = value.lower().split('.')[-1]
+    domain_labels = value.lower().split('.')[:-1]
+    tlds = {tld for tlds in get_tld_dict().values() for tld in tlds}
+    all_labels = {label for labels in get_label_dict().values() for label in labels}
+
+    assert type(value) is str
+    assert len(value) >= 4
+    assert len(value) <= 253
+    assert value == value.strip()
+    assert not value.startswith('.') and not value.endswith('.')
+    assert '..' not in value
+    assert value.islower()
+    assert domain_tld in tlds
+    assert len(domain_labels) >= 1
+    assert len(domain_labels) <= 127
+
+    for domain_label in domain_labels:
+        assert domain_label == domain_label.strip()
+        assert len(domain_label) >= 1
+        assert len(domain_label) <= 63
+        assert domain_label in all_labels or '-' in domain_label or domain_label.isalnum()
+        assert all(c.isalnum() or c == '-' for c in domain_label)
+        assert not domain_label.startswith('-') and not domain_label.endswith('-')

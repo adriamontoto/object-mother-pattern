@@ -9,12 +9,11 @@ if version_info >= (3, 12):
 else:
     from typing_extensions import override  # pragma: no cover
 
-from random import choice
 
 from object_mother_pattern.models import BaseMother
 from object_mother_pattern.mothers.primitives import StringMother
 
-from .string_uuid_v4_mother import StringUuidV4Mother
+from .uuid_mother import UuidMother
 
 
 class StringUuidMother(BaseMother[str]):
@@ -33,13 +32,14 @@ class StringUuidMother(BaseMother[str]):
 
     @classmethod
     @override
-    def create(cls, *, value: str | None = None) -> str:
+    def create(cls, *, value: str | None = None, allow_versions: set[int] | None = None) -> str:
         """
         Create a random string UUID value. If a specific string UUID value is provided via `value`, it is returned after
         validation. Otherwise, the method generates a random string UUID.
 
         Args:
             value (str | None, optional): Specific value to return. Defaults to None.
+            allow_versions (set[int] | None, optional): Specific UUID versions to allow. Defaults to all versions.
 
         Raises:
             TypeError: If the provided `value` is not a string.
@@ -62,11 +62,7 @@ class StringUuidMother(BaseMother[str]):
 
             return value
 
-        uuid_generators = [
-            StringUuidV4Mother.create,
-        ]
-
-        return choice(seq=uuid_generators)()  # noqa: S311
+        return str(UuidMother.create(allow_versions=allow_versions))
 
     @classmethod
     def invalid_value(cls) -> str:

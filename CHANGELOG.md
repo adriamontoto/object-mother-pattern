@@ -2,6 +2,44 @@
 
 <!-- version list -->
 
+## v3.4.1 (2025-08-26)
+
+### 🐛 Bug Fixes
+
+- Ensure generated user agent has no trailing spaces
+  ([`1133db7`](https://github.com/adriamontoto/object-mother-pattern/commit/1133db75ff3cb1a96e603d5ebb946606f9493787))
+
+
+## v3.4.0 (2025-08-26)
+
+### ✨ Features
+
+- **internet**: Implement ip address mother
+  ([`a04512a`](https://github.com/adriamontoto/object-mother-pattern/commit/a04512a1afabe733a03348a6d2a8ad4b91be08d3))
+
+- **internet**: Implement user agent mother
+  ([`db4b267`](https://github.com/adriamontoto/object-mother-pattern/commit/db4b26790eec24a1b239c053cd01f5024c680312))
+
+
+## v3.3.1 (2025-08-25)
+
+### 🐛 Bug Fixes
+
+- Ensure mother_type is a class before checking for ValueObject subclass
+  ([`a7bd44e`](https://github.com/adriamontoto/object-mother-pattern/commit/a7bd44eac23eec9b81491b7496ffbcedf853b3e1))
+
+
+## v3.3.0 (2025-08-25)
+
+### ✨ Features
+
+- Implement RFC-compliant domain generation
+  ([`9d17348`](https://github.com/adriamontoto/object-mother-pattern/commit/9d17348182e3afd0eaea2c0c081eb55b5d17bffe))
+
+- Integrate value-object library for obtaining value object primitive type
+  ([`79292c9`](https://github.com/adriamontoto/object-mother-pattern/commit/79292c9a9e7b589d3d65fb433a806f633afc1a84))
+
+
 ## v3.2.0 (2025-08-03)
 
 ### ✨ Features

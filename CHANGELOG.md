@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v3.4.1 (2025-08-26)
+
+### 🐛 Bug Fixes
+
+- Ensure generated user agent has no trailing spaces
+  ([`1133db7`](https://github.com/adriamontoto/object-mother-pattern/commit/1133db75ff3cb1a96e603d5ebb946606f9493787))
+
+
 ## v3.4.0 (2025-08-26)
 
 ### ✨ Features

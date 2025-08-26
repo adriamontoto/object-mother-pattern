@@ -2,6 +2,17 @@
 
 <!-- version list -->
 
+## v3.4.0 (2025-08-26)
+
+### ✨ Features
+
+- **internet**: Implement ip address mother
+  ([`a04512a`](https://github.com/adriamontoto/object-mother-pattern/commit/a04512a1afabe733a03348a6d2a8ad4b91be08d3))
+
+- **internet**: Implement user agent mother
+  ([`db4b267`](https://github.com/adriamontoto/object-mother-pattern/commit/db4b26790eec24a1b239c053cd01f5024c680312))
+
+
 ## v3.3.1 (2025-08-25)
 
 ### 🐛 Bug Fixes

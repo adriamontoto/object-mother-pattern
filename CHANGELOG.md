@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v3.5.0 (2025-08-26)
+
+### ✨ Features
+
+- Implement v1, v3, v5 uuid mothers and string representations
+  ([`036ce5e`](https://github.com/adriamontoto/object-mother-pattern/commit/036ce5e699c0f23befe5f720d486a5c5056e0756))
+
+
 ## v3.4.1 (2025-08-26)
 
 ### 🐛 Bug Fixes

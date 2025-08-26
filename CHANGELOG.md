@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v3.5.1 (2025-08-26)
+
+### 🐛 Bug Fixes
+
+- Rename allow_versions to exclude_versions in UUID mothers
+  ([`7833c8c`](https://github.com/adriamontoto/object-mother-pattern/commit/7833c8c6404facfa5022c5256ce924c900dd68f2))
+
+
 ## v3.5.0 (2025-08-26)
 
 ### ✨ Features

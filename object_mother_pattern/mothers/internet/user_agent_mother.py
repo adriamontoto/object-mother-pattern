@@ -85,11 +85,14 @@ class UserAgentMother(BaseMother[str]):
             raise ValueError('UserAgentMother min_length must be less than or equal to max_length.')
 
         length = randint(a=min_length, b=max_length)  # noqa: S311
-        print(length)
 
         user_agent = cls._random().user_agent()
         while len(user_agent) < length:
-            user_agent += ' ' + cls._random().user_agent()
+            user_agent += cls._random().user_agent()
+
+        user_agent = user_agent[:length]
+        if user_agent != user_agent.strip():
+            user_agent = user_agent[:-1] + cls._random().lexify(text='?').lower()  # pragma: no cover
 
         return user_agent[:length]
 

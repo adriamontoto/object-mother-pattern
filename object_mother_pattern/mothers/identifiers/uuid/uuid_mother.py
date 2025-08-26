@@ -36,19 +36,19 @@ class UuidMother(BaseMother[UUID]):
 
     @classmethod
     @override
-    def create(cls, *, value: UUID | None = None, allow_versions: set[int] | None = None) -> UUID:
+    def create(cls, *, value: UUID | None = None, exclude_versions: set[int] | None = None) -> UUID:
         """
         Create a random UUID value. If a specific UUID value is provided via `value`, it is returned after validation.
         Otherwise, the method generates a random UUID.
 
         Args:
             value (UUID | None, optional): Specific value to return. Defaults to None.
-            allow_versions (set[int] | None, optional): Specific UUID versions to allow. Defaults to all versions.
+            exclude_versions (set[int] | None, optional): Specific UUID versions to exclude. Defaults to no exclusions.
 
         Raises:
             TypeError: If the provided `value` is not a UUID.
-            TypeError: If the provided `allow_versions` is not a set.
-            ValueError: If the provided `allow_versions` is not a subset of {1, 3, 4, 5}.
+            TypeError: If the provided `exclude_versions` is not a set.
+            ValueError: If the provided `exclude_versions` is not a subset of {1, 3, 4, 5}.
 
         Returns:
             UUID: A random universally unique identifier value.
@@ -68,14 +68,15 @@ class UuidMother(BaseMother[UUID]):
 
             return value
 
-        if allow_versions is None:
-            allow_versions = {1, 3, 4, 5}
+        if exclude_versions is None:
+            exclude_versions = set()
 
-        if type(allow_versions) is not set:
-            raise TypeError('UuidMother allow_versions must be a set')
+        if type(exclude_versions) is not set:
+            raise TypeError('UuidMother exclude_versions must be a set')
 
-        if not allow_versions.issubset({1, 3, 4, 5}):
-            raise ValueError('UuidMother allow_versions must be a subset of {1, 3, 4, 5}')
+        all_versions = {1, 3, 4, 5}
+        if not exclude_versions.issubset(all_versions):
+            raise ValueError(f'UuidMother exclude_versions must be a subset of {all_versions}')
 
         uuid_generators = {
             1: UuidV1Mother.create,
@@ -84,6 +85,7 @@ class UuidMother(BaseMother[UUID]):
             5: UuidV5Mother.create,
         }
 
-        allowed_generators = [uuid_generators[version] for version in allow_versions]
+        allowed_versions = all_versions - exclude_versions
+        allowed_generators = [uuid_generators[version] for version in allowed_versions]
 
         return choice(seq=allowed_generators)()  # type: ignore[operator, no-any-return]  # noqa: S311

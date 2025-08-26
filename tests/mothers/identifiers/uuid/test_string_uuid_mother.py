@@ -2,7 +2,7 @@
 Test module for the StringUuidMother class.
 """
 
-from random import choice, choices
+from random import choices
 from uuid import UUID
 
 from pytest import mark, raises as assert_raises
@@ -64,38 +64,40 @@ def test_string_uuid_mother_invalid_value_type() -> None:
 
 
 @mark.unit_testing
-def test_string_uuid_mother_allow_versions() -> None:
+def test_string_uuid_mother_exclude_versions() -> None:
     """
-    Test StringUuidMother create method with allow_versions parameter.
+    Test StringUuidMother create method with exclude_versions parameter.
     """
-    version = choice(seq=(1, 3, 4, 5))  # noqa: S311
-    value = StringUuidMother.create(allow_versions={version})
+    excluded_versions = {1, 3}
+    allowed_versions = {4, 5}
+    value = StringUuidMother.create(exclude_versions=excluded_versions)
 
     assert type(value) is str
-    assert UUID(value).version == version
+    assert UUID(value).version in allowed_versions
+    assert UUID(value).version not in excluded_versions
 
 
 @mark.unit_testing
-def test_string_uuid_mother_invalid_allow_versions_type() -> None:
+def test_string_uuid_mother_invalid_exclude_versions_type() -> None:
     """
-    Test StringUuidMother create method with invalid allow_versions type.
+    Test StringUuidMother create method with invalid exclude_versions type.
     """
     with assert_raises(
         expected_exception=TypeError,
-        match='UuidMother allow_versions must be a set',
+        match='UuidMother exclude_versions must be a set',
     ):
-        StringUuidMother.create(allow_versions=[1, 2, 3])  # type: ignore[arg-type]
+        StringUuidMother.create(exclude_versions=[1, 2, 3])  # type: ignore[arg-type]
 
 
 @mark.unit_testing
-def test_string_uuid_mother_invalid_allow_versions_value() -> None:
+def test_string_uuid_mother_invalid_exclude_versions_value() -> None:
     """
-    Test StringUuidMother create method with invalid allow_versions value.
+    Test StringUuidMother create method with invalid exclude_versions value.
     """
     versions = choices(population=(10, 14, 7653, 13456), k=IntegerMother.positive())  # noqa: S311
 
     with assert_raises(
         expected_exception=ValueError,
-        match=r'UuidMother allow_versions must be a subset of \{1, 3, 4, 5\}',
+        match=r'UuidMother exclude_versions must be a subset of \{1, 3, 4, 5\}',
     ):
-        StringUuidMother.create(allow_versions=set(versions))
+        StringUuidMother.create(exclude_versions=set(versions))

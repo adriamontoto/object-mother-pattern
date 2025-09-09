@@ -2,6 +2,41 @@
 
 <!-- version list -->
 
+## v3.5.1 (2025-08-26)
+
+### 🐛 Bug Fixes
+
+- Rename allow_versions to exclude_versions in UUID mothers
+  ([`7833c8c`](https://github.com/adriamontoto/object-mother-pattern/commit/7833c8c6404facfa5022c5256ce924c900dd68f2))
+
+
+## v3.5.0 (2025-08-26)
+
+### ✨ Features
+
+- Implement v1, v3, v5 uuid mothers and string representations
+  ([`036ce5e`](https://github.com/adriamontoto/object-mother-pattern/commit/036ce5e699c0f23befe5f720d486a5c5056e0756))
+
+
+## v3.4.1 (2025-08-26)
+
+### 🐛 Bug Fixes
+
+- Ensure generated user agent has no trailing spaces
+  ([`1133db7`](https://github.com/adriamontoto/object-mother-pattern/commit/1133db75ff3cb1a96e603d5ebb946606f9493787))
+
+
+## v3.4.0 (2025-08-26)
+
+### ✨ Features
+
+- **internet**: Implement ip address mother
+  ([`a04512a`](https://github.com/adriamontoto/object-mother-pattern/commit/a04512a1afabe733a03348a6d2a8ad4b91be08d3))
+
+- **internet**: Implement user agent mother
+  ([`db4b267`](https://github.com/adriamontoto/object-mother-pattern/commit/db4b26790eec24a1b239c053cd01f5024c680312))
+
+
 ## v3.3.1 (2025-08-25)
 
 ### 🐛 Bug Fixes

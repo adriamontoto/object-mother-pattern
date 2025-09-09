@@ -2,10 +2,12 @@
 Test module for the StringUuidMother class.
 """
 
+from random import choices
 from uuid import UUID
 
 from pytest import mark, raises as assert_raises
 
+from object_mother_pattern.mothers import IntegerMother
 from object_mother_pattern.mothers.identifiers import StringUuidMother
 
 
@@ -17,7 +19,7 @@ def test_string_uuid_mother_happy_path() -> None:
     value = StringUuidMother.create()
 
     assert type(value) is str
-    UUID(value)
+    assert UUID(value).version in {1, 3, 4, 5}
 
 
 @mark.unit_testing
@@ -59,3 +61,43 @@ def test_string_uuid_mother_invalid_value_type() -> None:
         match=r'StringUuidMother value must be a string.',
     ):
         StringUuidMother.create(value=StringUuidMother.invalid_type())
+
+
+@mark.unit_testing
+def test_string_uuid_mother_exclude_versions() -> None:
+    """
+    Test StringUuidMother create method with exclude_versions parameter.
+    """
+    excluded_versions = {1, 3}
+    allowed_versions = {4, 5}
+    value = StringUuidMother.create(exclude_versions=excluded_versions)
+
+    assert type(value) is str
+    assert UUID(value).version in allowed_versions
+    assert UUID(value).version not in excluded_versions
+
+
+@mark.unit_testing
+def test_string_uuid_mother_invalid_exclude_versions_type() -> None:
+    """
+    Test StringUuidMother create method with invalid exclude_versions type.
+    """
+    with assert_raises(
+        expected_exception=TypeError,
+        match='UuidMother exclude_versions must be a set',
+    ):
+        StringUuidMother.create(exclude_versions=[1, 2, 3])  # type: ignore[arg-type]
+
+
+@mark.unit_testing
+def test_string_uuid_mother_invalid_exclude_versions_value() -> None:
+    """
+    Test StringUuidMother create method with invalid exclude_versions value.
+    """
+    versions = choices(population=(10, 14, 7653, 13456), k=IntegerMother.positive())  # noqa: S311
+
+    with assert_raises(
+        expected_exception=ValueError,
+        match=r'UuidMother exclude_versions must be a subset of \{1, 3, 4, 5\}',
+    ):
+        StringUuidMother.create(exclude_versions=set(versions))

@@ -20,9 +20,9 @@ class UuidV4Mother(BaseMother[UUID]):
 
     Example:
     ```python
-    from object_mother_pattern.mothers.identifiers import UuidMother
+    from object_mother_pattern.mothers.identifiers import UuidV4Mother
 
-    uuid = UuidMother.create()
+    uuid = UuidV4Mother.create()
     print(uuid)
     # >>> 3e9e0f3a-64a3-474f-9127-368e723f389f
     ```
@@ -46,9 +46,9 @@ class UuidV4Mother(BaseMother[UUID]):
 
         Example:
         ```python
-        from object_mother_pattern.mothers.identifiers import UuidMother
+        from object_mother_pattern.mothers.identifiers import UuidV4Mother
 
-        uuid = UuidMother.create()
+        uuid = UuidV4Mother.create()
         print(uuid)
         # >>> 3e9e0f3a-64a3-474f-9127-368e723f389f
         ```

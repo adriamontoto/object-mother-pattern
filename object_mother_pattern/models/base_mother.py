@@ -17,6 +17,7 @@ from typing import Any, Generic, Iterable, TypeVar, get_args, get_origin
 from uuid import UUID, uuid4
 
 from faker import Faker
+from faker.providers import user_agent
 
 try:
     from value_object_pattern import ValueObject  # type: ignore[import-not-found]
@@ -76,7 +77,10 @@ class BaseMother(ABC, Generic[T]):  # noqa: UP046
         Returns:
             Faker: Faker instance.
         """
-        return Faker(use_weighting=False)
+        faker = Faker(use_weighting=False)
+        faker.add_provider(user_agent)
+
+        return faker
 
     @classmethod
     @abstractmethod

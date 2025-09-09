@@ -32,14 +32,14 @@ class StringUuidMother(BaseMother[str]):
 
     @classmethod
     @override
-    def create(cls, *, value: str | None = None, allow_versions: set[int] | None = None) -> str:
+    def create(cls, *, value: str | None = None, exclude_versions: set[int] | None = None) -> str:
         """
         Create a random string UUID value. If a specific string UUID value is provided via `value`, it is returned after
         validation. Otherwise, the method generates a random string UUID.
 
         Args:
             value (str | None, optional): Specific value to return. Defaults to None.
-            allow_versions (set[int] | None, optional): Specific UUID versions to allow. Defaults to all versions.
+            exclude_versions (set[int] | None, optional): Specific UUID versions to exclude. Defaults to no exclusions.
 
         Raises:
             TypeError: If the provided `value` is not a string.
@@ -62,7 +62,7 @@ class StringUuidMother(BaseMother[str]):
 
             return value
 
-        return str(UuidMother.create(allow_versions=allow_versions))
+        return str(UuidMother.create(exclude_versions=exclude_versions))
 
     @classmethod
     def invalid_value(cls) -> str:

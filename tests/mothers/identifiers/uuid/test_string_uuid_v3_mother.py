@@ -8,7 +8,7 @@ from uuid import NAMESPACE_DNS, NAMESPACE_OID, NAMESPACE_URL, NAMESPACE_X500, UU
 from pytest import mark, raises as assert_raises
 
 from object_mother_pattern.mothers import StringMother
-from object_mother_pattern.mothers.identifiers import StringUuidV3Mother
+from object_mother_pattern.mothers.identifiers import StringUuidV3Mother, UuidV3Mother
 
 
 @mark.unit_testing
@@ -109,7 +109,7 @@ def test_string_uuid3_mother_invalid_namespace_type() -> None:
         expected_exception=TypeError,
         match='UuidV3Mother namespace must be a UUID.',
     ):
-        StringUuidV3Mother.create(namespace=StringMother.invalid_type())
+        StringUuidV3Mother.create(namespace=UuidV3Mother.invalid_type())
 
 
 @mark.unit_testing

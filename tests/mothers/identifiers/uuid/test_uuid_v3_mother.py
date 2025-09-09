@@ -98,7 +98,7 @@ def test_uuid3_mother_invalid_namespace_type() -> None:
         expected_exception=TypeError,
         match='UuidV3Mother namespace must be a UUID.',
     ):
-        UuidV3Mother.create(namespace=StringMother.invalid_type())
+        UuidV3Mother.create(namespace=UuidV3Mother.invalid_type())
 
 
 @mark.unit_testing

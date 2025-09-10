@@ -83,16 +83,20 @@ class EnumerationMother(ABC, Generic[E]):  # noqa: UP046
         raise TypeError('EnumerationMother must be parameterized, e.g. "class ColorMother(EnumerationMother[ColorEnumeration])".')  # noqa: E501  # fmt: skip
 
     @classmethod
-    def create(cls, *, value: E | None = None) -> E:
+    def create(cls, *, value: E | None = None, exclude: Iterable[E] | None = None) -> E:
         """
         Create a random enumeration value from the enumeration class. If a specific
         value is provided, it is returned after ensuring it is a member of the enumeration.
 
         Args:
             value (E | None, optional): Specific enumeration value to return. Defaults to None.
+            exclude (Iterable[E] | None, optional): Enumeration values to exclude from random selection. Defaults to
+            None.
 
         Raises:
             TypeError: If the provided `value` is not an instance of the enumeration class.
+            TypeError: If any value in `exclude` is not an instance of the enumeration class.
+            ValueError: If all enumeration values are excluded.
 
         Returns:
             E: A randomly generated enumeration value from the enumeration class.
@@ -128,7 +132,22 @@ class EnumerationMother(ABC, Generic[E]):  # noqa: UP046
 
             return value  # type: ignore[no-any-return]
 
-        return choice(seq=tuple(cls._enumeration))  # type: ignore[arg-type]  # noqa: S311
+        available_values: tuple[E, ...] = tuple(cls._enumeration)  # type: ignore[arg-type]
+
+        if exclude is not None:
+            exclude_set = set()
+            for excluded_value in exclude:
+                if not isinstance(excluded_value, cls._enumeration):
+                    raise TypeError(f'{cls._enumeration.__name__}Mother exclude values must be instances of <<<{cls._enumeration.__name__}>>> type.')  # noqa: E501  # fmt: skip
+
+                exclude_set.add(excluded_value)
+
+            available_values = tuple(value for value in available_values if value not in exclude_set)
+
+            if not available_values:
+                raise ValueError(f'{cls._enumeration.__name__}Mother cannot exclude all enumeration values.')
+
+        return choice(seq=available_values)  # noqa: S311
 
     @staticmethod
     def invalid_type(remove_types: Iterable[type[Any]] | None = None) -> Any:  # noqa: C901

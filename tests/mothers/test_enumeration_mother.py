@@ -100,6 +100,56 @@ def test_enumeration_mother_create_with_invalid_value_type() -> None:
 
 
 @mark.unit_testing
+def test_enumeration_mother_create_with_exclude() -> None:
+    """
+    Test EnumerationMother create method with exclude parameter.
+    """
+    excluded_values = [_TestEnum.VALUE_1, _TestEnum.VALUE_2]
+
+    result = TestEnumMother.create(exclude=excluded_values)
+    assert result not in excluded_values
+    assert result == _TestEnum.VALUE_3
+
+
+@mark.unit_testing
+def test_enumeration_mother_create_with_exclude_single_value() -> None:
+    """
+    Test EnumerationMother create method with exclude parameter containing a single value.
+    """
+    excluded_values = [_TestEnum.VALUE_1]
+
+    result = TestEnumMother.create(exclude=excluded_values)
+    assert result not in excluded_values
+    assert result in [_TestEnum.VALUE_2, _TestEnum.VALUE_3]
+
+
+@mark.unit_testing
+def test_enumeration_mother_create_with_exclude_all_values() -> None:
+    """
+    Test EnumerationMother create method with exclude parameter containing all enum values.
+    """
+    excluded_values = list(_TestEnum)
+
+    with assert_raises(
+        expected_exception=ValueError,
+        match=r'_TestEnumMother cannot exclude all enumeration values.',
+    ):
+        TestEnumMother.create(exclude=excluded_values)
+
+
+@mark.unit_testing
+def test_enumeration_mother_create_with_exclude_invalid_type() -> None:
+    """
+    Test EnumerationMother create method with exclude parameter containing invalid type.
+    """
+    with assert_raises(
+        expected_exception=TypeError,
+        match=r'_TestEnumMother exclude values must be instances of <<<.*>>> type.',
+    ):
+        TestEnumMother.create(exclude=[TestEnumMother.invalid_type()])
+
+
+@mark.unit_testing
 def test_enumeration_mother_invalid_type() -> None:
     """
     Test EnumerationMother invalid_type method.

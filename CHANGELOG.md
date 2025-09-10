@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v3.6.0 (2025-09-10)
+
+### ✨ Features
+
+- Implement exclude parameter to create method in EnumerationMother for filtering values
+  ([`6b001d4`](https://github.com/adriamontoto/object-mother-pattern/commit/6b001d440f7616bd98b58b351f11f9bc999f599a))
+
+
 ## v3.5.1 (2025-08-26)
 
 ### 🐛 Bug Fixes

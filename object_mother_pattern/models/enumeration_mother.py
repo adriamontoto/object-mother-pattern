@@ -77,7 +77,7 @@ class EnumerationMother(ABC, Generic[E]):  # noqa: UP046
                 if not (isclass(object=enumeration) and issubclass(enumeration, Enum)):
                     raise TypeError(f'EnumerationMother[...] <<<{enumeration}>>> must be an Enum subclass. Got <<<{type(enumeration).__name__}>>> type.')  # noqa: E501  # fmt: skip
 
-                cls._enumeration = enumeration
+                cls._enumeration = enumeration  # type: ignore[assignment]
                 return
 
         raise TypeError('EnumerationMother must be parameterized, e.g. "class ColorMother(EnumerationMother[ColorEnumeration])".')  # noqa: E501  # fmt: skip
@@ -130,9 +130,9 @@ class EnumerationMother(ABC, Generic[E]):  # noqa: UP046
             if not isinstance(value, cls._enumeration):
                 raise TypeError(f'{cls._enumeration.__name__}Mother value must be an instance of <<<{cls._enumeration.__name__}>>> type.')  # noqa: E501  # fmt: skip
 
-            return value  # type: ignore[no-any-return]
+            return value
 
-        available_values: tuple[E, ...] = tuple(cls._enumeration)  # type: ignore[arg-type]
+        available_values: tuple[E, ...] = tuple(cls._enumeration)
 
         if exclude is not None:
             exclude_set = set()

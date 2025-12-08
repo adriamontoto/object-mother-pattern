@@ -56,7 +56,7 @@ def test_string_date_mother_invalid_value_type() -> None:
     """
     with assert_raises(
         expected_exception=TypeError,
-        match='StringDateMother value must be a str.',
+        match='StringDateMother value must be a string.',
     ):
         StringDateMother.create(value=StringDateMother.invalid_type())
 

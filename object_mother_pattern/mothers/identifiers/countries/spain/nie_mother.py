@@ -67,7 +67,7 @@ class NieMother(BaseMother[str]):
         """
         if value is not None:
             if type(value) is not str:
-                raise TypeError('NieMother value must be a string')
+                raise TypeError('NieMother value must be a string.')
 
             return value
 
@@ -75,7 +75,7 @@ class NieMother(BaseMother[str]):
             string_case = StringCase(value=choice(seq=tuple(StringCase)))  # noqa: S311
 
         if type(string_case) is not StringCase:
-            raise TypeError('NieMother string_case must be a StringCase')
+            raise TypeError('NieMother string_case must be a StringCase.')
 
         prefix = choice(seq=tuple(cls._NIE_PREFIXES.keys()))  # noqa: S311
         prefix_num = cls._NIE_PREFIXES[prefix]

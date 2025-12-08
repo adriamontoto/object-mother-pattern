@@ -66,7 +66,7 @@ class DniMother(BaseMother[str]):
         """
         if value is not None:
             if type(value) is not str:
-                raise TypeError('DniMother value must be a string')
+                raise TypeError('DniMother value must be a string.')
 
             return value
 
@@ -74,7 +74,7 @@ class DniMother(BaseMother[str]):
             string_case = StringCase(value=choice(seq=tuple(StringCase)))  # noqa: S311
 
         if type(string_case) is not StringCase:
-            raise TypeError('DniMother string_case must be a StringCase')
+            raise TypeError('DniMother string_case must be a StringCase.')
 
         number = randint(a=cls._MIN_NUMBER, b=cls._MAX_NUMBER)  # noqa: S311
         letter = cls._DNI_LETTERS[number % 23]

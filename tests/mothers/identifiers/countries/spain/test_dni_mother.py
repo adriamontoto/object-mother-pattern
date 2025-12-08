@@ -39,7 +39,7 @@ def test_dni_mother_invalid_value_type() -> None:
     """
     with assert_raises(
         expected_exception=TypeError,
-        match='DniMother value must be a string',
+        match='DniMother value must be a string.',
     ):
         DniMother.create(value=DniMother.invalid_type())
 
@@ -81,7 +81,7 @@ def test_dni_mother_invalid_case() -> None:
     """
     with assert_raises(
         expected_exception=TypeError,
-        match='DniMother string_case must be a StringCase',
+        match='DniMother string_case must be a StringCase.',
     ):
         DniMother.create(string_case=StringMother.invalid_type())
 

@@ -73,7 +73,7 @@ def test_uuid_mother_invalid_exclude_versions_type() -> None:
     """
     with assert_raises(
         expected_exception=TypeError,
-        match='UuidMother exclude_versions must be a set',
+        match='UuidMother exclude_versions must be a set.',
     ):
         UuidMother.create(exclude_versions=[1, 2, 3])  # type: ignore[arg-type]
 
@@ -87,6 +87,6 @@ def test_uuid_mother_invalid_exclude_versions_value() -> None:
 
     with assert_raises(
         expected_exception=ValueError,
-        match=r'UuidMother exclude_versions must be a subset of \{1, 3, 4, 5\}',
+        match=r'UuidMother exclude_versions must be a subset of \{1, 3, 4, 5\}.',
     ):
         UuidMother.create(exclude_versions=set(versions))

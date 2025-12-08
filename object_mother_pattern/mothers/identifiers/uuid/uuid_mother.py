@@ -72,11 +72,11 @@ class UuidMother(BaseMother[UUID]):
             exclude_versions = set()
 
         if type(exclude_versions) is not set:
-            raise TypeError('UuidMother exclude_versions must be a set')
+            raise TypeError('UuidMother exclude_versions must be a set.')
 
         all_versions = {1, 3, 4, 5}
         if not exclude_versions.issubset(all_versions):
-            raise ValueError(f'UuidMother exclude_versions must be a subset of {all_versions}')
+            raise ValueError(f'UuidMother exclude_versions must be a subset of {all_versions}.')
 
         uuid_generators = {
             1: UuidV1Mother.create,

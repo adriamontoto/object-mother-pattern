@@ -39,7 +39,7 @@ def test_nie_mother_invalid_value_type() -> None:
     """
     with assert_raises(
         expected_exception=TypeError,
-        match='NieMother value must be a string',
+        match='NieMother value must be a string.',
     ):
         NieMother.create(value=NieMother.invalid_type())
 
@@ -81,7 +81,7 @@ def test_nie_mother_invalid_case() -> None:
     """
     with assert_raises(
         expected_exception=TypeError,
-        match='NieMother string_case must be a StringCase',
+        match='NieMother string_case must be a StringCase.',
     ):
         NieMother.create(string_case=StringMother.invalid_type())
 

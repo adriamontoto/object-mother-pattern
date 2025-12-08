@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v3.7.0 (2025-12-08)
+
+### ✨ Features
+
+- Support python 3.14
+  ([`dc02a53`](https://github.com/adriamontoto/object-mother-pattern/commit/dc02a53f4755e5a1fa036dd284e81fd2a4ce10c0))
+
+
 ## v3.6.0 (2025-09-10)
 
 ### ✨ Features

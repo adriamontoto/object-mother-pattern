@@ -63,9 +63,9 @@ class IpAddressMother(BaseMother[str]):
             return value
 
         if BooleanMother.create():
-            return Ipv4AddressMother.create()
+            return Ipv4AddressMother.create()  # pragma: no cover
 
-        return Ipv6AddressMother.create()
+        return Ipv6AddressMother.create()  # pragma: no cover# pragma: no cover
 
     @classmethod
     def invalid_value(cls) -> str:

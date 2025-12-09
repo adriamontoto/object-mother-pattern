@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v3.9.0 (2025-12-09)
+
+### ✨ Features
+
+- Align FloatMother API with IntegerMother API
+  ([`9cacaf0`](https://github.com/adriamontoto/object-mother-pattern/commit/9cacaf0c1968948c90b31b1c2044add73dfcdd1b))
+
+
 ## v3.8.0 (2025-12-09)
 
 ### ✨ Features

@@ -226,8 +226,8 @@ class IntegerMother(BaseMother[int]):
             raise ValueError('IntegerMother range must be greater than 0.')
 
         return choice(  # noqa: S311
-            seq=[
+            seq=(
                 randint(a=min - range, b=min - 1),  # noqa: S311
                 randint(a=max + 1, b=max + range),  # noqa: S311
-            ]
+            )
         )

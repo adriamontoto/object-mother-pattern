@@ -9,7 +9,7 @@ if version_info >= (3, 12):
 else:
     from typing_extensions import override  # pragma: no cover
 
-from random import randint, uniform
+from random import choice, randint, uniform
 from typing import Any, Iterable
 
 from object_mother_pattern.models import BaseMother
@@ -121,3 +121,196 @@ class FloatMother(BaseMother[float]):
         remove_types.add(int)
 
         return super().invalid_type(remove_types=remove_types)
+
+    @classmethod
+    def positive(cls, *, max: int | float = 1.0, decimals: int | None = None) -> float:
+        """
+        Create a random positive float with an upper bound of `max`, greater than 0 and less than or equal to `max`.
+
+        Args:
+            max (int | float, optional): Upper bound for the positive float. Must be > 0. Defaults to 1.0.
+            decimals (int | None, optional): Number of decimal places for the float. Must be >= 0 and <= 10. Defaults
+            to None, which will generate a random number of decimals between 0 and 10.
+
+        Raises:
+            TypeError: If `max` is not an integer or a float.
+            TypeError: If `decimals` is not an integer.
+            ValueError: If `decimals` is less than 0.
+            ValueError: If `decimals` is greater than 10.
+            ValueError: If `max` is not greater than 0.
+
+        Returns:
+            float: A randomly generated positive float value.
+        """
+        if type(max) is not int and type(max) is not float:
+            raise TypeError('FloatMother max value must be an integer or a float.')
+
+        decimals_value = randint(a=0, b=10) if decimals is None else decimals  # noqa: S311
+        if type(decimals_value) is not int:
+            raise TypeError('FloatMother decimals value must be an integer.')
+
+        if decimals_value < 0:
+            raise ValueError('FloatMother decimals value must be greater than or equal to 0.')
+
+        if decimals_value > 10:
+            raise ValueError('FloatMother decimals value must be less than or equal to 10.')
+
+        minimum_positive = 10 ** (-decimals_value) if decimals_value > 0 else 1
+        if minimum_positive > max:
+            minimum_positive = max
+
+        return float(cls.create(min=minimum_positive, max=max, decimals=decimals_value))
+
+    @classmethod
+    def positive_or_zero(cls, *, max: int | float = 1.0, decimals: int | None = None) -> float:
+        """
+        Create a random positive float (including 0) with an upper bound of `max`, from 0 to `max` (both included).
+
+        Args:
+            max (int | float, optional): Upper bound for the positive float. Must be >= 0. Defaults to 1.0.
+            decimals (int | None, optional): Number of decimal places for the float. Must be >= 0 and <= 10. Defaults
+            to None, which will generate a random number of decimals between 0 and 10.
+
+        Raises:
+            TypeError: If `max` is not an integer or a float.
+            TypeError: If `decimals` is not an integer.
+            ValueError: If `decimals` is less than 0.
+            ValueError: If `decimals` is greater than 10.
+            ValueError: If `max` is less than 0.
+
+        Returns:
+            float: A randomly generated positive float value.
+        """
+        return float(cls.create(min=0.0, max=max, decimals=decimals))
+
+    @classmethod
+    def negative(cls, *, min: int | float = -1.0, decimals: int | None = None) -> float:
+        """
+        Create a random negative float with a lower bound of `min`, from `min` to -`step` (both included).
+
+        Args:
+            min (int | float, optional): Lower bound for the negative float. Must be < 0. Defaults to -1.0.
+            decimals (int | None, optional): Number of decimal places for the float. Must be >= 0 and <= 10. Defaults
+            to None, which will generate a random number of decimals between 0 and 10.
+
+        Raises:
+            TypeError: If `min` is not an integer or a float.
+            TypeError: If `decimals` is not an integer.
+            ValueError: If `decimals` is less than 0.
+            ValueError: If `decimals` is greater than 10.
+            ValueError: If `min` is greater than or equal to 0.
+
+        Returns:
+            float: A randomly generated negative float value.
+        """
+        if type(min) is not int and type(min) is not float:
+            raise TypeError('FloatMother min value must be an integer or a float.')
+
+        decimals_value = randint(a=0, b=10) if decimals is None else decimals  # noqa: S311
+        if type(decimals_value) is not int:
+            raise TypeError('FloatMother decimals value must be an integer.')
+
+        if decimals_value < 0:
+            raise ValueError('FloatMother decimals value must be greater than or equal to 0.')
+
+        if decimals_value > 10:
+            raise ValueError('FloatMother decimals value must be less than or equal to 10.')
+
+        maximum_negative = -(10 ** (-decimals_value)) if decimals_value > 0 else -1
+        if maximum_negative < min:
+            maximum_negative = min
+
+        return float(cls.create(min=min, max=maximum_negative, decimals=decimals_value))
+
+    @classmethod
+    def negative_or_zero(cls, *, min: int | float = -1.0, decimals: int | None = None) -> float:
+        """
+        Create a random negative float (including 0) with a lower bound of `min`, from `min` to 0 (both included).
+
+        Args:
+            min (int | float, optional): Lower bound for the negative float. Must be < 0. Defaults to -1.0.
+            decimals (int | None, optional): Number of decimal places for the float. Must be >= 0 and <= 10. Defaults
+            to None, which will generate a random number of decimals between 0 and 10.
+
+        Raises:
+            TypeError: If `min` is not an integer or a float.
+            TypeError: If `decimals` is not an integer.
+            ValueError: If `decimals` is less than 0.
+            ValueError: If `decimals` is greater than 10.
+            ValueError: If `min` is greater than 0.
+
+        Returns:
+            float: A randomly generated negative float value.
+        """
+        return float(cls.create(min=min, max=0.0, decimals=decimals))
+
+    @classmethod
+    def out_of_range(  # noqa: C901
+        cls,
+        *,
+        min: int | float = -1.0,
+        max: int | float = 1.0,
+        range: int | float = 1.0,
+        decimals: int | None = None,
+    ) -> float:
+        """
+        Create a random float value that is either less than `min` or greater than `max` (both excluded) by a range
+        specified by the `range` parameter.
+
+        Args:
+            min (int | float, optional): The lower bound of the range. Defaults to -1.0.
+            max (int | float, optional): The upper bound of the range. Defaults to 1.0.
+            range (int | float, optional): The range offset. Must be > 0. Defaults to 1.0.
+            decimals (int | None, optional): Number of decimal places for the float. Must be >= 0 and <= 10. Defaults
+            to None, which will generate a random number of decimals between 0 and 10.
+
+        Raises:
+            TypeError: If `min` is not an integer or a float.
+            TypeError: If `max` is not an integer or a float.
+            ValueError: If `min` is greater than `max`.
+            TypeError: If `range` is not an integer or a float.
+            ValueError: If `range` is a non-positive number.
+            TypeError: If `decimals` is not an integer.
+            ValueError: If `decimals` is less than 0.
+            ValueError: If `decimals` is greater than 10.
+
+        Returns:
+            float: A randomly generated float value out of the provided range.
+        """
+        if type(min) is not int and type(min) is not float:
+            raise TypeError('FloatMother min value must be an integer or a float.')
+
+        if type(max) is not int and type(max) is not float:
+            raise TypeError('FloatMother max value must be an integer or a float.')
+
+        if min > max:
+            raise ValueError('FloatMother min value must be less than or equal to max value.')
+
+        if type(range) is not int and type(range) is not float:
+            raise TypeError('FloatMother range must be an integer or a float.')
+
+        if range <= 0:
+            raise ValueError('FloatMother range must be greater than 0.')
+
+        decimals_value = randint(a=0, b=10) if decimals is None else decimals  # noqa: S311
+        if type(decimals_value) is not int:
+            raise TypeError('FloatMother decimals value must be an integer.')
+
+        if decimals_value < 0:
+            raise ValueError('FloatMother decimals value must be greater than or equal to 0.')
+
+        if decimals_value > 10:
+            raise ValueError('FloatMother decimals value must be less than or equal to 10.')
+
+        step = 10 ** (-decimals_value) if decimals_value > 0 else 1.0
+        lower_bounds = sorted((min - range, min - step))
+        upper_bounds = sorted((max + step, max + range))
+
+        candidate = choice(  # noqa: S311
+            seq=(
+                uniform(a=lower_bounds[0], b=lower_bounds[1]),  # noqa: S311
+                uniform(a=upper_bounds[0], b=upper_bounds[1]),  # noqa: S311
+            )
+        )
+
+        return float(round(number=candidate, ndigits=decimals_value))

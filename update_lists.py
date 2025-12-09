@@ -3,24 +3,32 @@ Update the lists used in the Object Mother Pattern package.
 """
 
 from datetime import UTC, datetime
+from pathlib import Path
 from re import DOTALL, findall
 from urllib.request import urlopen
 
 
-def add_updated_date_comment(file_path: str) -> None:
+def write_if_changed(path: str, lines: tuple[str, ...]) -> None:
     """
-    Automatically add a comment indicating the last updated date to the first line of the specified file.
+    Write list content to a file only when the body has changed to avoid noisy commits. Preserves the existing file
+    when no changes are detected.
 
     Args:
-        file_path (str): The path of the file to be updated.
+        path (str): The file path to update.
+        lines (tuple[str, ...]): The lines to write to the file.
     """
-    now = datetime.now(tz=UTC).isoformat()
+    header_prefix = '# This file was automatically updated using "update_lists.py" on '
+    new_body = '\n'.join(lines) + '\n'
+    file_path = Path(path)
 
-    with open(file=file_path, mode='r+', encoding='utf-8') as file:
-        content = file.read()
-        file.seek(0)
-        file.write(f'# This file was automatically updated using "update_lists.py" on {now}\n\n{content}')
-        file.truncate()
+    current_text = file_path.read_text(encoding='utf-8')
+    _, _, existing_body = current_text.partition('\n')
+    if existing_body[1:] == new_body:
+        return
+
+    now = datetime.now(tz=UTC).isoformat()
+    new_text = f'{header_prefix}{now}\n\n{new_body}'
+    file_path.write_text(new_text, encoding='utf-8')
 
 
 def update_aws_cloud_regions() -> None:
@@ -38,10 +46,7 @@ def update_aws_cloud_regions() -> None:
     aws_regions = tuple(region_code.lower() for region_code in findall(pattern=pattern, string=content, flags=DOTALL))
 
     path = 'object_mother_pattern/mothers/internet/utils/aws_regions.txt'
-    with open(file=path, mode='w', encoding='utf-8') as file:
-        file.writelines(f'{word}\n' for word in aws_regions)
-
-    add_updated_date_comment(file_path=path)
+    write_if_changed(path=path, lines=aws_regions)
 
 
 def update_bip39_words() -> None:
@@ -58,10 +63,7 @@ def update_bip39_words() -> None:
     bip39_words = tuple(line.strip().lower() for line in lines if line and not line.startswith('#'))
 
     path = 'object_mother_pattern/mothers/money/cryptocurrencies/utils/bip39_words.txt'
-    with open(file=path, mode='w', encoding='utf-8') as file:
-        file.writelines(f'{word}\n' for word in bip39_words)
-
-    add_updated_date_comment(file_path=path)
+    write_if_changed(path=path, lines=bip39_words)
 
 
 def update_tld_domains() -> None:
@@ -78,10 +80,7 @@ def update_tld_domains() -> None:
     tld_domains = tuple(line.strip().lower() for line in lines if line and not line.startswith('#'))
 
     path = 'object_mother_pattern/mothers/internet/utils/tld_domains.txt'
-    with open(file=path, mode='w', encoding='utf-8') as file:
-        file.writelines(f'{domain}\n' for domain in tld_domains)
-
-    add_updated_date_comment(file_path=path)
+    write_if_changed(path=path, lines=tld_domains)
 
 
 def update_word_list() -> None:
@@ -98,10 +97,7 @@ def update_word_list() -> None:
     words = tuple(line.strip().lower() for line in lines if line)
 
     path = 'object_mother_pattern/mothers/internet/utils/words.txt'
-    with open(file=path, mode='w', encoding='utf-8') as file:
-        file.writelines(f'{word}\n' for word in words)
-
-    add_updated_date_comment(file_path=path)
+    write_if_changed(path=path, lines=words)
 
 
 if __name__ == '__main__':

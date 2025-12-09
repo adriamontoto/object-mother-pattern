@@ -1,5 +1,5 @@
 """
-StringUuidV1Mother module.
+StringUuidV7Mother module.
 """
 
 from sys import version_info
@@ -14,20 +14,20 @@ from uuid import UUID
 from object_mother_pattern.models import BaseMother
 from object_mother_pattern.mothers.primitives import StringMother
 
-from .uuid_v1_mother import UuidV1Mother
+from .uuid_v7_mother import UuidV7Mother
 
 
-class StringUuidV1Mother(BaseMother[str]):
+class StringUuidV7Mother(BaseMother[str]):
     """
-    StringUuidV1Mother class is responsible for creating random string UUID1 values.
+    StringUuidV7Mother class is responsible for creating random string UUID7 values.
 
     Example:
     ```python
-    from object_mother_pattern.mothers.identifiers import StringUuidV1Mother
+    from object_mother_pattern.mothers.identifiers import StringUuidV7Mother
 
-    uuid = StringUuidV1Mother.create()
+    uuid = StringUuidV7Mother.create()
     print(uuid)
-    # >>> 26afb422-824d-11f0-9bbf-325096b39f47
+    # >>> 019afedd-025c-7f00-b22f-796d93c9b9cb
     ```
     """
 
@@ -44,33 +44,33 @@ class StringUuidV1Mother(BaseMother[str]):
         Raises:
             TypeError: If the provided `value` is not a string.
             TypeError: If the provided `value` is not a valid UUID string.
-            TypeError: If the provided `value` is not a UUID1.
+            TypeError: If the provided `value` is not a UUID7.
 
         Returns:
             str: A random string universally unique identifier value.
 
         Example:
         ```python
-        from object_mother_pattern.mothers.identifiers import StringUuidV1Mother
+        from object_mother_pattern.mothers.identifiers import StringUuidV7Mother
 
-        uuid = StringUuidV1Mother.create()
+        uuid = StringUuidV7Mother.create()
         print(uuid)
-        # >>> 26afb422-824d-11f0-9bbf-325096b39f47
+        # >>> 019afedd-025c-7f00-b22f-796d93c9b9cb
         ```
         """
         if value is not None:
             if type(value) is not str:
-                raise TypeError('StringUuidV1Mother value must be a string.')
+                raise TypeError('StringUuidV7Mother value must be a string.')
 
             try:
                 UUID(value)
 
             except Exception as exception:
-                raise TypeError('StringUuidV1Mother value must be a UUID.') from exception
+                raise TypeError('StringUuidV7Mother value must be a UUID.') from exception
 
-            return str(UuidV1Mother.create(value=UUID(value)))
+            return str(UuidV7Mother.create(value=UUID(value)))
 
-        return str(UuidV1Mother.create())
+        return str(UuidV7Mother.create())
 
     @classmethod
     def invalid_value(cls) -> str:

@@ -6,7 +6,7 @@ from uuid import UUID
 
 from pytest import mark, raises as assert_raises
 
-from object_mother_pattern.mothers.identifiers import UuidV1Mother
+from object_mother_pattern.mothers.identifiers import UuidMother, UuidV1Mother
 
 
 @mark.unit_testing
@@ -16,7 +16,7 @@ def test_uuid1_mother_happy_path() -> None:
     """
     value = UuidV1Mother.create()
 
-    assert type(value) is UUID
+    assert isinstance(value, UUID)
     assert value.version == 1
 
 
@@ -48,3 +48,15 @@ def test_uuid1_mother_invalid_value_type() -> None:
         match='UuidV1Mother value must be a UUID.',
     ):
         UuidV1Mother.create(value=UuidV1Mother.invalid_type())
+
+
+@mark.unit_testing
+def test_uuid1_mother_invalid_uuid_version() -> None:
+    """
+    Test UuidV1Mother create method with invalid UUID version.
+    """
+    with assert_raises(
+        expected_exception=TypeError,
+        match='UuidV1Mother value must be a UUID1.',
+    ):
+        UuidV1Mother.create(value=UuidMother.create(exclude_versions={1}))

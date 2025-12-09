@@ -44,6 +44,7 @@ class UuidV5Mother(BaseMother[UUID]):
 
         Raises:
             TypeError: If the provided `value` is not a UUID.
+            TypeError: If the provided `value` is not a UUID5.
             TypeError: If the provided `namespace` is not a UUID.
             TypeError: If the provided `name` is not a string.
 
@@ -60,8 +61,11 @@ class UuidV5Mother(BaseMother[UUID]):
         ```
         """
         if value is not None:
-            if type(value) is not UUID:
+            if not isinstance(value, UUID):
                 raise TypeError('UuidV5Mother value must be a UUID.')
+
+            if value.version != 5:
+                raise TypeError('UuidV5Mother value must be a UUID5.')
 
             return value
 

@@ -9,6 +9,7 @@ if version_info >= (3, 12):
 else:
     from typing_extensions import override  # pragma: no cover
 
+from uuid import UUID
 
 from object_mother_pattern.models import BaseMother
 from object_mother_pattern.mothers.primitives import StringMother
@@ -43,9 +44,11 @@ class StringUuidMother(BaseMother[str]):
 
         Raises:
             TypeError: If the provided `value` is not a string.
+            TypeError: If the provided `value` is not a valid UUID string.
 
         Returns:
-            str: A random string universally unique identifier value (UUID1, UUID2, UUID3, UUID4, or UUID5).
+            str: A random string universally unique identifier value (UUID1, UUID2, UUID3, UUID4, UUID5, UUID6, UUID7,
+            or UUID8).
 
         Example:
         ```python
@@ -60,7 +63,7 @@ class StringUuidMother(BaseMother[str]):
             if type(value) is not str:
                 raise TypeError('StringUuidMother value must be a string.')
 
-            return value
+            return str(UuidMother.create(value=UUID(value)))
 
         return str(UuidMother.create(exclude_versions=exclude_versions))
 

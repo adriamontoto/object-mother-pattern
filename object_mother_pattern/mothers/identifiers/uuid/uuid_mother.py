@@ -18,6 +18,9 @@ from .uuid_v1_mother import UuidV1Mother
 from .uuid_v3_mother import UuidV3Mother
 from .uuid_v4_mother import UuidV4Mother
 from .uuid_v5_mother import UuidV5Mother
+from .uuid_v6_mother import UuidV6Mother
+from .uuid_v7_mother import UuidV7Mother
+from .uuid_v8_mother import UuidV8Mother
 
 
 class UuidMother(BaseMother[UUID]):
@@ -48,7 +51,7 @@ class UuidMother(BaseMother[UUID]):
         Raises:
             TypeError: If the provided `value` is not a UUID.
             TypeError: If the provided `exclude_versions` is not a set.
-            ValueError: If the provided `exclude_versions` is not a subset of {1, 3, 4, 5}.
+            ValueError: If the provided `exclude_versions` is not a subset of {1, 3, 4, 5, 6, 7, 8}.
 
         Returns:
             UUID: A random universally unique identifier value.
@@ -63,7 +66,7 @@ class UuidMother(BaseMother[UUID]):
         ```
         """
         if value is not None:
-            if type(value) is not UUID:
+            if not isinstance(value, UUID):
                 raise TypeError('UuidMother value must be a UUID.')
 
             return value
@@ -74,7 +77,7 @@ class UuidMother(BaseMother[UUID]):
         if type(exclude_versions) is not set:
             raise TypeError('UuidMother exclude_versions must be a set.')
 
-        all_versions = {1, 3, 4, 5}
+        all_versions = {1, 3, 4, 5, 6, 7, 8}
         if not exclude_versions.issubset(all_versions):
             raise ValueError(f'UuidMother exclude_versions must be a subset of {all_versions}.')
 
@@ -83,6 +86,9 @@ class UuidMother(BaseMother[UUID]):
             3: UuidV3Mother.create,
             4: UuidV4Mother.create,
             5: UuidV5Mother.create,
+            6: UuidV6Mother.create,
+            7: UuidV7Mother.create,
+            8: UuidV8Mother.create,
         }
 
         allowed_versions = all_versions - exclude_versions

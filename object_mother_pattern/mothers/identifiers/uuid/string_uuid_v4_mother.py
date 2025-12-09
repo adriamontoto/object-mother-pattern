@@ -9,6 +9,7 @@ if version_info >= (3, 12):
 else:
     from typing_extensions import override  # pragma: no cover
 
+from uuid import UUID
 
 from object_mother_pattern.models import BaseMother
 from object_mother_pattern.mothers.primitives import StringMother
@@ -42,6 +43,8 @@ class StringUuidV4Mother(BaseMother[str]):
 
         Raises:
             TypeError: If the provided `value` is not a string.
+            TypeError: If the provided `value` is not a valid UUID string.
+            TypeError: If the provided `value` is not a UUID4.
 
         Returns:
             str: A random string universally unique identifier value.
@@ -59,7 +62,13 @@ class StringUuidV4Mother(BaseMother[str]):
             if type(value) is not str:
                 raise TypeError('StringUuidV4Mother value must be a string.')
 
-            return value
+            try:
+                UUID(value)
+
+            except Exception as exception:
+                raise TypeError('StringUuidV4Mother value must be a UUID.') from exception
+
+            return str(UuidV4Mother.create(value=UUID(value)))
 
         return str(UuidV4Mother.create())
 

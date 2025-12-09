@@ -4,11 +4,17 @@ from .uuid import (
     StringUuidV3Mother,
     StringUuidV4Mother,
     StringUuidV5Mother,
+    StringUuidV6Mother,
+    StringUuidV7Mother,
+    StringUuidV8Mother,
     UuidMother,
     UuidV1Mother,
     UuidV3Mother,
     UuidV4Mother,
     UuidV5Mother,
+    UuidV6Mother,
+    UuidV7Mother,
+    UuidV8Mother,
 )
 
 __all__ = (
@@ -17,9 +23,15 @@ __all__ = (
     'StringUuidV3Mother',
     'StringUuidV4Mother',
     'StringUuidV5Mother',
+    'StringUuidV6Mother',
+    'StringUuidV7Mother',
+    'StringUuidV8Mother',
     'UuidMother',
     'UuidV1Mother',
     'UuidV3Mother',
     'UuidV4Mother',
     'UuidV5Mother',
+    'UuidV6Mother',
+    'UuidV7Mother',
+    'UuidV8Mother',
 )

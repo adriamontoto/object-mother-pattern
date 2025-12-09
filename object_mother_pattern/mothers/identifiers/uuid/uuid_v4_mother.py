@@ -40,6 +40,7 @@ class UuidV4Mother(BaseMother[UUID]):
 
         Raises:
             TypeError: If the provided `value` is not a UUID.
+            TypeError: If the provided `value` is not a UUID4.
 
         Returns:
             UUID: A random UUID4 (random) value.
@@ -54,8 +55,11 @@ class UuidV4Mother(BaseMother[UUID]):
         ```
         """
         if value is not None:
-            if type(value) is not UUID:
+            if not isinstance(value, UUID):
                 raise TypeError('UuidV4Mother value must be a UUID.')
+
+            if value.version != 4:
+                raise TypeError('UuidV4Mother value must be a UUID4.')
 
             return value
 

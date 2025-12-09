@@ -18,8 +18,8 @@ def test_uuid_mother_happy_path() -> None:
     """
     value = UuidMother.create()
 
-    assert type(value) is UUID
-    assert value.version in {1, 3, 4, 5}
+    assert isinstance(value, UUID)
+    assert value.version in {1, 3, 4, 5, 6, 7, 8}
 
 
 @mark.unit_testing
@@ -57,11 +57,12 @@ def test_uuid_mother_exclude_versions() -> None:
     """
     Test UuidMother create method with exclude_versions parameter.
     """
-    excluded_versions = {1, 3}  # Exclude versions 1 and 3
-    allowed_versions = {4, 5}  # So only versions 4 and 5 are allowed
+    # TODO: do it randomly
+    excluded_versions = {1, 3, 6, 7, 8}
+    allowed_versions = {4, 5}
     value = UuidMother.create(exclude_versions=excluded_versions)
 
-    assert type(value) is UUID
+    assert isinstance(value, UUID)
     assert value.version in allowed_versions
     assert value.version not in excluded_versions
 
@@ -87,6 +88,6 @@ def test_uuid_mother_invalid_exclude_versions_value() -> None:
 
     with assert_raises(
         expected_exception=ValueError,
-        match=r'UuidMother exclude_versions must be a subset of \{1, 3, 4, 5\}.',
+        match=r'UuidMother exclude_versions must be a subset of \{1, 3, 4, 5, 6, 7, 8\}.',
     ):
         UuidMother.create(exclude_versions=set(versions))

@@ -40,6 +40,7 @@ class UuidV1Mother(BaseMother[UUID]):
 
         Raises:
             TypeError: If the provided `value` is not a UUID.
+            TypeError: If the provided `value` is not a UUID1.
 
         Returns:
             UUID: A random UUID1 (random) value.
@@ -54,8 +55,11 @@ class UuidV1Mother(BaseMother[UUID]):
         ```
         """
         if value is not None:
-            if type(value) is not UUID:
+            if not isinstance(value, UUID):
                 raise TypeError('UuidV1Mother value must be a UUID.')
+
+            if value.version != 1:
+                raise TypeError('UuidV1Mother value must be a UUID1.')
 
             return value
 

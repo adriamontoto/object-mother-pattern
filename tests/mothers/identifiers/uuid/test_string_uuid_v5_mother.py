@@ -8,7 +8,7 @@ from uuid import NAMESPACE_DNS, NAMESPACE_OID, NAMESPACE_URL, NAMESPACE_X500, UU
 from pytest import mark, raises as assert_raises
 
 from object_mother_pattern.mothers import StringMother
-from object_mother_pattern.mothers.identifiers import StringUuidV5Mother, UuidV5Mother
+from object_mother_pattern.mothers.identifiers import StringUuidV5Mother, UuidMother, UuidV5Mother
 
 
 @mark.unit_testing
@@ -122,3 +122,27 @@ def test_string_uuid5_mother_invalid_name_type() -> None:
         match='UuidV5Mother name must be a string.',
     ):
         StringUuidV5Mother.create(name=StringMother.invalid_type())
+
+
+@mark.unit_testing
+def test_string_uuid5_mother_not_uuid_value() -> None:
+    """
+    Test StringUuidV5Mother create method with invalid value type.
+    """
+    with assert_raises(
+        expected_exception=TypeError,
+        match='StringUuidV5Mother value must be a UUID.',
+    ):
+        StringUuidV5Mother.create(value=StringMother.create())
+
+
+@mark.unit_testing
+def test_string_uuid5_mother_invalid_uuid_version() -> None:
+    """
+    Test UuidV5Mother create method with invalid UUID version.
+    """
+    with assert_raises(
+        expected_exception=TypeError,
+        match='UuidV5Mother value must be a UUID5.',
+    ):
+        StringUuidV5Mother.create(value=str(UuidMother.create(exclude_versions={5})))

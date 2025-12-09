@@ -45,6 +45,8 @@ class StringUuidV5Mother(BaseMother[str]):
 
         Raises:
             TypeError: If the provided `value` is not a string.
+            TypeError: If the provided `value` is not a valid UUID string.
+            TypeError: If the provided `value` is not a UUID5.
             TypeError: If the provided `namespace` is not a UUID.
             TypeError: If the provided `name` is not a string.
 
@@ -64,7 +66,13 @@ class StringUuidV5Mother(BaseMother[str]):
             if type(value) is not str:
                 raise TypeError('StringUuidV5Mother value must be a string.')
 
-            return value
+            try:
+                UUID(value)
+
+            except Exception as exception:
+                raise TypeError('StringUuidV5Mother value must be a UUID.') from exception
+
+            return str(UuidV5Mother.create(value=UUID(value)))
 
         return str(UuidV5Mother.create(namespace=namespace, name=name))
 

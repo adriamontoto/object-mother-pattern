@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v3.10.0 (2025-12-09)
+
+### ✨ Features
+
+- Add IpNetworkMother and corresponding tests for IP network generation
+  ([`0c7d51b`](https://github.com/adriamontoto/object-mother-pattern/commit/0c7d51bc2135539baf1070bdb86fea6f6a9ab98d))
+
+
 ## v3.9.0 (2025-12-09)
 
 ### ✨ Features

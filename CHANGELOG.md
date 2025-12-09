@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v3.8.0 (2025-12-09)
+
+### ✨ Features
+
+- Implement UuidV6Mother, UuidV7Mother and UuidV8Mother
+  ([`e5859f7`](https://github.com/adriamontoto/object-mother-pattern/commit/e5859f75d938614a4889238a89873c3790a6224d))
+
+
 ## v3.7.0 (2025-12-08)
 
 ### ✨ Features

@@ -2,6 +2,31 @@
 
 <!-- version list -->
 
+## v3.11.0 (2026-02-26)
+
+### 🧹 Chores
+
+- Update content lists ([#134](https://github.com/adriamontoto/object-mother-pattern/pull/134),
+  [`0f40ac6`](https://github.com/adriamontoto/object-mother-pattern/commit/0f40ac6cb1e8c5baefd898636f5d970790749c19))
+
+- Update content lists ([#128](https://github.com/adriamontoto/object-mother-pattern/pull/128),
+  [`97a8c63`](https://github.com/adriamontoto/object-mother-pattern/commit/97a8c63a60c351855d4cffb975cd5ad15774242c))
+
+- Update content lists ([#122](https://github.com/adriamontoto/object-mother-pattern/pull/122),
+  [`3ae15be`](https://github.com/adriamontoto/object-mother-pattern/commit/3ae15be0bc5fc1520d07ed3e9b69cdf250bac0e2))
+
+### ✨ Features
+
+- **internet**: Implement KeyMother and SlugMother classes for generating random keys and slugs
+  ([`b5443e8`](https://github.com/adriamontoto/object-mother-pattern/commit/b5443e8f78c33e4d1a597f5e3667efb804ce5da7))
+
+- **update-lists**: If no word list retrieval raise a runtime error
+  ([`d472e89`](https://github.com/adriamontoto/object-mother-pattern/commit/d472e890cd1f60188d8ec0dd3a8124a929b1020c))
+
+- **update-lists**: If there is not list updates do not update files
+  ([`9669cda`](https://github.com/adriamontoto/object-mother-pattern/commit/9669cda8b157248ae68ce1d79dfb1dfe4fd11881))
+
+
 ## v3.10.0 (2025-12-09)
 
 ### ✨ Features

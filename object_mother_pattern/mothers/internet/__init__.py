@@ -6,8 +6,10 @@ from .ipv4_address_mother import Ipv4AddressMother
 from .ipv4_network_mother import Ipv4NetworkMother
 from .ipv6_address_mother import Ipv6AddressMother
 from .ipv6_network_mother import Ipv6NetworkMother
+from .key_mother import KeyMother
 from .mac_address_mother import MacAddressMother
 from .port_mother import PortMother
+from .slug_mother import SlugMother
 from .user_agent_mother import UserAgentMother
 
 __all__ = (
@@ -19,7 +21,9 @@ __all__ = (
     'Ipv4NetworkMother',
     'Ipv6AddressMother',
     'Ipv6NetworkMother',
+    'KeyMother',
     'MacAddressMother',
     'PortMother',
+    'SlugMother',
     'UserAgentMother',
 )

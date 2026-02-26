@@ -20,7 +20,7 @@ from faker import Faker
 from faker.providers import user_agent
 
 try:
-    from value_object_pattern import ValueObject  # type: ignore[import-not-found]
+    from value_object_pattern import ValueObject
 
     HAS_VALUE_OBJECTS = True
 

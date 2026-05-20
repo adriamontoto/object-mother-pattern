@@ -11,6 +11,7 @@ else:
 
 from random import randint
 from string import ascii_uppercase, digits
+from typing import ClassVar
 
 from object_mother_pattern.models import BaseMother
 from object_mother_pattern.mothers.primitives.string_mother import StringMother
@@ -21,8 +22,7 @@ class IbanMother(BaseMother[str]):
     IbanMother generates IBAN numbers with correct check digits.
     """
 
-    # Common IBAN lengths by country (ISO 13616)
-    _COUNTRY_LENGTHS: dict[str, int] = {
+    _COUNTRY_LENGTHS: ClassVar[dict[str, int]] = {
         'AL': 28,
         'AT': 20,
         'BA': 20,
@@ -104,7 +104,6 @@ class IbanMother(BaseMother[str]):
     def _pick_country(cls, country_code: str | None) -> str:
         if country_code is None:
             keys = tuple(cls._COUNTRY_LENGTHS.keys())
-            # Using randint to avoid importing choice again (keeps dependencies minimal)
             index = randint(0, len(keys) - 1)  # noqa: S311
             return keys[index]
 

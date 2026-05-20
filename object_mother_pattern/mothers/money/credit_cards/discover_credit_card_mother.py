@@ -20,7 +20,7 @@ class DiscoverCreditCardMother(BaseMother[str]):
     DiscoverCreditCardMother generates Discover card numbers.
     """
 
-    _PREFIXES: tuple[str, ...] = ('6011', '65') + tuple(str(prefix) for prefix in range(644, 650))
+    _PREFIXES: tuple[str, ...] = ('6011', '65', *(str(prefix) for prefix in range(644, 650)))
     _LENGTH: int = 16
 
     @classmethod

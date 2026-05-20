@@ -94,4 +94,4 @@ class UuidMother(BaseMother[UUID]):
         allowed_versions = all_versions - exclude_versions
         allowed_generators = [uuid_generators[version] for version in allowed_versions]
 
-        return choice(seq=allowed_generators)()  # type: ignore[operator, no-any-return]  # noqa: S311
+        return choice(seq=allowed_generators)()  # noqa: S311

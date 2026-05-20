@@ -36,7 +36,7 @@ help: # It displays this help message
 	@printf "  %-40s %s\n" "CI=$(CI)"                       	  "Indicates if the script is running in a CI environment (true/false)"
 	@printf "  %-40s %s\n" "PYTHON_VERSION=$(PYTHON_VERSION)"     "Used python interpreter for creating the virtual environment"
 	@printf "  %-40s %s\n" "PYTHON_VIRTUAL_ENVIRONMENT=$(PYTHON_VIRTUAL_ENVIRONMENT)" "Name of the virtual environment folder"
-	@printf "  %-40s %s\n" "GROUP=$(GROUP)"                       "Group of dependencies to install (all, audit, coverage, format, lint, release, test, types)"
+	@printf "  %-40s %s\n" "GROUP=$(GROUP)"                       "Group of dependencies to install (all, coverage, format, lint, release, test, types)"
 	@printf "\n"
 
 
@@ -132,7 +132,7 @@ build: # It builds the project
 audit: # It audits dependencies and source code
 	@echo -e "\n⌛ Running security audit...\n"
 
-	@$(PYTHON_BIN) -m pip_audit --progress-spinner off
+	@$(UV_BIN) audit
 
 	@echo -e "\n✅ Security audit completed correctly.\n"
 
@@ -152,16 +152,16 @@ clean: # It cleans up the project, removing the virtual environment and some fil
 
 	$(call quiet, $(PYTHON_BIN) -m pre_commit clean)
 	$(call quiet, $(PYTHON_BIN) -m pre_commit uninstall --hook-type pre-commit --hook-type commit-msg)
-	$(call quiet, rm --force --recursive $(PYTHON_VIRTUAL_ENVIRONMENT))
-	$(call quiet, rm --force --recursive `find . -type f -name '*.py[co]'`)
-	$(call quiet, rm --force --recursive `find . -name __pycache__`)
-	$(call quiet, rm --force --recursive `find . -name .ruff_cache`)
-	$(call quiet, rm --force --recursive `find . -name .mypy_cache`)
-	$(call quiet, rm --force --recursive `find . -name .pytest_cache`)
-	$(call quiet, rm --force --recursive .coverage)
-	$(call quiet, rm --force --recursive .coverage.*)
-	$(call quiet, rm --force --recursive coverage.xml)
-	$(call quiet, rm --force --recursive htmlcov)
+	$(call quiet, rm -rf $(PYTHON_VIRTUAL_ENVIRONMENT))
+	$(call quiet, rm -rf `find . -type f -name '*.py[co]'`)
+	$(call quiet, rm -rf `find . -name __pycache__`)
+	$(call quiet, rm -rf `find . -name .ruff_cache`)
+	$(call quiet, rm -rf `find . -name .mypy_cache`)
+	$(call quiet, rm -rf `find . -name .pytest_cache`)
+	$(call quiet, rm -rf .coverage)
+	$(call quiet, rm -rf .coverage.*)
+	$(call quiet, rm -rf coverage.xml)
+	$(call quiet, rm -rf htmlcov)
 
 	@echo -e "\n✅ Run 'deactivate' to deactivate the virtual environment.\n"
 

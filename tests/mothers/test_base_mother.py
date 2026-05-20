@@ -6,7 +6,7 @@ from importlib import util as importlib_util
 from pathlib import Path
 from re import escape
 from types import ModuleType
-from typing import Final
+from typing import Final, Mapping, Sequence
 
 from pytest import mark, raises as assert_raises
 
@@ -19,13 +19,6 @@ BASE_MOTHER_PATH: Final[Path] = PROJECT_ROOT / 'object_mother_pattern' / 'models
 def _load_base_mother(module_name: str, *, block_value_object: bool = False) -> ModuleType:
     """
     Load ``base_mother.py`` under an isolated module name.
-
-    Args:
-        module_name (str): Name to register the module under ``sys.modules``.
-        block_value_object (bool): When True, simulate ``ImportError`` for ``value_object_pattern``.
-
-    Returns:
-        ModuleType: Loaded ``base_mother`` module instance.
     """
     import builtins
     import sys
@@ -34,10 +27,19 @@ def _load_base_mother(module_name: str, *, block_value_object: bool = False) -> 
 
     original_import = builtins.__import__
 
-    def fake_import(name: str, *args: object, **kwargs: object):
+    def fake_import(
+        name: str,
+        globals: Mapping[str, object] | None = None,  # noqa: A002
+        locals: Mapping[str, object] | None = None,  # noqa: A002
+        fromlist: Sequence[str] | None = None,
+        level: int = 0,
+    ) -> ModuleType:
+        """
+        Proxy imports while optionally blocking value_object_pattern.
+        """
         if block_value_object and name == 'value_object_pattern':
             raise ImportError
-        return original_import(name, *args, **kwargs)
+        return original_import(name, globals, locals, fromlist, level)
 
     builtins.__import__ = fake_import
     try:
@@ -108,7 +110,7 @@ def test_base_mother_without_value_object_dependency() -> None:
 
     with assert_raises(TypeError, match=r'BaseMother\[.*\] <<<.*>>> must be a type. Got <<<.*>>> type.'):
 
-        class BooleanMother(module.BaseMother[value]):  # type: ignore[valid-type]
+        class BooleanMother(module.BaseMother[value]):  # type: ignore[name-defined, misc]
             pass
 
 
@@ -124,7 +126,7 @@ def test_base_mother_with_value_object() -> None:
     class IntegerValueObject(ValueObject[int]):  # noqa: D401 - simple wrapper
         pass
 
-    class IntegerMother(module.BaseMother[IntegerValueObject]):
+    class IntegerMother(module.BaseMother[IntegerValueObject]):  # type: ignore[name-defined, misc]
         @classmethod
         def create(cls, *, value: int | None = None) -> IntegerValueObject:
             return IntegerValueObject(value=value if value is not None else 7)

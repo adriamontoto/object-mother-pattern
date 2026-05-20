@@ -113,6 +113,17 @@ def test_key_mother_of_length_method() -> None:
 
 
 @mark.unit_testing
+def test_key_mother_of_length_method_with_single_character() -> None:
+    """
+    Test KeyMother of_length method with the minimum length.
+    """
+    value = KeyMother.of_length(length=1)
+
+    assert len(value) == 1
+    assert _KEY_REGEX.match(string=value) is not None
+
+
+@mark.unit_testing
 def test_key_mother_invalid_key_value() -> None:
     """
     Test KeyMother invalid_value method.
@@ -129,4 +140,4 @@ def test_key_mother_invalid_min_length_type_for_of_length() -> None:
     Test KeyMother of_length method with invalid length type.
     """
     with assert_raises(TypeError, match='KeyMother min_length must be an integer.'):
-        KeyMother.of_length(length=StringMother.invalid_type())
+        KeyMother.of_length(length=StringMother.invalid_type(remove_types=(int,)))

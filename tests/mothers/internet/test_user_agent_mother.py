@@ -17,6 +17,7 @@ def test_user_agent_mother_create_happy_path() -> None:
 
     assert type(value) is str
     assert 64 <= len(value) <= 256
+    assert value.isprintable()
     assert value == value.strip()
 
 

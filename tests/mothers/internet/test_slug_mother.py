@@ -113,6 +113,17 @@ def test_slug_mother_of_length_method() -> None:
 
 
 @mark.unit_testing
+def test_slug_mother_of_length_method_with_single_character() -> None:
+    """
+    Test SlugMother of_length method with the minimum length.
+    """
+    value = SlugMother.of_length(length=1)
+
+    assert len(value) == 1
+    assert _SLUG_REGEX.match(string=value) is not None
+
+
+@mark.unit_testing
 def test_slug_mother_invalid_slug_value() -> None:
     """
     Test SlugMother invalid_value method.
@@ -129,4 +140,4 @@ def test_slug_mother_invalid_min_length_type_for_of_length() -> None:
     Test SlugMother of_length method with invalid length type.
     """
     with assert_raises(TypeError, match='SlugMother min_length must be an integer.'):
-        SlugMother.of_length(length=StringMother.invalid_type())
+        SlugMother.of_length(length=StringMother.invalid_type(remove_types=(int,)))

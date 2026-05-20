@@ -8,6 +8,9 @@ from object_mother_pattern.mothers import IbanMother
 
 
 def _iban_is_valid(iban: str) -> bool:
+    """
+    Check whether an IBAN passes the mod-97 validation algorithm.
+    """
     if len(iban) < 4:
         return False
 

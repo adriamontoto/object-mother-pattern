@@ -9,7 +9,7 @@ if version_info >= (3, 12):
 else:
     from typing_extensions import override  # pragma: no cover
 
-from random import choice, randint
+from random import choice, randint, sample
 
 from object_mother_pattern.models import BaseMother
 
@@ -373,6 +373,307 @@ class StringMother(BaseMother[str]):
         ```
         """
         return cls.create(min_length=min_length, max_length=max_length, characters=DIGITS_BASIC)
+
+    @classmethod
+    def kebab_case(cls, *, min_length: int = 1, max_length: int = 128) -> str:
+        """
+        Create a random kebab-case string value of length between `min_length` and `max_length`.
+
+        Args:
+            min_length (int, optional): Minimum length of the string. Must be >= 0. Defaults to 1.
+            max_length (int, optional): Maximum length of the string. Must be >= 0 and >= `min_length`. Defaults to
+            128.
+
+        Raises:
+            TypeError: If `min_length` is not an integer.
+            TypeError: If `max_length` is not an integer.
+            ValueError: If `min_length` is less than 0.
+            ValueError: If `max_length` is less than 0.
+            ValueError: If `min_length` is greater than `max_length`.
+
+        Returns:
+            str: Random kebab-case string value.
+
+        Example:
+        ```python
+        from object_mother_pattern import StringMother
+
+        string = StringMother.kebab_case(min_length=8, max_length=32)
+        print(string)
+        # >>> tfkryx-91aewzbc
+        ```
+        """
+        return cls._create_delimited_case(
+            min_length=min_length,
+            max_length=max_length,
+            characters=ALPHABET_LOWERCASE_BASIC + DIGITS_BASIC,
+            separator='-',
+        )
+
+    @classmethod
+    def camel_case(cls, *, min_length: int = 1, max_length: int = 128) -> str:
+        """
+        Create a random camelCase string value of length between `min_length` and `max_length`.
+
+        Args:
+            min_length (int, optional): Minimum length of the string. Must be >= 0. Defaults to 1.
+            max_length (int, optional): Maximum length of the string. Must be >= 0 and >= `min_length`. Defaults to
+            128.
+
+        Raises:
+            TypeError: If `min_length` is not an integer.
+            TypeError: If `max_length` is not an integer.
+            ValueError: If `min_length` is less than 0.
+            ValueError: If `max_length` is less than 0.
+            ValueError: If `min_length` is greater than `max_length`.
+
+        Returns:
+            str: Random camelCase string value.
+
+        Example:
+        ```python
+        from object_mother_pattern import StringMother
+
+        string = StringMother.camel_case(min_length=8, max_length=32)
+        print(string)
+        # >>> tfkryx91Aewzbc
+        ```
+        """
+        cls.create(
+            min_length=min_length,
+            max_length=max_length,
+            characters=ALPHABET_LOWERCASE_BASIC,
+        )
+
+        total_length = randint(a=min_length, b=max_length)  # noqa: S311
+        if total_length == 0:
+            return ''
+
+        segment_count = randint(a=1, b=total_length)  # noqa: S311
+        segment_lengths = tuple(
+            segment_length + 1
+            for segment_length in cls._optional_segment_lengths(
+                total_characters=total_length - segment_count,
+                total_segments=segment_count,
+            )
+        )
+
+        return cls._render_segmented_case(
+            segment_lengths=segment_lengths,
+            first_segment_characters=ALPHABET_LOWERCASE_BASIC,
+            next_segment_characters=ALPHABET_UPPERCASE_BASIC,
+            remaining_characters=ALPHABET_LOWERCASE_BASIC + DIGITS_BASIC,
+            separator='',
+        )
+
+    @classmethod
+    def snake_case(cls, *, min_length: int = 1, max_length: int = 128) -> str:
+        """
+        Create a random snake_case string value of length between `min_length` and `max_length`.
+
+        Args:
+            min_length (int, optional): Minimum length of the string. Must be >= 0. Defaults to 1.
+            max_length (int, optional): Maximum length of the string. Must be >= 0 and >= `min_length`. Defaults to
+            128.
+
+        Raises:
+            TypeError: If `min_length` is not an integer.
+            TypeError: If `max_length` is not an integer.
+            ValueError: If `min_length` is less than 0.
+            ValueError: If `max_length` is less than 0.
+            ValueError: If `min_length` is greater than `max_length`.
+
+        Returns:
+            str: Random snake_case string value.
+
+        Example:
+        ```python
+        from object_mother_pattern import StringMother
+
+        string = StringMother.snake_case(min_length=8, max_length=32)
+        print(string)
+        # >>> tfkryx_91aewzbc
+        ```
+        """
+        return cls._create_delimited_case(
+            min_length=min_length,
+            max_length=max_length,
+            characters=ALPHABET_LOWERCASE_BASIC + DIGITS_BASIC,
+            separator='_',
+        )
+
+    @classmethod
+    def screaming_snake_case(cls, *, min_length: int = 1, max_length: int = 128) -> str:
+        """
+        Create a random SCREAMING_SNAKE_CASE string value of length between `min_length` and `max_length`.
+
+        Args:
+            min_length (int, optional): Minimum length of the string. Must be >= 0. Defaults to 1.
+            max_length (int, optional): Maximum length of the string. Must be >= 0 and >= `min_length`. Defaults to
+            128.
+
+        Raises:
+            TypeError: If `min_length` is not an integer.
+            TypeError: If `max_length` is not an integer.
+            ValueError: If `min_length` is less than 0.
+            ValueError: If `max_length` is less than 0.
+            ValueError: If `min_length` is greater than `max_length`.
+
+        Returns:
+            str: Random SCREAMING_SNAKE_CASE string value.
+
+        Example:
+        ```python
+        from object_mother_pattern import StringMother
+
+        string = StringMother.screaming_snake_case(min_length=8, max_length=32)
+        print(string)
+        # >>> TFKRYX_91AEWZBC
+        ```
+        """
+        return cls._create_delimited_case(
+            min_length=min_length,
+            max_length=max_length,
+            characters=ALPHABET_UPPERCASE_BASIC + DIGITS_BASIC,
+            separator='_',
+        )
+
+    @classmethod
+    def _create_delimited_case(
+        cls,
+        *,
+        min_length: int,
+        max_length: int,
+        characters: str,
+        separator: str,
+    ) -> str:
+        """
+        Create a segmented string with a fixed separator inserted between adjacent segments.
+
+        Args:
+            min_length (int): Minimum total length of the generated value.
+            max_length (int): Maximum total length of the generated value.
+            characters (str): Characters allowed inside each segment.
+            separator (str): Separator inserted between adjacent segments.
+
+        Returns:
+            str: Random segmented string using the provided separator, or an empty string when the generated
+            length is 0.
+        """
+        cls.create(min_length=min_length, max_length=max_length, characters=characters)
+
+        total_length = randint(a=min_length, b=max_length)  # noqa: S311
+        if total_length == 0:
+            return ''
+
+        separator_count = cls._separator_count(total_length=total_length)
+        segment_lengths = cls._segment_lengths(
+            total_characters=total_length - separator_count,
+            total_segments=separator_count + 1,
+        )
+
+        return cls._render_segmented_case(
+            segment_lengths=segment_lengths,
+            first_segment_characters=characters,
+            next_segment_characters=characters,
+            remaining_characters=characters,
+            separator=separator,
+        )
+
+    @classmethod
+    def _separator_count(cls, *, total_length: int) -> int:
+        """
+        Compute how many separators can be inserted while keeping every segment non-empty.
+
+        Args:
+            total_length (int): Total length of the final formatted string, including separators.
+
+        Returns:
+            int: Random number of separators allowed for the provided length.
+        """
+        if total_length <= 1:
+            return 0
+
+        max_separators = (total_length - 1) // 2
+
+        return randint(a=0, b=max_separators)  # noqa: S311
+
+    @classmethod
+    def _segment_lengths(cls, *, total_characters: int, total_segments: int) -> tuple[int, ...]:
+        """
+        Split a positive character budget into non-empty segment lengths.
+
+        Args:
+            total_characters (int): Total number of characters to distribute.
+            total_segments (int): Number of non-empty segments to produce.
+
+        Returns:
+            tuple[int, ...]: Segment lengths that sum to `total_characters`.
+        """
+        if total_segments == 1:
+            return (total_characters,)
+
+        split_points = sample(population=range(1, total_characters), k=total_segments - 1)  # noqa: S311
+        split_points.sort()
+        boundaries = [0, *split_points, total_characters]
+
+        return tuple(boundaries[index + 1] - boundaries[index] for index in range(total_segments))
+
+    @classmethod
+    def _optional_segment_lengths(cls, *, total_characters: int, total_segments: int) -> tuple[int, ...]:
+        """
+        Distribute a character budget across segments that may be empty.
+
+        Args:
+            total_characters (int): Total number of characters to distribute.
+            total_segments (int): Number of segments that will receive the characters.
+
+        Returns:
+            tuple[int, ...]: Segment lengths that sum to `total_characters` and may include zeros.
+        """
+        segment_lengths = [0] * total_segments
+
+        for _ in range(total_characters):
+            segment_lengths[randint(a=0, b=total_segments - 1)] += 1  # noqa: S311
+
+        return tuple(segment_lengths)
+
+    @classmethod
+    def _render_segmented_case(
+        cls,
+        *,
+        segment_lengths: tuple[int, ...],
+        first_segment_characters: str,
+        next_segment_characters: str,
+        remaining_characters: str,
+        separator: str,
+    ) -> str:
+        """
+        Render a segmented string from precomputed segment lengths and character alphabets.
+
+        Args:
+            segment_lengths (tuple[int, ...]): Length of each segment to render.
+            first_segment_characters (str): Characters allowed for the first character of the first segment.
+            next_segment_characters (str): Characters allowed for the first character of every later segment.
+            remaining_characters (str): Characters allowed for the remaining characters in every segment.
+            separator (str): Separator inserted between adjacent segments.
+
+        Returns:
+            str: Rendered segmented string.
+        """
+        value = ''
+        segment_count = len(segment_lengths)
+
+        for index, segment_length in enumerate(segment_lengths):
+            segment_characters = first_segment_characters if index == 0 else next_segment_characters
+
+            value += choice(seq=segment_characters)  # noqa: S311
+            value += ''.join(choice(seq=remaining_characters) for _ in range(segment_length - 1))  # noqa: S311
+
+            if index < segment_count - 1:
+                value += separator
+
+        return value
 
     @classmethod
     def not_trimmed(cls, *, min_length: int = 2, max_length: int = 128) -> str:

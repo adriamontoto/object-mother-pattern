@@ -2,6 +2,8 @@
 Test module for the StringMother class.
 """
 
+from re import fullmatch
+
 from pytest import mark, raises as assert_raises
 
 from object_mother_pattern.mothers import IntegerMother, StringMother
@@ -1478,3 +1480,319 @@ def test_string_mother_invalid_value_method_no_spaces() -> None:
     value = StringMother.invalid_value()
 
     assert value.strip() == value
+
+
+@mark.unit_testing
+def test_string_mother_kebab_case_method_happy_path() -> None:
+    """
+    Check that kebab_case method returns a kebab-case string value.
+    """
+    value = StringMother.kebab_case()
+
+    assert type(value) is str
+    assert 1 <= len(value) <= 128
+    assert fullmatch(pattern=r'^[a-z0-9]+(?:-[a-z0-9]+)*$', string=value)
+
+
+@mark.unit_testing
+def test_string_mother_kebab_case_method_zero_length() -> None:
+    """
+    Check that kebab_case method supports generating an empty string.
+    """
+    assert StringMother.kebab_case(min_length=0, max_length=0) == ''
+
+
+@mark.unit_testing
+def test_string_mother_kebab_case_method_minimum_length() -> None:
+    """
+    Check that kebab_case method supports generating a one-character value.
+    """
+    value = StringMother.kebab_case(min_length=1, max_length=1)
+
+    assert type(value) is str
+    assert len(value) == 1
+
+
+@mark.unit_testing
+def test_string_mother_kebab_case_method_exact_length() -> None:
+    """
+    Check that kebab_case method supports generating a random exact-length value.
+    """
+    length = IntegerMother.positive()
+    value = StringMother.kebab_case(min_length=length, max_length=length)
+
+    assert type(value) is str
+    assert len(value) == length
+
+
+@mark.unit_testing
+def test_string_mother_kebab_case_method_invalid_min_length_type() -> None:
+    """
+    Check that kebab_case method raises a TypeError when min_length is not an integer.
+    """
+    with assert_raises(expected_exception=TypeError, match='StringMother min_length must be an integer.'):
+        StringMother.kebab_case(min_length=IntegerMother.invalid_type())
+
+
+@mark.unit_testing
+def test_string_mother_kebab_case_method_invalid_min_length_value() -> None:
+    """
+    Check that kebab_case method raises a ValueError when min_length is negative.
+    """
+    with assert_raises(expected_exception=ValueError, match='StringMother min_length must be greater than or equal'):
+        StringMother.kebab_case(min_length=-1)
+
+
+@mark.unit_testing
+def test_string_mother_kebab_case_method_invalid_max_length_value() -> None:
+    """
+    Check that kebab_case method raises a ValueError when max_length is negative.
+    """
+    with assert_raises(expected_exception=ValueError, match='StringMother max_length must be greater than or equal'):
+        StringMother.kebab_case(max_length=-1)
+
+
+@mark.unit_testing
+def test_string_mother_kebab_case_method_min_length_greater_than_max_length() -> None:
+    """
+    Check that kebab_case method raises a ValueError when min_length exceeds max_length.
+    """
+    with assert_raises(expected_exception=ValueError, match='StringMother min_length must be less than or equal'):
+        StringMother.kebab_case(min_length=2, max_length=1)
+
+
+@mark.unit_testing
+def test_string_mother_camel_case_method_happy_path() -> None:
+    """
+    Check that camel_case method returns a camelCase string value.
+    """
+    value = StringMother.camel_case()
+
+    assert type(value) is str
+    assert 1 <= len(value) <= 128
+    assert fullmatch(pattern=r'^[a-z][a-z0-9]*(?:[A-Z][a-z0-9]*)*$', string=value)
+
+
+@mark.unit_testing
+def test_string_mother_camel_case_method_zero_length() -> None:
+    """
+    Check that camel_case method supports generating an empty string.
+    """
+    assert StringMother.camel_case(min_length=0, max_length=0) == ''
+
+
+@mark.unit_testing
+def test_string_mother_camel_case_method_minimum_length() -> None:
+    """
+    Check that camel_case method supports generating a one-character value.
+    """
+    value = StringMother.camel_case(min_length=1, max_length=1)
+
+    assert type(value) is str
+    assert len(value) == 1
+
+
+@mark.unit_testing
+def test_string_mother_camel_case_method_exact_length() -> None:
+    """
+    Check that camel_case method supports generating a random exact-length value.
+    """
+    length = IntegerMother.positive()
+    value = StringMother.camel_case(min_length=length, max_length=length)
+
+    assert type(value) is str
+    assert len(value) == length
+
+
+@mark.unit_testing
+def test_string_mother_camel_case_method_invalid_min_length_type() -> None:
+    """
+    Check that camel_case method raises a TypeError when min_length is not an integer.
+    """
+    with assert_raises(expected_exception=TypeError, match='StringMother min_length must be an integer.'):
+        StringMother.camel_case(min_length=IntegerMother.invalid_type())
+
+
+@mark.unit_testing
+def test_string_mother_camel_case_method_invalid_min_length_value() -> None:
+    """
+    Check that camel_case method raises a ValueError when min_length is negative.
+    """
+    with assert_raises(expected_exception=ValueError, match='StringMother min_length must be greater than or equal'):
+        StringMother.camel_case(min_length=-1)
+
+
+@mark.unit_testing
+def test_string_mother_camel_case_method_invalid_max_length_value() -> None:
+    """
+    Check that camel_case method raises a ValueError when max_length is negative.
+    """
+    with assert_raises(expected_exception=ValueError, match='StringMother max_length must be greater than or equal'):
+        StringMother.camel_case(max_length=-1)
+
+
+@mark.unit_testing
+def test_string_mother_camel_case_method_min_length_greater_than_max_length() -> None:
+    """
+    Check that camel_case method raises a ValueError when min_length exceeds max_length.
+    """
+    with assert_raises(expected_exception=ValueError, match='StringMother min_length must be less than or equal'):
+        StringMother.camel_case(min_length=2, max_length=1)
+
+
+@mark.unit_testing
+def test_string_mother_snake_case_method_happy_path() -> None:
+    """
+    Check that snake_case method returns a snake_case string value.
+    """
+    value = StringMother.snake_case()
+
+    assert type(value) is str
+    assert 1 <= len(value) <= 128
+    assert fullmatch(pattern=r'^[a-z0-9]+(?:_[a-z0-9]+)*$', string=value)
+
+
+@mark.unit_testing
+def test_string_mother_snake_case_method_zero_length() -> None:
+    """
+    Check that snake_case method supports generating an empty string.
+    """
+    assert StringMother.snake_case(min_length=0, max_length=0) == ''
+
+
+@mark.unit_testing
+def test_string_mother_snake_case_method_minimum_length() -> None:
+    """
+    Check that snake_case method supports generating a one-character value.
+    """
+    value = StringMother.snake_case(min_length=1, max_length=1)
+
+    assert type(value) is str
+    assert len(value) == 1
+
+
+@mark.unit_testing
+def test_string_mother_snake_case_method_exact_length() -> None:
+    """
+    Check that snake_case method supports generating a random exact-length value.
+    """
+    length = IntegerMother.positive()
+    value = StringMother.snake_case(min_length=length, max_length=length)
+
+    assert type(value) is str
+    assert len(value) == length
+
+
+@mark.unit_testing
+def test_string_mother_snake_case_method_invalid_min_length_type() -> None:
+    """
+    Check that snake_case method raises a TypeError when min_length is not an integer.
+    """
+    with assert_raises(expected_exception=TypeError, match='StringMother min_length must be an integer.'):
+        StringMother.snake_case(min_length=IntegerMother.invalid_type())
+
+
+@mark.unit_testing
+def test_string_mother_snake_case_method_invalid_min_length_value() -> None:
+    """
+    Check that snake_case method raises a ValueError when min_length is negative.
+    """
+    with assert_raises(expected_exception=ValueError, match='StringMother min_length must be greater than or equal'):
+        StringMother.snake_case(min_length=-1)
+
+
+@mark.unit_testing
+def test_string_mother_snake_case_method_invalid_max_length_value() -> None:
+    """
+    Check that snake_case method raises a ValueError when max_length is negative.
+    """
+    with assert_raises(expected_exception=ValueError, match='StringMother max_length must be greater than or equal'):
+        StringMother.snake_case(max_length=-1)
+
+
+@mark.unit_testing
+def test_string_mother_snake_case_method_min_length_greater_than_max_length() -> None:
+    """
+    Check that snake_case method raises a ValueError when min_length exceeds max_length.
+    """
+    with assert_raises(expected_exception=ValueError, match='StringMother min_length must be less than or equal'):
+        StringMother.snake_case(min_length=2, max_length=1)
+
+
+@mark.unit_testing
+def test_string_mother_screaming_snake_case_method_happy_path() -> None:
+    """
+    Check that screaming_snake_case method returns a SCREAMING_SNAKE_CASE string value.
+    """
+    value = StringMother.screaming_snake_case()
+
+    assert type(value) is str
+    assert 1 <= len(value) <= 128
+    assert fullmatch(pattern=r'^[A-Z0-9]+(?:_[A-Z0-9]+)*$', string=value)
+
+
+@mark.unit_testing
+def test_string_mother_screaming_snake_case_method_zero_length() -> None:
+    """
+    Check that screaming_snake_case method supports generating an empty string.
+    """
+    assert StringMother.screaming_snake_case(min_length=0, max_length=0) == ''
+
+
+@mark.unit_testing
+def test_string_mother_screaming_snake_case_method_minimum_length() -> None:
+    """
+    Check that screaming_snake_case method supports generating a one-character value.
+    """
+    value = StringMother.screaming_snake_case(min_length=1, max_length=1)
+
+    assert type(value) is str
+    assert len(value) == 1
+
+
+@mark.unit_testing
+def test_string_mother_screaming_snake_case_method_exact_length() -> None:
+    """
+    Check that screaming_snake_case method supports generating a random exact-length value.
+    """
+    length = IntegerMother.positive()
+    value = StringMother.screaming_snake_case(min_length=length, max_length=length)
+
+    assert type(value) is str
+    assert len(value) == length
+
+
+@mark.unit_testing
+def test_string_mother_screaming_snake_case_method_invalid_min_length_type() -> None:
+    """
+    Check that screaming_snake_case method raises a TypeError when min_length is not an integer.
+    """
+    with assert_raises(expected_exception=TypeError, match='StringMother min_length must be an integer.'):
+        StringMother.screaming_snake_case(min_length=IntegerMother.invalid_type())
+
+
+@mark.unit_testing
+def test_string_mother_screaming_snake_case_method_invalid_min_length_value() -> None:
+    """
+    Check that screaming_snake_case method raises a ValueError when min_length is negative.
+    """
+    with assert_raises(expected_exception=ValueError, match='StringMother min_length must be greater than or equal'):
+        StringMother.screaming_snake_case(min_length=-1)
+
+
+@mark.unit_testing
+def test_string_mother_screaming_snake_case_method_invalid_max_length_value() -> None:
+    """
+    Check that screaming_snake_case method raises a ValueError when max_length is negative.
+    """
+    with assert_raises(expected_exception=ValueError, match='StringMother max_length must be greater than or equal'):
+        StringMother.screaming_snake_case(max_length=-1)
+
+
+@mark.unit_testing
+def test_string_mother_screaming_snake_case_method_min_length_greater_than_max_length() -> None:
+    """
+    Check that screaming_snake_case method raises a ValueError when min_length exceeds max_length.
+    """
+    with assert_raises(expected_exception=ValueError, match='StringMother min_length must be less than or equal'):
+        StringMother.screaming_snake_case(min_length=2, max_length=1)

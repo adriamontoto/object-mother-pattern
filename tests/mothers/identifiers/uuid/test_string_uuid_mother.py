@@ -2,7 +2,7 @@
 Test module for the StringUuidMother class.
 """
 
-from random import choices
+from random import choices, sample
 from uuid import UUID
 
 from pytest import mark, raises as assert_raises
@@ -68,14 +68,15 @@ def test_string_uuid_mother_exclude_versions() -> None:
     """
     Test StringUuidMother create method with exclude_versions parameter.
     """
-    # TODO: do it randomly
-    excluded_versions = {1, 3, 6, 7, 8}
-    allowed_versions = {4, 5}
+    all_versions = {1, 3, 4, 5, 6, 7, 8}
+    excluded_versions = set(sample(population=tuple(all_versions), k=IntegerMother.create(min=1, max=6)))  # noqa: S311
+    allowed_versions = all_versions - excluded_versions
     value = StringUuidMother.create(exclude_versions=excluded_versions)
+    version = UUID(value).version
 
     assert type(value) is str
-    assert UUID(value).version in allowed_versions
-    assert UUID(value).version not in excluded_versions
+    assert version in allowed_versions
+    assert version not in excluded_versions
 
 
 @mark.unit_testing

@@ -2,7 +2,7 @@
 Test module for the UuidMother class.
 """
 
-from random import choices
+from random import choices, sample
 from uuid import UUID
 
 from pytest import mark, raises as assert_raises
@@ -57,9 +57,9 @@ def test_uuid_mother_exclude_versions() -> None:
     """
     Test UuidMother create method with exclude_versions parameter.
     """
-    # TODO: do it randomly
-    excluded_versions = {1, 3, 6, 7, 8}
-    allowed_versions = {4, 5}
+    all_versions = {1, 3, 4, 5, 6, 7, 8}
+    excluded_versions = set(sample(population=tuple(all_versions), k=IntegerMother.create(min=1, max=6)))  # noqa: S311
+    allowed_versions = all_versions - excluded_versions
     value = UuidMother.create(exclude_versions=excluded_versions)
 
     assert isinstance(value, UUID)

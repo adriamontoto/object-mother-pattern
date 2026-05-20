@@ -38,7 +38,10 @@ def test_password_mother_invalid_value_type() -> None:
     """
     Test PasswordMother create method with invalid value type.
     """
-    with assert_raises(expected_exception=TypeError, match='PasswordMother value must be a string.'):
+    with assert_raises(
+        expected_exception=TypeError,
+        match='PasswordMother value must be a string.',
+    ):
         PasswordMother.create(value=PasswordMother.invalid_type())
 
 
@@ -116,7 +119,10 @@ def test_password_mother_invalid_lowercase_count_type() -> None:
     """
     Test PasswordMother create method with invalid lowercase_count type.
     """
-    with assert_raises(expected_exception=TypeError, match='PasswordMother lowercase_count value must be an integer.'):
+    with assert_raises(
+        expected_exception=TypeError,
+        match='PasswordMother lowercase_count value must be an integer.',
+    ):
         PasswordMother.create(lowercase_count=IntegerMother.invalid_type())
 
 
@@ -125,7 +131,10 @@ def test_password_mother_invalid_uppercase_count_type() -> None:
     """
     Test PasswordMother create method with invalid uppercase_count type.
     """
-    with assert_raises(expected_exception=TypeError, match='PasswordMother uppercase_count value must be an integer.'):
+    with assert_raises(
+        expected_exception=TypeError,
+        match='PasswordMother uppercase_count value must be an integer.',
+    ):
         PasswordMother.create(uppercase_count=IntegerMother.invalid_type())
 
 
@@ -134,7 +143,10 @@ def test_password_mother_invalid_digits_count_type() -> None:
     """
     Test PasswordMother create method with invalid digits_count type.
     """
-    with assert_raises(expected_exception=TypeError, match='PasswordMother digits_count value must be an integer.'):
+    with assert_raises(
+        expected_exception=TypeError,
+        match='PasswordMother digits_count value must be an integer.',
+    ):
         PasswordMother.create(digits_count=IntegerMother.invalid_type())
 
 
@@ -167,7 +179,10 @@ def test_password_mother_invalid_lowercase_alphabet_type() -> None:
     """
     Test PasswordMother create method with invalid lowercase_alphabet type.
     """
-    with assert_raises(expected_exception=TypeError, match='PasswordMother lowercase_alphabet value must be a string.'):
+    with assert_raises(
+        expected_exception=TypeError,
+        match='PasswordMother lowercase_alphabet value must be a string.',
+    ):
         PasswordMother.create(lowercase_alphabet=StringMother.invalid_type())
 
 
@@ -176,7 +191,10 @@ def test_password_mother_invalid_uppercase_alphabet_type() -> None:
     """
     Test PasswordMother create method with invalid uppercase_alphabet type.
     """
-    with assert_raises(expected_exception=TypeError, match='PasswordMother uppercase_alphabet value must be a string.'):
+    with assert_raises(
+        expected_exception=TypeError,
+        match='PasswordMother uppercase_alphabet value must be a string.',
+    ):
         PasswordMother.create(uppercase_alphabet=StringMother.invalid_type())
 
 
@@ -185,7 +203,10 @@ def test_password_mother_invalid_digits_alphabet_type() -> None:
     """
     Test PasswordMother create method with invalid digits_alphabet type.
     """
-    with assert_raises(expected_exception=TypeError, match='PasswordMother digits_alphabet value must be a string.'):
+    with assert_raises(
+        expected_exception=TypeError,
+        match='PasswordMother digits_alphabet value must be a string.',
+    ):
         PasswordMother.create(digits_alphabet=StringMother.invalid_type())
 
 
@@ -317,7 +338,10 @@ def test_password_mother_random_length_invalid_min_length_type() -> None:
     """
     Test PasswordMother random_length method with invalid min_length type.
     """
-    with assert_raises(expected_exception=TypeError, match='PasswordMother min_length value must be an integer.'):
+    with assert_raises(
+        expected_exception=TypeError,
+        match='PasswordMother min_length value must be an integer.',
+    ):
         PasswordMother.random_length(min_length=IntegerMother.invalid_type())
 
 
@@ -326,7 +350,10 @@ def test_password_mother_random_length_invalid_max_length_type() -> None:
     """
     Test PasswordMother random_length method with invalid max_length type.
     """
-    with assert_raises(expected_exception=TypeError, match='PasswordMother max_length value must be an integer.'):
+    with assert_raises(
+        expected_exception=TypeError,
+        match='PasswordMother max_length value must be an integer.',
+    ):
         PasswordMother.random_length(max_length=IntegerMother.invalid_type())
 
 
@@ -335,7 +362,10 @@ def test_password_mother_random_length_min_length_less_than_or_equal_to_zero() -
     """
     Test PasswordMother random_length method with min_length <= 0.
     """
-    with assert_raises(expected_exception=ValueError, match='PasswordMother min_length value must be greater than 0.'):
+    with assert_raises(
+        expected_exception=ValueError,
+        match='PasswordMother min_length value must be greater than 0.',
+    ):
         PasswordMother.random_length(min_length=IntegerMother.create(max=0))
 
 
@@ -344,7 +374,10 @@ def test_password_mother_random_length_max_length_less_than_or_equal_to_zero() -
     """
     Test PasswordMother random_length method with max_length <= 0.
     """
-    with assert_raises(expected_exception=ValueError, match='PasswordMother max_length value must be greater than 0.'):
+    with assert_raises(
+        expected_exception=ValueError,
+        match='PasswordMother max_length value must be greater than 0.',
+    ):
         PasswordMother.random_length(max_length=IntegerMother.create(max=0))
 
 

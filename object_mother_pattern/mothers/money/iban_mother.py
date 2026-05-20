@@ -102,6 +102,19 @@ class IbanMother(BaseMother[str]):
 
     @classmethod
     def _pick_country(cls, country_code: str | None) -> str:
+        """
+        Pick and validate the country code used to generate an IBAN.
+
+        Args:
+            country_code (str | None): Optional country code to force.
+
+        Raises:
+            TypeError: If `country_code` is not a string.
+            ValueError: If `country_code` is not supported.
+
+        Returns:
+            str: Supported uppercase country code.
+        """
         if country_code is None:
             keys = tuple(cls._COUNTRY_LENGTHS.keys())
             index = randint(0, len(keys) - 1)  # noqa: S311
@@ -119,6 +132,13 @@ class IbanMother(BaseMother[str]):
     def _compute_checksum(cls, *, code: str, bban: str) -> str:
         """
         Compute IBAN checksum using the mod-97 algorithm.
+
+        Args:
+            code (str): Two-letter country code.
+            bban (str): Basic bank account number.
+
+        Returns:
+            str: Two-digit IBAN checksum.
         """
         rearranged = f'{bban}{code}00'
         remainder = 0
@@ -132,5 +152,11 @@ class IbanMother(BaseMother[str]):
 
     @classmethod
     def _random_bban_char(cls) -> str:
+        """
+        Create a random BBAN character.
+
+        Returns:
+            str: Random character allowed in the generated BBAN.
+        """
         index = randint(0, len(cls._BBAN_CHARS) - 1)  # noqa: S311
         return cls._BBAN_CHARS[index]

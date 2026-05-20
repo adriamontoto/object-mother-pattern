@@ -57,7 +57,10 @@ def test_list_mother_create_method_invalid_value_type() -> None:
     """
     Check that ListMother validates provided value type.
     """
-    with assert_raises(expected_exception=TypeError, match='ListMother value must be a list.'):
+    with assert_raises(
+        expected_exception=TypeError,
+        match='ListMother value must be a list.',
+    ):
         ListMother.create(value=ListMother.invalid_type(remove_types=(list,)))
 
 
@@ -66,10 +69,16 @@ def test_list_mother_create_method_invalid_length_types() -> None:
     """
     Check that ListMother validates length parameter types.
     """
-    with assert_raises(expected_exception=TypeError, match='ListMother min_length must be an integer.'):
+    with assert_raises(
+        expected_exception=TypeError,
+        match='ListMother min_length must be an integer.',
+    ):
         ListMother.create(min_length=IntegerMother.invalid_type())
 
-    with assert_raises(expected_exception=TypeError, match='ListMother max_length must be an integer.'):
+    with assert_raises(
+        expected_exception=TypeError,
+        match='ListMother max_length must be an integer.',
+    ):
         ListMother.create(max_length=IntegerMother.invalid_type())
 
 
@@ -79,12 +88,14 @@ def test_list_mother_create_method_invalid_length_bounds() -> None:
     Check that ListMother validates length bounds.
     """
     with assert_raises(
-        expected_exception=ValueError, match='ListMother min_length must be greater than or equal to 0.'
+        expected_exception=ValueError,
+        match='ListMother min_length must be greater than or equal to 0.',
     ):
         ListMother.create(min_length=-1)
 
     with assert_raises(
-        expected_exception=ValueError, match='ListMother max_length must be greater than or equal to 0.'
+        expected_exception=ValueError,
+        match='ListMother max_length must be greater than or equal to 0.',
     ):
         ListMother.create(max_length=-1)
 
@@ -100,7 +111,10 @@ def test_list_mother_create_method_invalid_item_mother_type() -> None:
     """
     Check that ListMother validates item_mother type.
     """
-    with assert_raises(expected_exception=TypeError, match='ListMother item_mother must be callable.'):
+    with assert_raises(
+        expected_exception=TypeError,
+        match='ListMother item_mother must be callable.',
+    ):
         ListMother.create(item_mother=ListMother.invalid_type())
 
 

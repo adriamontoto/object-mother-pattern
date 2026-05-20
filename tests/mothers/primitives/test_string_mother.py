@@ -345,7 +345,8 @@ def test_string_mother_lowercase_method_invalid_min_length_value() -> None:
     Check that StringMother lowercase method raises a ValueError when the provided min_length is negative.
     """
     with assert_raises(
-        expected_exception=ValueError, match='StringMother min_length must be greater than or equal to 0.'
+        expected_exception=ValueError,
+        match='StringMother min_length must be greater than or equal to 0.',
     ):
         StringMother.lowercase(min_length=IntegerMother.negative())
 
@@ -488,7 +489,8 @@ def test_string_mother_uppercase_method_invalid_min_length_value() -> None:
     Check that StringMother uppercase method raises a ValueError when the provided min_length is negative.
     """
     with assert_raises(
-        expected_exception=ValueError, match='StringMother min_length must be greater than or equal to 0.'
+        expected_exception=ValueError,
+        match='StringMother min_length must be greater than or equal to 0.',
     ):
         StringMother.uppercase(min_length=IntegerMother.negative())
 
@@ -631,7 +633,8 @@ def test_string_mother_titlecase_method_invalid_min_length_value() -> None:
     Check that StringMother titlecase method raises a ValueError when the provided min_length is negative.
     """
     with assert_raises(
-        expected_exception=ValueError, match='StringMother min_length must be greater than or equal to 0.'
+        expected_exception=ValueError,
+        match='StringMother min_length must be greater than or equal to 0.',
     ):
         StringMother.titlecase(min_length=IntegerMother.negative())
 
@@ -774,7 +777,8 @@ def test_string_mother_mixedcase_method_invalid_min_length_value() -> None:
     Check that StringMother mixedcase method raises a ValueError when the provided min_length is negative.
     """
     with assert_raises(
-        expected_exception=ValueError, match='StringMother min_length must be greater than or equal to 0.'
+        expected_exception=ValueError,
+        match='StringMother min_length must be greater than or equal to 0.',
     ):
         StringMother.mixedcase(min_length=IntegerMother.negative())
 
@@ -917,7 +921,8 @@ def test_string_mother_alpha_method_invalid_min_length_value() -> None:
     Check that StringMother alpha method raises a ValueError when the provided min_length is negative.
     """
     with assert_raises(
-        expected_exception=ValueError, match='StringMother min_length must be greater than or equal to 0.'
+        expected_exception=ValueError,
+        match='StringMother min_length must be greater than or equal to 0.',
     ):
         StringMother.alpha(min_length=IntegerMother.negative())
 
@@ -1059,7 +1064,8 @@ def test_string_mother_alphanumeric_method_invalid_min_length_value() -> None:
     Check that StringMother alphanumeric method raises a ValueError when the provided min_length is negative.
     """
     with assert_raises(
-        expected_exception=ValueError, match='StringMother min_length must be greater than or equal to 0.'
+        expected_exception=ValueError,
+        match='StringMother min_length must be greater than or equal to 0.',
     ):
         StringMother.alphanumeric(min_length=IntegerMother.negative())
 
@@ -1202,7 +1208,8 @@ def test_string_mother_numeric_method_invalid_min_length_value() -> None:
     Check that StringMother numeric method raises a ValueError when the provided min_length is negative.
     """
     with assert_raises(
-        expected_exception=ValueError, match='StringMother min_length must be greater than or equal to 0.'
+        expected_exception=ValueError,
+        match='StringMother min_length must be greater than or equal to 0.',
     ):
         StringMother.numeric(min_length=IntegerMother.negative())
 
@@ -1343,7 +1350,8 @@ def test_string_mother_not_trimmed_method_invalid_min_length_value() -> None:
     Check that StringMother not_trimmed method raises a ValueError when the provided min_length is negative.
     """
     with assert_raises(
-        expected_exception=ValueError, match='StringMother min_length must be greater than or equal to 2.'
+        expected_exception=ValueError,
+        match='StringMother min_length must be greater than or equal to 2.',
     ):
         StringMother.not_trimmed(min_length=IntegerMother.create(max=1))
 
@@ -1530,7 +1538,10 @@ def test_string_mother_kebab_case_method_invalid_min_length_type() -> None:
     """
     Check that kebab_case method raises a TypeError when min_length is not an integer.
     """
-    with assert_raises(expected_exception=TypeError, match='StringMother min_length must be an integer.'):
+    with assert_raises(
+        expected_exception=TypeError,
+        match='StringMother min_length must be an integer.',
+    ):
         StringMother.kebab_case(min_length=IntegerMother.invalid_type())
 
 
@@ -1539,7 +1550,10 @@ def test_string_mother_kebab_case_method_invalid_min_length_value() -> None:
     """
     Check that kebab_case method raises a ValueError when min_length is negative.
     """
-    with assert_raises(expected_exception=ValueError, match='StringMother min_length must be greater than or equal'):
+    with assert_raises(
+        expected_exception=ValueError,
+        match='StringMother min_length must be greater than or equal',
+    ):
         StringMother.kebab_case(min_length=-1)
 
 
@@ -1548,7 +1562,10 @@ def test_string_mother_kebab_case_method_invalid_max_length_value() -> None:
     """
     Check that kebab_case method raises a ValueError when max_length is negative.
     """
-    with assert_raises(expected_exception=ValueError, match='StringMother max_length must be greater than or equal'):
+    with assert_raises(
+        expected_exception=ValueError,
+        match='StringMother max_length must be greater than or equal',
+    ):
         StringMother.kebab_case(max_length=-1)
 
 
@@ -1557,7 +1574,10 @@ def test_string_mother_kebab_case_method_min_length_greater_than_max_length() ->
     """
     Check that kebab_case method raises a ValueError when min_length exceeds max_length.
     """
-    with assert_raises(expected_exception=ValueError, match='StringMother min_length must be less than or equal'):
+    with assert_raises(
+        expected_exception=ValueError,
+        match='StringMother min_length must be less than or equal',
+    ):
         StringMother.kebab_case(min_length=2, max_length=1)
 
 
@@ -1609,7 +1629,10 @@ def test_string_mother_camel_case_method_invalid_min_length_type() -> None:
     """
     Check that camel_case method raises a TypeError when min_length is not an integer.
     """
-    with assert_raises(expected_exception=TypeError, match='StringMother min_length must be an integer.'):
+    with assert_raises(
+        expected_exception=TypeError,
+        match='StringMother min_length must be an integer.',
+    ):
         StringMother.camel_case(min_length=IntegerMother.invalid_type())
 
 
@@ -1618,7 +1641,10 @@ def test_string_mother_camel_case_method_invalid_min_length_value() -> None:
     """
     Check that camel_case method raises a ValueError when min_length is negative.
     """
-    with assert_raises(expected_exception=ValueError, match='StringMother min_length must be greater than or equal'):
+    with assert_raises(
+        expected_exception=ValueError,
+        match='StringMother min_length must be greater than or equal',
+    ):
         StringMother.camel_case(min_length=-1)
 
 
@@ -1627,7 +1653,10 @@ def test_string_mother_camel_case_method_invalid_max_length_value() -> None:
     """
     Check that camel_case method raises a ValueError when max_length is negative.
     """
-    with assert_raises(expected_exception=ValueError, match='StringMother max_length must be greater than or equal'):
+    with assert_raises(
+        expected_exception=ValueError,
+        match='StringMother max_length must be greater than or equal',
+    ):
         StringMother.camel_case(max_length=-1)
 
 
@@ -1636,7 +1665,10 @@ def test_string_mother_camel_case_method_min_length_greater_than_max_length() ->
     """
     Check that camel_case method raises a ValueError when min_length exceeds max_length.
     """
-    with assert_raises(expected_exception=ValueError, match='StringMother min_length must be less than or equal'):
+    with assert_raises(
+        expected_exception=ValueError,
+        match='StringMother min_length must be less than or equal',
+    ):
         StringMother.camel_case(min_length=2, max_length=1)
 
 
@@ -1688,7 +1720,10 @@ def test_string_mother_snake_case_method_invalid_min_length_type() -> None:
     """
     Check that snake_case method raises a TypeError when min_length is not an integer.
     """
-    with assert_raises(expected_exception=TypeError, match='StringMother min_length must be an integer.'):
+    with assert_raises(
+        expected_exception=TypeError,
+        match='StringMother min_length must be an integer.',
+    ):
         StringMother.snake_case(min_length=IntegerMother.invalid_type())
 
 
@@ -1697,7 +1732,10 @@ def test_string_mother_snake_case_method_invalid_min_length_value() -> None:
     """
     Check that snake_case method raises a ValueError when min_length is negative.
     """
-    with assert_raises(expected_exception=ValueError, match='StringMother min_length must be greater than or equal'):
+    with assert_raises(
+        expected_exception=ValueError,
+        match='StringMother min_length must be greater than or equal',
+    ):
         StringMother.snake_case(min_length=-1)
 
 
@@ -1706,7 +1744,10 @@ def test_string_mother_snake_case_method_invalid_max_length_value() -> None:
     """
     Check that snake_case method raises a ValueError when max_length is negative.
     """
-    with assert_raises(expected_exception=ValueError, match='StringMother max_length must be greater than or equal'):
+    with assert_raises(
+        expected_exception=ValueError,
+        match='StringMother max_length must be greater than or equal',
+    ):
         StringMother.snake_case(max_length=-1)
 
 
@@ -1715,7 +1756,10 @@ def test_string_mother_snake_case_method_min_length_greater_than_max_length() ->
     """
     Check that snake_case method raises a ValueError when min_length exceeds max_length.
     """
-    with assert_raises(expected_exception=ValueError, match='StringMother min_length must be less than or equal'):
+    with assert_raises(
+        expected_exception=ValueError,
+        match='StringMother min_length must be less than or equal',
+    ):
         StringMother.snake_case(min_length=2, max_length=1)
 
 
@@ -1767,7 +1811,10 @@ def test_string_mother_screaming_snake_case_method_invalid_min_length_type() -> 
     """
     Check that screaming_snake_case method raises a TypeError when min_length is not an integer.
     """
-    with assert_raises(expected_exception=TypeError, match='StringMother min_length must be an integer.'):
+    with assert_raises(
+        expected_exception=TypeError,
+        match='StringMother min_length must be an integer.',
+    ):
         StringMother.screaming_snake_case(min_length=IntegerMother.invalid_type())
 
 
@@ -1776,7 +1823,10 @@ def test_string_mother_screaming_snake_case_method_invalid_min_length_value() ->
     """
     Check that screaming_snake_case method raises a ValueError when min_length is negative.
     """
-    with assert_raises(expected_exception=ValueError, match='StringMother min_length must be greater than or equal'):
+    with assert_raises(
+        expected_exception=ValueError,
+        match='StringMother min_length must be greater than or equal',
+    ):
         StringMother.screaming_snake_case(min_length=-1)
 
 
@@ -1785,7 +1835,10 @@ def test_string_mother_screaming_snake_case_method_invalid_max_length_value() ->
     """
     Check that screaming_snake_case method raises a ValueError when max_length is negative.
     """
-    with assert_raises(expected_exception=ValueError, match='StringMother max_length must be greater than or equal'):
+    with assert_raises(
+        expected_exception=ValueError,
+        match='StringMother max_length must be greater than or equal',
+    ):
         StringMother.screaming_snake_case(max_length=-1)
 
 
@@ -1794,5 +1847,8 @@ def test_string_mother_screaming_snake_case_method_min_length_greater_than_max_l
     """
     Check that screaming_snake_case method raises a ValueError when min_length exceeds max_length.
     """
-    with assert_raises(expected_exception=ValueError, match='StringMother min_length must be less than or equal'):
+    with assert_raises(
+        expected_exception=ValueError,
+        match='StringMother min_length must be less than or equal',
+    ):
         StringMother.screaming_snake_case(min_length=2, max_length=1)

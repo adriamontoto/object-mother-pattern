@@ -2,10 +2,29 @@
 Test module for the UserAgentMother class.
 """
 
-from pytest import mark, raises as assert_raises
+from pytest import MonkeyPatch, mark, raises as assert_raises
 
 from object_mother_pattern.mothers import IntegerMother
 from object_mother_pattern.mothers.internet import UserAgentMother
+
+
+class _ShortUserAgentRandom:
+    """
+    Deterministic random provider that always creates a short user agent.
+    """
+
+    def user_agent(self) -> str:
+        """
+        Create a short user agent string.
+        """
+        return 'short-agent'
+
+
+def _short_user_agent_random_factory(cls: type[UserAgentMother]) -> _ShortUserAgentRandom:
+    """
+    Create the deterministic random provider used by UserAgentMother tests.
+    """
+    return _ShortUserAgentRandom()
 
 
 @mark.unit_testing
@@ -19,6 +38,19 @@ def test_user_agent_mother_create_happy_path() -> None:
     assert 64 <= len(value) <= 256
     assert value.isprintable()
     assert value == value.strip()
+
+
+@mark.unit_testing
+def test_user_agent_mother_create_method_extends_short_generated_user_agent(monkeypatch: MonkeyPatch) -> None:
+    """
+    Check that create extends generated user agents until the requested length is reached.
+    """
+    monkeypatch.setattr(UserAgentMother, '_random', classmethod(_short_user_agent_random_factory))
+
+    value = UserAgentMother.create(min_length=30, max_length=30)
+
+    assert type(value) is str
+    assert len(value) == 30
 
 
 @mark.unit_testing

@@ -69,15 +69,6 @@ class EmailAddressMother(BaseMother[str]):
 
         Returns:
             str: A randomly generated email address value with the provided constraints.
-
-        Example:
-        ```python
-        from object_mother_pattern.mothers.internet import EmailAddressMother
-
-        email_address = EmailAddressMother.create()
-        print(email_address)
-        # >>> fowler.archer.com
-        ```
         """
         if value is not None:
             if type(value) is not str:
@@ -142,66 +133,41 @@ class EmailAddressMother(BaseMother[str]):
                 continue
 
         if local_part is None or final_domain is None:
-            # Fallback if no valid email could be generated after all attempts
-            # This happens when strict length requirements can't be met with random domains
-            # Create a simple email that exactly matches the required length constraints
             at_sign_len = 1
 
-            # Determine domain length based on constraints
-            # For exact length (min == max), we need to be precise
             if min_length == max_length:
-                # Use a minimal domain to maximize local part flexibility
                 if max_length <= 6:
-                    final_domain = 'a.b'  # 3 chars
+                    final_domain = 'a.b'
                 elif max_length <= 10:
-                    final_domain = 'a.co'  # 4 chars
+                    final_domain = 'a.co'
                 else:
-                    final_domain = 'ex.co'  # 5 chars
+                    final_domain = 'ex.co'
 
                 local_len = max_length - len(final_domain) - at_sign_len
 
-                # Ensure local_len is valid (at least 1)
-                if local_len < 1:
-                    # For very short emails like length=6, we need x@a.co (1+1+4=6)
-                    final_domain = 'a.co'
-                    local_len = max_length - len(final_domain) - at_sign_len
-                    if local_len < 1:
-                        final_domain = 'a.b'
-                        local_len = max_length - len(final_domain) - at_sign_len
-
-                # Generate local part of exact length (but respect RFC limit of 64)
-                if local_len <= 0:
-                    local_part = 'x'
-                elif local_len <= 64:
+                if local_len <= 64:
                     local_part = 'x' * local_len
                 else:
-                    # Local part can't exceed 64 chars per RFC
-                    # Need a longer domain to meet the length requirement
                     local_part = 'x' * 64
                     needed_domain_len = max_length - 64 - at_sign_len
-                    # Create a domain of the needed length
                     if needed_domain_len <= 10:
-                        final_domain = 'example.co'[:needed_domain_len]
-                        if '.' not in final_domain:
-                            final_domain = 'ex.co'
+                        final_domain = f'{"x" * (needed_domain_len - 3)}.co'
                     else:
-                        # Build a domain with subdomains to reach the needed length
                         parts = []
-                        remaining = needed_domain_len - 3  # Reserve for TLD ".co"
+                        remaining = needed_domain_len - 3
                         while remaining > 0:
                             part_len = min(remaining, 10)
                             parts.append('x' * part_len)
                             remaining -= part_len
                             if remaining > 0:
-                                remaining -= 1  # For the dot
+                                remaining -= 1
                         parts.append('co')
                         final_domain = '.'.join(parts)
             else:
-                # For range constraints, use a reasonable default
                 final_domain = 'ex.co'
                 local_len = min(max_length - len(final_domain) - at_sign_len, 64)
                 local_len = max(min_length - len(final_domain) - at_sign_len, local_len)
-                local_len = max(1, local_len)  # Ensure at least 1 char
+                local_len = max(1, local_len)
                 local_part = UsernameMother.create(min_length=local_len, max_length=local_len, separators='.')
 
         match string_case:
@@ -223,16 +189,6 @@ class EmailAddressMother(BaseMother[str]):
     def _generate_local_part(cls, *, min_length: int, max_length: int) -> str:
         """
         Generate a random local part for an email address.
-
-        Args:
-            min_length (int): The minimum length of the local part.
-            max_length (int): The maximum length of the local part.
-
-        Raises:
-            ValueError: If the generated local part does not meet the length requirements.
-
-        Returns:
-            str: The generated local part.
         """
         local_part = UsernameMother.create(min_length=min_length, max_length=max_length, separators='.')
         if len(local_part) > 64:
@@ -244,58 +200,13 @@ class EmailAddressMother(BaseMother[str]):
     def of_length(cls, *, length: int) -> str:
         """
         Create a random email address value of a specific length.
-
-        Args:
-            length (int): The length of the email address.
-
-        Raises:
-            TypeError: If `length` is not an integer.
-            ValueError: If `length` is less than 6 or greater than 254.
-
-        Returns:
-            str: A randomly generated email address value of the specified length.
-
-        Example:
-        ```python
-        from object_mother_pattern.mothers.internet import EmailAddressMother
-
-        email_address = EmailAddressMother.of_length(length=16)
-        print(email_address)
-        # >>> user@example.com
-        ```
         """
         return cls.create(min_length=length, max_length=length)
 
     @classmethod
     def rfc_create(cls) -> str:
         """
-        It creates a random syntactically valid (but possibly unrealistic) email address value based on the constraints
-        of the RFC 5322 and 5321 specifications:
-        - Entire domain address length ≤ 254 characters.
-        - Local part length ≤ 64 characters.
-        - The domain part can contain only ASCII letters, digits and hyphens.
-        - The domain part contains no label that starts/ends with a hyphen.
-        - The domain part contains 1-63 chars per label, 2-127 labels.
-        - The domain part ≤ 253 characters (presentation form).
-        - The TLD is ≥ 2 chars and it is from the IANA TLD list.
-
-        Returns:
-            str: A randomly generated, RFC-conformant email address.
-
-        References:
-            RFC 5322: https://www.rfc-editor.org/rfc/rfc5322
-            RFC 5321: https://www.rfc-editor.org/rfc/rfc5321
-            TLD Domains: https://data.iana.org/TLD/tlds-alpha-by-domain.txt
-
-        Example:
-        ```python
-        from object_mother_pattern.mothers.internet import EmailAddressMother
-
-        email_address = EmailAddressMother.rfc_create()
-        print(email_address)
-        # >>> user@example.com
-        # >>> test.email@domain.org
-        ```
+        Create a random syntactically valid email address value based on RFC length constraints.
         """
         for _ in range(1000):
             try:
@@ -322,8 +233,5 @@ class EmailAddressMother(BaseMother[str]):
     def invalid_value(cls) -> str:
         """
         Create an invalid email address value.
-
-        Returns:
-            str: Invalid email address string.
         """
         return StringMother.invalid_value()

@@ -1,6 +1,7 @@
 from .aws_cloud_region_mother import AwsCloudRegionMother
 from .domain_mother import DomainMother
 from .email_address_mother import EmailAddressMother
+from .host_mother import HostMother
 from .ip_address_mother import IpAddressMother
 from .ip_network_mother import IpNetworkMother
 from .ipv4_address_mother import Ipv4AddressMother
@@ -17,6 +18,7 @@ __all__ = (
     'AwsCloudRegionMother',
     'DomainMother',
     'EmailAddressMother',
+    'HostMother',
     'IpAddressMother',
     'IpNetworkMother',
     'Ipv4AddressMother',

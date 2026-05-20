@@ -2,6 +2,31 @@
 
 <!-- version list -->
 
+## v3.12.0 (2026-05-20)
+
+### 🧹 Chores
+
+- Update content lists ([#147](https://github.com/adriamontoto/object-mother-pattern/pull/147),
+  [`2f0fbb9`](https://github.com/adriamontoto/object-mother-pattern/commit/2f0fbb95fa75b4d287728e9663805afb4f44886a))
+
+### ✨ Features
+
+- Implement dictionary object mother
+  ([`7f6e1d0`](https://github.com/adriamontoto/object-mother-pattern/commit/7f6e1d077844d1fc145e5c61869a01cf1ac9b8f6))
+
+- Implement email address mother
+  ([`4dbbf91`](https://github.com/adriamontoto/object-mother-pattern/commit/4dbbf91b0205b5c084f669cb6587ab5b77b52e41))
+
+- Implement email mothers
+  ([`d7a0e2f`](https://github.com/adriamontoto/object-mother-pattern/commit/d7a0e2fbee0c89c45f6fd8935f328abedbdb67d7))
+
+- Implement kebab_case, camel_case, snake_case, and screaming_snake_case methods to StringMother
+  ([`b32a64c`](https://github.com/adriamontoto/object-mother-pattern/commit/b32a64ceb82527b3f2487f2a15b1f53e30e6b077))
+
+- Implement list mother
+  ([`447ee35`](https://github.com/adriamontoto/object-mother-pattern/commit/447ee35819e3873262f2099168d751c4abb97101))
+
+
 ## v3.11.0 (2026-02-26)
 
 ### 🧹 Chores

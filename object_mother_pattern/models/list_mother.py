@@ -1,185 +1,153 @@
 """
-EnumerationMother module.
+ListMother module.
 """
 
+from collections.abc import Callable
+from random import randint
 from sys import version_info
+from typing import Any, TypeVar, cast
 
 if version_info >= (3, 12):
     from typing import override  # pragma: no cover
 else:
     from typing_extensions import override  # pragma: no cover
 
-from abc import ABC
-from datetime import date, datetime
-from enum import Enum
-from inspect import isclass
-from random import choice
-from typing import Any, Iterable, TypeVar, get_args, get_origin
-from uuid import UUID, uuid4
+from .base_mother import BaseMother
 
-from faker import Faker
-
-E = TypeVar('E', bound=Enum)
+T = TypeVar('T')
 
 
-class EnumerationMother(ABC, BaseMother):  # noqa: UP046
+class ListMother(BaseMother[list[T]]):
     """
-    EnumerationMother class is responsible for creating random enum values.
-
-    ***This class is supposed to be subclassed and not instantiated directly***.
+    ListMother class is responsible for creating random list values.
 
     Example:
     ```python
-    from enum import Enum, unique
+    from object_mother_pattern.models import ListMother
+    from object_mother_pattern.mothers import IntegerMother
 
-    from object_mother_pattern.models import EnumerationMother
-
-
-    @unique
-    class ColorEnumeration(Enum):
-        RED = 1
-        GREEN = 2
-        BLUE = 3
-
-
-    class ColorMother(EnumerationMother[ColorEnumeration]):
-        pass
-
-
-    color_mother = ColorMother()
-
-    color = color_mother.create()
-    print(color)
-    # >>> Color.GREEN
+    values = ListMother.create(min_length=2, max_length=5, item_mother=IntegerMother.create)
+    print(values)
+    # >>> [13, -42, 8]
     ```
     """
 
-    _enumeration: type[E]
-
-    @override
-    def __init_subclass__(cls, **kwargs: Any) -> None:
-        """
-        Initializes the class.
-
-        Args:
-            **kwargs (Any): Keyword arguments.
-
-        Raises:
-            TypeError: If the class parameter is not an Enum subclass.
-            TypeError: If the class is not parameterized.
-        """
-        super().__init_subclass__(**kwargs)
-
-        for base in getattr(cls, '__orig_bases__', ()):
-            if get_origin(tp=base) is EnumerationMother:
-                enumeration, *_ = get_args(tp=base)
-
-                if not (isclass(object=enumeration) and issubclass(enumeration, Enum)):
-                    raise TypeError(f'EnumerationMother[...] <<<{enumeration}>>> must be an Enum subclass. Got <<<{type(enumeration).__name__}>>> type.')  # noqa: E501  # fmt: skip
-
-                cls._enumeration = enumeration
-                return
-
-        raise TypeError('EnumerationMother must be parameterized, e.g. "class ColorMother(EnumerationMother[ColorEnumeration])".')  # noqa: E501  # fmt: skip
-
     @classmethod
-    def create(cls, *, value: E | None = None) -> E:
+    @override
+    def create(
+        cls,
+        *,
+        value: list[T] | None = None,
+        min_length: int = 0,
+        max_length: int = 10,
+        item_mother: Callable[[], T] | None = None,
+    ) -> list[T]:
         """
-        Create a random enumeration value from the enumeration class. If a specific
-        value is provided, it is returned after ensuring it is a member of the enumeration.
+        Create a random list value. If a specific list value is provided via `value`, it is returned after validation.
+        Otherwise, a random list value is generated with the provided length bounds.
 
         Args:
-            value (E | None, optional): Specific enumeration value to return. Defaults to None.
+            value (list[T] | None, optional): Specific list value to return. Defaults to None.
+            min_length (int, optional): Minimum length of the list. Must be >= 0. Defaults to 0.
+            max_length (int, optional): Maximum length of the list. Must be >= 0 and >= `min_length`. Defaults to 10.
+            item_mother (Callable[[], T] | None, optional): Mother callable used to create each item. Defaults to None.
 
         Raises:
-            TypeError: If the provided `value` is not an instance of the enumeration class.
+            TypeError: If the provided `value` is not a list.
+            TypeError: If `min_length` is not an integer.
+            TypeError: If `max_length` is not an integer.
+            ValueError: If `min_length` is less than 0.
+            ValueError: If `max_length` is less than 0.
+            ValueError: If `min_length` is greater than `max_length`.
+            TypeError: If `item_mother` is not callable.
 
         Returns:
-            E: A randomly generated enumeration value from the enumeration class.
+            list[T]: Random list value of length between `min_length` and `max_length`.
 
         Example:
         ```python
-        from enum import Enum, unique
+        from object_mother_pattern.models import ListMother
+        from object_mother_pattern.mothers import StringMother
 
-        from object_mother_pattern.models import EnumerationMother
-
-
-        @unique
-        class ColorEnumeration(Enum):
-            RED = 1
-            GREEN = 2
-            BLUE = 3
-
-
-        class ColorMother(EnumerationMother[ColorEnumeration]):
-            pass
-
-
-        color_mother = ColorMother()
-
-        color = color_mother.create()
-        print(color)
-        # >>> Color.GREEN
+        values = ListMother.create(min_length=2, max_length=4, item_mother=StringMother.create)
+        print(values)
+        # >>> ['alpha', 'beta', 'gamma']
         ```
         """
         if value is not None:
-            if not isinstance(value, cls._enumeration):
-                raise TypeError(f'{cls._enumeration.__name__}Mother value must be an instance of <<<{cls._enumeration.__name__}>>> type.')  # noqa: E501  # fmt: skip
+            if type(value) is not list:
+                raise TypeError('ListMother value must be a list.')
 
             return value
 
-        return choice(seq=tuple(cls._enumeration))  # type: ignore[arg-type]  # noqa: S311
+        if type(min_length) is not int:
+            raise TypeError('ListMother min_length must be an integer.')
 
-    @staticmethod
-    def invalid_type(remove_types: Iterable[type[Any]] | None = None) -> Any:  # noqa: C901
+        if type(max_length) is not int:
+            raise TypeError('ListMother max_length must be an integer.')
+
+        if min_length < 0:
+            raise ValueError('ListMother min_length must be greater than or equal to 0.')
+
+        if max_length < 0:
+            raise ValueError('ListMother max_length must be greater than or equal to 0.')
+
+        if min_length > max_length:
+            raise ValueError('ListMother min_length must be less than or equal to max_length.')
+
+        if item_mother is not None and not callable(item_mother):
+            raise TypeError('ListMother item_mother must be callable.')
+
+        length = randint(a=min_length, b=max_length)  # noqa: S311
+        if item_mother is None:
+            return cast('list[T]', [None for _ in range(length)])
+
+        return [item_mother() for _ in range(length)]
+
+    @classmethod
+    def empty(cls) -> list[Any]:
         """
-        Create an invalid type.
-
-        Args:
-            remove_types (Iterable[type[Any]] | None, optional): Iterable of types to remove. Defaults to None.
+        Create an empty list.
 
         Returns:
-            Any: Invalid type.
+            list[Any]: Empty list.
+
+        Example:
+        ```python
+        from object_mother_pattern.models import ListMother
+
+        values = ListMother.empty()
+        print(values)
+        # >>> []
+        ```
         """
-        faker = Faker()
+        return []
 
-        remove_types = set() if remove_types is None else set(remove_types)
+    @classmethod
+    def of_length(cls, *, length: int, item_mother: Callable[[], T] | None = None) -> list[T]:
+        """
+        Create a list with a specific length.
 
-        types: list[Any] = []
-        if int not in remove_types:
-            types.append(faker.pyint())  # pragma: no cover
+        Args:
+            length (int): Exact length of the list. Must be >= 0.
+            item_mother (Callable[[], T] | None, optional): Mother callable used to create each item. Defaults to None.
 
-        if float not in remove_types:
-            types.append(faker.pyfloat())  # pragma: no cover
+        Raises:
+            TypeError: If `length` is not an integer.
+            ValueError: If `length` is less than 0.
+            TypeError: If `item_mother` is not callable.
 
-        if bool not in remove_types:
-            types.append(faker.pybool())  # pragma: no cover
+        Returns:
+            list[T]: Random list value with exactly `length` items.
 
-        if str not in remove_types:
-            types.append(faker.pystr())  # pragma: no cover
+        Example:
+        ```python
+        from object_mother_pattern.models import ListMother
+        from object_mother_pattern.mothers import IntegerMother
 
-        if bytes not in remove_types:
-            types.append(faker.pystr().encode())  # pragma: no cover
-
-        if list not in remove_types:
-            types.append(faker.pylist())  # pragma: no cover
-
-        if set not in remove_types:
-            types.append(faker.pyset())  # pragma: no cover
-
-        if tuple not in remove_types:
-            types.append(faker.pytuple())  # pragma: no cover
-
-        if dict not in remove_types:
-            types.append(faker.pydict())  # pragma: no cover
-
-        if datetime not in remove_types:
-            types.append(faker.date_time())  # pragma: no cover
-
-        if date not in remove_types:
-            types.append(faker.date_object())  # pragma: no cover
-
-        if UUID not in remove_types:
-            types.append(uuid4())  # pragma: no cover
-
-        return choice(seq=types)  # noqa: S311
+        values = ListMother.of_length(length=3, item_mother=IntegerMother.create)
+        print(values)
+        # >>> [7, -1, 42]
+        ```
+        """
+        return cls.create(min_length=length, max_length=length, item_mother=item_mother)

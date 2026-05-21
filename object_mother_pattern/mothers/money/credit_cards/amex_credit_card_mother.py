@@ -10,10 +10,12 @@ else:
     from typing_extensions import override  # pragma: no cover
 
 
+from random import choice
+
 from object_mother_pattern.models import BaseMother
 from object_mother_pattern.mothers.primitives.string_mother import StringMother
 
-from ._helpers import _generate_luhn_number, _pick_prefix
+from .utils import generate_luhn_number
 
 
 class AmexCreditCardMother(BaseMother[str]):
@@ -35,8 +37,8 @@ class AmexCreditCardMother(BaseMother[str]):
                 raise TypeError('AmexCreditCardMother value must be a string.')
             return value
 
-        prefix = _pick_prefix(cls._PREFIXES)
-        return _generate_luhn_number(prefix=prefix, length=cls._LENGTH)
+        prefix = choice(seq=cls._PREFIXES)  # noqa: S311
+        return generate_luhn_number(prefix=prefix, length=cls._LENGTH)
 
     @classmethod
     def invalid_value(cls) -> str:

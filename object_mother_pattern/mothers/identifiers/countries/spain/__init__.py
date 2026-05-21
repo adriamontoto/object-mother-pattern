@@ -9,4 +9,5 @@ __all__ = (
     'NieMother',
     'NifMother',
     'NussMother',
+    'PassportMother',
 )

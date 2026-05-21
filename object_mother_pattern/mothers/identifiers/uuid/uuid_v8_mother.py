@@ -9,10 +9,12 @@ if version_info >= (3, 12):
 else:
     from typing_extensions import override  # pragma: no cover
 
+
 if version_info >= (3, 14):
     from uuid import uuid8  # pragma: no cover
 else:
     from uuid6 import uuid8  # type: ignore  # pragma: no cover
+
 
 from uuid import UUID
 

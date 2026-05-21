@@ -9,6 +9,7 @@ if version_info >= (3, 12):
 else:
     from typing_extensions import override  # pragma: no cover
 
+
 from abc import ABC, abstractmethod
 from datetime import date, datetime
 from inspect import isclass

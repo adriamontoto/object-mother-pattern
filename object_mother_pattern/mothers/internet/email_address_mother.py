@@ -2,14 +2,16 @@
 EmailAddressMother module.
 """
 
-from random import choice
 from sys import version_info
-from typing import assert_never
 
 if version_info >= (3, 12):
     from typing import override  # pragma: no cover
 else:
     from typing_extensions import override  # pragma: no cover
+
+
+from random import choice
+from typing import assert_never
 
 from object_mother_pattern.models import BaseMother
 from object_mother_pattern.mothers import StringCase, StringMother

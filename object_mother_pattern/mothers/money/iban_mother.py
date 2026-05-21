@@ -9,6 +9,7 @@ if version_info >= (3, 12):
 else:
     from typing_extensions import override  # pragma: no cover
 
+
 from random import randint
 from string import ascii_uppercase, digits
 from typing import ClassVar

@@ -2,7 +2,6 @@
 HostMother module.
 """
 
-from random import choice
 from sys import version_info
 
 if version_info >= (3, 12):
@@ -10,10 +9,14 @@ if version_info >= (3, 12):
 else:
     from typing_extensions import override  # pragma: no cover
 
+
+from random import choice
+
 from object_mother_pattern.models import BaseMother
+from object_mother_pattern.mothers import StringCase
 from object_mother_pattern.mothers.primitives.string_mother import StringMother
 
-from .hostname_mother import HostnameMother
+from .domain_mother import DomainMother
 from .ipv4_address_mother import Ipv4AddressMother
 from .ipv6_address_mother import Ipv6AddressMother
 
@@ -22,7 +25,7 @@ class HostMother(BaseMother[str]):
     """
     HostMother class is responsible for creating random host values.
 
-    Generated hosts match the host value object rules: a host can be a DNS hostname, an IPv4 address, or an IPv6
+    Generated hosts match the host value object rules: a host can be a domain, an IPv4 address, or an IPv6
     address.
 
     Example:
@@ -42,7 +45,7 @@ class HostMother(BaseMother[str]):
         Create a random host value.
 
         If a specific host value is provided via `value`, it is returned after type validation. Otherwise, a random host
-        is generated from one of the supported host families: hostname, IPv4 address, or IPv6 address.
+        is generated from one of the supported host families: domain, IPv4 address, or IPv6 address.
 
         Args:
             value (str | None, optional): Specific value to return. Defaults to None.
@@ -68,26 +71,26 @@ class HostMother(BaseMother[str]):
 
             return value
 
-        return choice(seq=(cls.hostname, cls.ipv4_address, cls.ipv6_address))()  # noqa: S311
+        return choice(seq=(cls.domain, cls.ipv4_address, cls.ipv6_address))()  # noqa: S311
 
     @classmethod
-    def hostname(cls) -> str:
+    def domain(cls) -> str:
         """
-        Create a random hostname host value.
+        Create a random domain host value.
 
         Returns:
-            str: A randomly generated hostname.
+            str: A randomly generated domain.
 
         Example:
         ```python
         from object_mother_pattern.mothers.internet import HostMother
 
-        host = HostMother.hostname()
+        host = HostMother.domain()
         print(host)
         # >>> web.service.io
         ```
         """
-        return HostnameMother.create()
+        return DomainMother.create(string_case=StringCase.LOWERCASE)
 
     @classmethod
     def ipv4_address(cls) -> str:

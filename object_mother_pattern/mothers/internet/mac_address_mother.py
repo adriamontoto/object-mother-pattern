@@ -9,6 +9,7 @@ if version_info >= (3, 12):
 else:
     from typing_extensions import override  # pragma: no cover
 
+
 from enum import StrEnum, unique
 from random import choice
 from typing import assert_never

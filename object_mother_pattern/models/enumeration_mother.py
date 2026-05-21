@@ -9,6 +9,7 @@ if version_info >= (3, 12):
 else:
     from typing_extensions import override  # pragma: no cover
 
+
 from abc import ABC
 from datetime import date, datetime
 from enum import Enum

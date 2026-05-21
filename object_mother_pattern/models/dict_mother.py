@@ -2,15 +2,17 @@
 DictMother module.
 """
 
-from collections.abc import Callable, Hashable
-from random import randint
 from sys import version_info
-from typing import Any, TypeVar, cast
 
 if version_info >= (3, 12):
     from typing import override  # pragma: no cover
 else:
     from typing_extensions import override  # pragma: no cover
+
+
+from collections.abc import Callable, Hashable
+from random import randint
+from typing import Any, TypeVar, cast
 
 from .base_mother import BaseMother
 

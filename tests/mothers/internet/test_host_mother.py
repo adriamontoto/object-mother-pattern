@@ -44,14 +44,14 @@ def test_host_mother_create_method_invalid_value_type() -> None:
 
 
 @mark.unit_testing
-def test_host_mother_hostname_method() -> None:
+def test_host_mother_domain_method() -> None:
     """
-    Check that HostMother hostname method returns a valid hostname host.
+    Check that HostMother domain method returns a valid domain host.
     """
-    value = HostMother.hostname()
+    value = HostMother.domain()
 
     assert type(value) is str
-    assert HostValueObject(value=value).value == value.lower()
+    assert HostValueObject(value=value).value == value
 
 
 @mark.unit_testing

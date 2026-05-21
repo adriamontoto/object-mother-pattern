@@ -9,6 +9,7 @@ if version_info >= (3, 12):
 else:
     from typing_extensions import override  # pragma: no cover
 
+
 from object_mother_pattern.models import BaseMother
 from object_mother_pattern.mothers.internet.ipv4_network_mother import Ipv4NetworkMother
 from object_mother_pattern.mothers.internet.ipv6_network_mother import Ipv6NetworkMother

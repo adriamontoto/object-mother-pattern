@@ -264,6 +264,92 @@ def test_integer_mother_negative_or_zero_method_min_random_value() -> None:
 
 
 @mark.unit_testing
+def test_integer_mother_even_method_happy_path() -> None:
+    """
+    Check that IntegerMother even method returns an even integer.
+    """
+    value = IntegerMother.even()
+
+    assert type(value) is int
+    assert value % 2 == 0
+
+
+@mark.unit_testing
+def test_integer_mother_even_method_value() -> None:
+    """
+    Check that IntegerMother even method returns the provided even integer value.
+    """
+    assert IntegerMother.even(value=2) == 2
+
+
+@mark.unit_testing
+def test_integer_mother_even_method_invalid_value_type() -> None:
+    """
+    Check that IntegerMother even method raises a TypeError when the provided value is not an integer.
+    """
+    with assert_raises(
+        expected_exception=TypeError,
+        match='IntegerMother value must be an integer.',
+    ):
+        IntegerMother.even(value=IntegerMother.invalid_type())
+
+
+@mark.unit_testing
+def test_integer_mother_even_method_odd_value() -> None:
+    """
+    Check that IntegerMother even method raises a ValueError when the provided value is odd.
+    """
+    with assert_raises(
+        expected_exception=ValueError,
+        match='IntegerMother value must be even.',
+    ):
+        IntegerMother.even(value=IntegerMother.odd())
+
+
+@mark.unit_testing
+def test_integer_mother_odd_method_happy_path() -> None:
+    """
+    Check that IntegerMother odd method returns an odd integer.
+    """
+    value = IntegerMother.odd()
+
+    assert type(value) is int
+    assert value % 2 != 0
+
+
+@mark.unit_testing
+def test_integer_mother_odd_method_value() -> None:
+    """
+    Check that IntegerMother odd method returns the provided odd integer value.
+    """
+    assert IntegerMother.odd(value=1) == 1
+
+
+@mark.unit_testing
+def test_integer_mother_odd_method_invalid_value_type() -> None:
+    """
+    Check that IntegerMother odd method raises a TypeError when the provided value is not an integer.
+    """
+    with assert_raises(
+        expected_exception=TypeError,
+        match='IntegerMother value must be an integer.',
+    ):
+        IntegerMother.odd(value=IntegerMother.invalid_type())
+
+
+@mark.unit_testing
+def test_integer_mother_odd_method_even_value() -> None:
+    """
+    Check that IntegerMother odd method raises a ValueError when the provided value is even.
+    """
+    with assert_raises(
+        expected_exception=ValueError,
+        match='IntegerMother value must be odd.',
+    ):
+        IntegerMother.odd(value=IntegerMother.even())
+
+
+@mark.unit_testing
 def test_integer_mother_out_of_range_method_happy_path() -> None:
     """
     Check that IntegerMother out_of_range method returns a random integer value that is either less than min_value or

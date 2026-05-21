@@ -182,6 +182,76 @@ class IntegerMother(BaseMother[int]):
         return cls.create(min=min, max=0)
 
     @classmethod
+    def even(cls, *, value: int | None = None) -> int:
+        """
+        Create a random even integer value or return the provided even integer value.
+
+        Args:
+            value (int | None, optional): Specific even integer value to return. Defaults to None.
+
+        Raises:
+            TypeError: If the provided `value` is not an integer.
+            ValueError: If the provided `value` is not even.
+
+        Returns:
+            int: A random even integer value.
+
+        Example:
+        ```python
+        from object_mother_pattern import IntegerMother
+
+        value = IntegerMother.even()
+        print(value)
+        # >>> 42
+        ```
+        """
+        if value is not None:
+            if type(value) is not int:
+                raise TypeError('IntegerMother value must be an integer.')
+
+            if value % 2 != 0:
+                raise ValueError('IntegerMother value must be even.')
+
+            return value
+
+        return cls.create(min=-50, max=50) * 2
+
+    @classmethod
+    def odd(cls, *, value: int | None = None) -> int:
+        """
+        Create a random odd integer value or return the provided odd integer value.
+
+        Args:
+            value (int | None, optional): Specific odd integer value to return. Defaults to None.
+
+        Raises:
+            TypeError: If the provided `value` is not an integer.
+            ValueError: If the provided `value` is not odd.
+
+        Returns:
+            int: A random odd integer value.
+
+        Example:
+        ```python
+        from object_mother_pattern import IntegerMother
+
+        value = IntegerMother.odd()
+        print(value)
+        # >>> 41
+        ```
+        """
+        if value is not None:
+            if type(value) is not int:
+                raise TypeError('IntegerMother value must be an integer.')
+
+            if value % 2 == 0:
+                raise ValueError('IntegerMother value must be odd.')
+
+            return value
+
+        return cls.create(min=-50, max=49) * 2 + 1
+
+    @classmethod
     def out_of_range(cls, *, min: int = -100, max: int = 100, range: int = 100) -> int:
         """
         Create a random integer value that is either less than `min` or greater than `max` (both excluded) by a range

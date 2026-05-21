@@ -12,7 +12,7 @@ from .key_mother import KeyMother
 from .mac_address_mother import MacAddressMother
 from .port_mother import PortMother
 from .slug_mother import SlugMother
-from .uri_mother import UriMother
+from .url_mother import UrlMother
 from .user_agent_mother import UserAgentMother
 
 __all__ = (
@@ -30,6 +30,6 @@ __all__ = (
     'MacAddressMother',
     'PortMother',
     'SlugMother',
-    'UriMother',
+    'UrlMother',
     'UserAgentMother',
 )

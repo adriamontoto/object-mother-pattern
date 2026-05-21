@@ -2,6 +2,9 @@ from .aws_cloud_region_mother import AwsCloudRegionMother
 from .domain_mother import DomainMother
 from .email_address_mother import EmailAddressMother
 from .host_mother import HostMother
+from .http_https_url_mother import HttpHttpsUrlMother
+from .http_url_mother import HttpUrlMother
+from .https_url_mother import HttpsUrlMother
 from .imei_mother import ImeiMother
 from .ip_address_mother import IpAddressMother
 from .ip_network_mother import IpNetworkMother
@@ -21,6 +24,9 @@ __all__ = (
     'DomainMother',
     'EmailAddressMother',
     'HostMother',
+    'HttpHttpsUrlMother',
+    'HttpUrlMother',
+    'HttpsUrlMother',
     'ImeiMother',
     'IpAddressMother',
     'IpNetworkMother',

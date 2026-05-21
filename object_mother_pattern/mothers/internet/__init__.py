@@ -21,6 +21,7 @@ __all__ = (
     'DomainMother',
     'EmailAddressMother',
     'HostMother',
+    'ImeiMother',
     'IpAddressMother',
     'IpNetworkMother',
     'Ipv4AddressMother',

@@ -468,6 +468,62 @@ class StringMother(BaseMother[str]):
         )
 
     @classmethod
+    def pascal_case(cls, *, min_length: int = 1, max_length: int = 128) -> str:
+        """
+        Create a random PascalCase string value of length between `min_length` and `max_length`.
+
+        Args:
+            min_length (int, optional): Minimum length of the string. Must be >= 0. Defaults to 1.
+            max_length (int, optional): Maximum length of the string. Must be >= 0 and >= `min_length`. Defaults to
+            128.
+
+        Raises:
+            TypeError: If `min_length` is not an integer.
+            TypeError: If `max_length` is not an integer.
+            ValueError: If `min_length` is less than 0.
+            ValueError: If `max_length` is less than 0.
+            ValueError: If `min_length` is greater than `max_length`.
+
+        Returns:
+            str: Random PascalCase string value.
+
+        Example:
+        ```python
+        from object_mother_pattern import StringMother
+
+        string = StringMother.pascal_case(min_length=8, max_length=32)
+        print(string)
+        # >>> TfkrYx91Aewzbc
+        ```
+        """
+        cls.create(
+            min_length=min_length,
+            max_length=max_length,
+            characters=ALPHABET_UPPERCASE_BASIC,
+        )
+
+        total_length = randint(a=min_length, b=max_length)  # noqa: S311
+        if total_length == 0:
+            return ''
+
+        segment_count = randint(a=1, b=total_length)  # noqa: S311
+        segment_lengths = tuple(
+            segment_length + 1
+            for segment_length in cls._optional_segment_lengths(
+                total_characters=total_length - segment_count,
+                total_segments=segment_count,
+            )
+        )
+
+        return cls._render_segmented_case(
+            segment_lengths=segment_lengths,
+            first_segment_characters=ALPHABET_UPPERCASE_BASIC,
+            next_segment_characters=ALPHABET_UPPERCASE_BASIC,
+            remaining_characters=ALPHABET_LOWERCASE_BASIC + DIGITS_BASIC,
+            separator='',
+        )
+
+    @classmethod
     def snake_case(cls, *, min_length: int = 1, max_length: int = 128) -> str:
         """
         Create a random snake_case string value of length between `min_length` and `max_length`.

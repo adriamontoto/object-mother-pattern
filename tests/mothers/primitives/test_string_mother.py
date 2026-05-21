@@ -1279,6 +1279,7 @@ def test_string_mother_numeric_method_min_length_greater_than_max_length() -> No
         StringMother.numeric(min_length=max_length, max_length=min_length)
 
 
+@mark.unit_testing
 def test_string_mother_not_trimmed_method_happy_path() -> None:
     """
     Check that StringMother not_trimmed method returns a string value with random spaces.
@@ -1670,6 +1671,49 @@ def test_string_mother_camel_case_method_min_length_greater_than_max_length() ->
         match='StringMother min_length must be less than or equal',
     ):
         StringMother.camel_case(min_length=2, max_length=1)
+
+
+@mark.unit_testing
+def test_string_mother_pascal_case_method_happy_path() -> None:
+    """
+    Check that pascal_case method returns a PascalCase string value.
+    """
+    value = StringMother.pascal_case()
+
+    assert type(value) is str
+    assert 1 <= len(value) <= 128
+    assert fullmatch(pattern=r'^[A-Z][a-z0-9]*(?:[A-Z][a-z0-9]*)*$', string=value)
+
+
+@mark.unit_testing
+def test_string_mother_pascal_case_method_zero_length() -> None:
+    """
+    Check that pascal_case method supports generating an empty string.
+    """
+    assert StringMother.pascal_case(min_length=0, max_length=0) == ''
+
+
+@mark.unit_testing
+def test_string_mother_pascal_case_method_minimum_length() -> None:
+    """
+    Check that pascal_case method supports generating a one-character value.
+    """
+    value = StringMother.pascal_case(min_length=1, max_length=1)
+
+    assert len(value) == 1
+    assert value.isupper()
+
+
+@mark.unit_testing
+def test_string_mother_pascal_case_method_exact_length() -> None:
+    """
+    Check that pascal_case method supports generating a random exact-length value.
+    """
+    length = IntegerMother.positive()
+    value = StringMother.pascal_case(min_length=length, max_length=length)
+
+    assert len(value) == length
+    assert fullmatch(pattern=r'^[A-Z][a-z0-9]*(?:[A-Z][a-z0-9]*)*$', string=value)
 
 
 @mark.unit_testing

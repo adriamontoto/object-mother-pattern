@@ -2,6 +2,49 @@
 
 <!-- version list -->
 
+## v3.13.0 (2026-05-21)
+
+### 📦 Build System
+
+- Update value-object-pattern to 1.28.0
+  ([`7fbafef`](https://github.com/adriamontoto/object-mother-pattern/commit/7fbafef05e0c8be6461007ebc3749b03b725a075))
+
+- Update value-object-pattern to 1.29.2
+  ([`ba03f6a`](https://github.com/adriamontoto/object-mother-pattern/commit/ba03f6a74046c988c192b6ae1f50aef5fbe547f9))
+
+### ✨ Features
+
+- Implement even and odd methods in IntegerMother
+  ([`891e976`](https://github.com/adriamontoto/object-mother-pattern/commit/891e976cabb9b28697e13c42f3b053351ffbf4d8))
+
+- Implement host object mother
+  ([`f86940a`](https://github.com/adriamontoto/object-mother-pattern/commit/f86940adb83da298e938bd8578819879ca7c8114))
+
+- Implement http adn https URL mothers
+  ([`3bd94f2`](https://github.com/adriamontoto/object-mother-pattern/commit/3bd94f29c7d8fe06bae0f30705a16c07843313d2))
+
+- Implement IMEI mother
+  ([`1eea231`](https://github.com/adriamontoto/object-mother-pattern/commit/1eea23144d1682ec9ea641476f21e9886010c05a))
+
+- Implement NUSS Number mother
+  ([`0b20803`](https://github.com/adriamontoto/object-mother-pattern/commit/0b20803d25cb28eb77aa284be028480b0a06850c))
+
+- Implement passport object mother for Spain
+  ([`93cc615`](https://github.com/adriamontoto/object-mother-pattern/commit/93cc61598d3ef3b69630bfc44988e83d160e8f72))
+
+- Implement spanish NIF object mother
+  ([`626a572`](https://github.com/adriamontoto/object-mother-pattern/commit/626a572aec11fbda0247ef7299027e87d06104d2))
+
+- Implement StringMother.pascal_case method
+  ([`318db0d`](https://github.com/adriamontoto/object-mother-pattern/commit/318db0dd50667365b9c5a7386bfed3fd6f9500ef))
+
+- Implement uri object mother
+  ([`efd4523`](https://github.com/adriamontoto/object-mother-pattern/commit/efd4523eef0bee84c63f734b717989527c2b6fe0))
+
+- Implement url mother
+  ([`28a6b65`](https://github.com/adriamontoto/object-mother-pattern/commit/28a6b6528134b2e37ab3398a3f345067ecebed9b))
+
+
 ## v3.12.0 (2026-05-20)
 
 ### 🧹 Chores

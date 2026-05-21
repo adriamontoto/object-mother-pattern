@@ -1,5 +1,5 @@
 """
-DictMother module.
+Object mother for dictionary values.
 """
 
 from sys import version_info
@@ -22,7 +22,11 @@ V = TypeVar('V')
 
 class DictMother(BaseMother[dict[K, V]]):
     """
-    DictMother class is responsible for creating random dictionary values.
+    Generate dictionaries with optional length bounds, key factories, and value factories.
+
+    `DictMother` can validate and return an explicit dictionary, create integer-keyed dictionaries with `None` values,
+    or call provided key and value mothers. Generated keys must be hashable and unique enough to satisfy the requested
+    length.
 
     Example:
     ```python
@@ -52,8 +56,11 @@ class DictMother(BaseMother[dict[K, V]]):
         value_mother: Callable[[], V] | None = None,
     ) -> dict[K, V]:
         """
-        Create a random dictionary value. If a specific dictionary value is provided via `value`, it is returned after
-        validation. Otherwise, a random dictionary value is generated with the provided length bounds.
+        Create a dictionary value.
+
+        If `value` is provided, it is validated and returned. Otherwise, a random dictionary length is selected between
+        `min_length` and `max_length`. When factories are provided, `key_mother` creates keys and `value_mother` creates
+        values.
 
         Args:
             value (dict[K, V] | None, optional): Specific dictionary value to return. Defaults to None.
@@ -238,7 +245,7 @@ class DictMother(BaseMother[dict[K, V]]):
     @classmethod
     def empty(cls) -> dict[Any, Any]:
         """
-        Create an empty dictionary.
+        Create an empty dictionary value.
 
         Returns:
             dict[Any, Any]: Empty dictionary.
@@ -263,7 +270,7 @@ class DictMother(BaseMother[dict[K, V]]):
         value_mother: Callable[[], V] | None = None,
     ) -> dict[K, V]:
         """
-        Create a dictionary with a specific length.
+        Create a dictionary with exactly `length` items.
 
         Args:
             length (int): Exact length of the dictionary. Must be >= 0.

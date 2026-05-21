@@ -1,5 +1,5 @@
 """
-StringMother module.
+Object mother for string values.
 """
 
 from sys import version_info
@@ -19,7 +19,10 @@ from .utils.alphabets import ALPHABET_BASIC, ALPHABET_LOWERCASE_BASIC, ALPHABET_
 
 class StringMother(BaseMother[str]):
     """
-    StringMother class.
+    Generate strings with configurable length, casing, and character sets.
+
+    `StringMother.create()` is the general entry point. Convenience methods such as `lowercase()`, `uppercase()`,
+    `mixedcase()`, and `of_length()` cover common test-data shapes while preserving the same validation behavior.
 
     Example:
     ```python

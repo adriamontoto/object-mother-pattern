@@ -1,5 +1,5 @@
 """
-DateMother module.
+Object mother for date values.
 """
 
 from sys import version_info
@@ -20,7 +20,11 @@ from object_mother_pattern.models import BaseMother
 
 class DateMother(BaseMother[date]):
     """
-    DateMother class is responsible for creating random date values.
+    Generate `date` values inside or outside explicit ranges.
+
+    `DateMother.create()` defaults to the range from 100 years before the current UTC date through today. Pass
+    `start_date` and `end_date` when tests need a specific business range, or use `out_of_range()` for negative-path
+    boundary tests.
 
     Example:
     ```python

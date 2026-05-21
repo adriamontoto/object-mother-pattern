@@ -1,5 +1,5 @@
 """
-ListMother module.
+Object mother for list values.
 """
 
 from sys import version_info
@@ -21,7 +21,10 @@ T = TypeVar('T')
 
 class ListMother(BaseMother[list[T]]):
     """
-    ListMother class is responsible for creating random list values.
+    Generate lists with optional length bounds and item factories.
+
+    `ListMother` can validate and return an explicit list, create a list of `None` placeholders, or call an
+    `item_mother` once per generated item. Use `of_length()` when a test needs an exact size.
 
     Example:
     ```python
@@ -45,8 +48,11 @@ class ListMother(BaseMother[list[T]]):
         item_mother: Callable[[], T] | None = None,
     ) -> list[T]:
         """
-        Create a random list value. If a specific list value is provided via `value`, it is returned after validation.
-        Otherwise, a random list value is generated with the provided length bounds.
+        Create a list value.
+
+        If `value` is provided, it is validated and returned. Otherwise, a random list length is selected between
+        `min_length` and `max_length`. When `item_mother` is provided, it is called once for every item; without it, the
+        list is filled with `None` placeholders.
 
         Args:
             value (list[T] | None, optional): Specific list value to return. Defaults to None.
@@ -109,7 +115,7 @@ class ListMother(BaseMother[list[T]]):
     @classmethod
     def empty(cls) -> list[Any]:
         """
-        Create an empty list.
+        Create an empty list value.
 
         Returns:
             list[Any]: Empty list.
@@ -128,7 +134,7 @@ class ListMother(BaseMother[list[T]]):
     @classmethod
     def of_length(cls, *, length: int, item_mother: Callable[[], T] | None = None) -> list[T]:
         """
-        Create a list with a specific length.
+        Create a list with exactly `length` items.
 
         Args:
             length (int): Exact length of the list. Must be >= 0.

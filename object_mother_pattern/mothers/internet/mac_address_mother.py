@@ -22,7 +22,10 @@ from object_mother_pattern.mothers.primitives.string_mother import StringMother
 @unique
 class MacAddressFormat(StrEnum):
     """
-    Type of MAC address formats.
+    Supported MAC address output formats.
+
+    `MacAddressMother.create()` accepts this enum to force raw, separated, Cisco-style, null, or broadcast MAC address
+    values instead of picking a random format.
     """
 
     RAW = 'raw'

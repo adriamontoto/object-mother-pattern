@@ -20,7 +20,10 @@ from .utils import generate_luhn_number
 
 class VisaCreditCardMother(BaseMother[str]):
     """
-    VisaCreditCardMother generates Visa card numbers.
+    Generate Visa-like card numbers for tests.
+
+    Generated values use Visa prefixes and lengths, then compute a Luhn-valid number. Passing `value` returns the
+    explicit value after type validation for deterministic tests.
     """
 
     _PREFIXES: tuple[str, ...] = ('4',)
@@ -31,6 +34,15 @@ class VisaCreditCardMother(BaseMother[str]):
     def create(cls, *, value: str | None = None) -> str:
         """
         Create a random Visa card number or return the provided value.
+
+        Args:
+            value (str | None): Explicit card number to validate and return.
+
+        Raises:
+            TypeError: If `value` is not a string.
+
+        Returns:
+            str: Explicit or generated Visa-like card number.
         """
         if value is not None:
             if type(value) is not str:
@@ -44,6 +56,9 @@ class VisaCreditCardMother(BaseMother[str]):
     @classmethod
     def invalid_value(cls) -> str:
         """
-        Create an invalid Visa card number.
+        Create an invalid Visa card number for negative-path tests.
+
+        Returns:
+            str: Invalid card-number value.
         """
         return StringMother.invalid_value()

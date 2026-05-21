@@ -1,5 +1,5 @@
 """
-IntegerMother module.
+Object mother for integer values.
 """
 
 from sys import version_info
@@ -17,7 +17,10 @@ from object_mother_pattern.models import BaseMother
 
 class IntegerMother(BaseMother[int]):
     """
-    IntegerMother class is responsible for creating random integer values.
+    Generate integers for boundary, sign, parity, and range-based tests.
+
+    `IntegerMother.create()` generates values inside an inclusive range. Convenience methods cover common cases such as
+    positive values, negative values, even values, odd values, and values outside a range.
 
     Example:
     ```python

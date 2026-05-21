@@ -25,8 +25,8 @@ from .visa_credit_card_mother import VisaCreditCardMother
 
 class CreditCardMother(BaseMother[str]):
     """
-    CreditCardMother randomly generates a card number from the supported networks
-    (Visa, Mastercard, American Express, Discover).
+    CreditCardMother randomly generates a card number from the supported networks (Visa, Mastercard, American Express,
+    Discover).
     """
 
     _NETWORK_MOTHERS = (
@@ -72,7 +72,10 @@ class CreditCardMother(BaseMother[str]):
     @classmethod
     def invalid_value(cls) -> str:
         """
-        Create an invalid credit card number.
+        Create an invalid credit card number for negative-path tests.
+
+        Returns:
+            str: Invalid credit-card value.
         """
         return StringMother.invalid_value()
 

@@ -23,17 +23,22 @@
     </a>
 </p>
 
-The **Object Mother Pattern** is a Python 🐍 package that simplifies and standardizes the creation of test 🧪 objects. This pattern is especially helpful in testing scenarios where you need to generate multiple instances of complex objects quickly and consistently. By providing a set of prebuilt 🛠️ object mothers, you can drop these into your existing test suite and skip the boilerplate setup yourself.
+The **Object Mother Pattern** is a Python 🐍 package that simplifies and standardizes the creation of test 🧪 data.
+Instead of hand-writing random values, invalid values, range boundaries, dates, identifiers, URLs, credit cards, and
+other fixtures in every test module, you use reusable object mother classes with consistent validation behavior.
 <br><br>
 
 ## Table of Contents
 
 - [📥 Installation](#installation)
-- [📚 Documentation](#-documentation)
-- [💻 Utilization](#utilization)
-  - [📃 Available Mothers](#available-mothers)
-  - [🎄 Real-Life Case: Christmas Detector Service](#real-life-case-christmas-detector-service)
-  - [🧑‍🔧 Creating your own Object Mother](#creating-your-own-object-mother)
+- [📚 Documentation](#documentation)
+- [⚡ Quick Start](#quick-start)
+- [🧩 Core Ideas](#core-ideas)
+- [🤔 Why Object Mothers?](#why-object-mothers)
+- [📃 Available Mothers](#available-mothers)
+- [🧪 Testing Patterns](#testing-patterns)
+- [🎄 Real-Life Case: Christmas Detector Service](#real-life-case-christmas-detector-service)
+- [🧑‍🔧 Creating Your Own Object Mother](#creating-your-own-object-mother)
 - [🤝 Contributing](#contributing)
 - [🔑 License](#license)
 
@@ -59,63 +64,145 @@ pip install object-mother-pattern
 
 ## 📚 Documentation
 
-This [project's documentation](https://deepwiki.com/adriamontoto/object-mother-pattern) is powered by DeepWiki, which provides a comprehensive overview of the **Object Mother Pattern** and its usage.
+The root README is the entry point. Deeper guides live in this repository and are linked here:
+
+- [`docs/README.md`](docs/README.md): Documentation hub.
+- [`docs/usage/README.md`](docs/usage/README.md): Core usage, imports, validation, and custom mothers.
+- [`docs/catalog/README.md`](docs/catalog/README.md): Feature map by mother category.
+- Catalog details: [`primitives`](docs/catalog/primitives/README.md), [`dates`](docs/catalog/dates/README.md),
+  [`identifiers`](docs/catalog/identifiers/README.md), [`internet`](docs/catalog/internet/README.md),
+  [`money`](docs/catalog/money/README.md), and [`people/text`](docs/catalog/people/README.md).
+- [`docs/testing/README.md`](docs/testing/README.md): Testing patterns for valid, invalid, boundary, and deterministic data.
+
+This [project's DeepWiki documentation](https://deepwiki.com/adriamontoto/object-mother-pattern) is also available for
+generated repository navigation.
 
 <p align="right">
     <a href="#readme-top">🔼 Back to top</a>
 </p><br><br>
 
-<a name="utilization"></a>
+<a name="quick-start"></a>
 
-## 💻 Utilization
+## ⚡ Quick Start
 
-Here is how you can utilize the **Object Mother** library to generate various types of test data:
+Use mothers directly in tests when you need valid values:
 
 ```python
 from object_mother_pattern import (
     BooleanMother,
+    DateMother,
     FloatMother,
     IntegerMother,
-    StringDateMother,
     StringMother,
-    UuidMother,
 )
+from object_mother_pattern.mothers.identifiers.uuid import UuidV4Mother
 
-# Generate a random integer between -4 and 15
-number = IntegerMother.create(min=-4, max=15)
-print(number)
-# >>> 8
-
-# Generate a random float between -4 and 15 with 5 Decimal Places
-number = FloatMother.create(min=-4, max=15, decimals=5)
-print(number)
-# >>> 0.83396
-
-# Generate a random boolean
-boolean = BooleanMother.create()
-print(boolean)
-# >>> True
-
-# Generate a random string
-string = StringMother.create()
-print(string)
-# >>> zFUmlsODZqzwyGjrOOqBtYzNwlJdOETalkXbuSegoQpgEnYQTCDeoifWrTQXMm
-
-# Generate a random string of specific length
-string = StringMother.of_length(length=10)
-print(string)
-# >>> TfkrYRxUFT
-
-# Generate a random UUID
-uuid = UuidMother.create()
-print(uuid)
-# >>> 3e9e0f3a-64a3-474f-9127-368e723f389f
-
-# Generate a random date
-date = StringDateMother.create()
-print(date)
-# >>> 2015-09-15
+integer = IntegerMother.create(min=-4, max=15)
+amount = FloatMother.create(min=0, max=100, decimals=2)
+enabled = BooleanMother.create()
+username = StringMother.lowercase(min_length=8, max_length=16)
+date = DateMother.create()
+uuid = UuidV4Mother.create()
 ```
+
+Pass an explicit `value` when a test needs a known valid value and you still want the mother to validate it:
+
+```python
+from object_mother_pattern import IntegerMother
+
+assert IntegerMother.create(value=7) == 7
+```
+
+Generate values outside an accepted range when testing validation failures:
+
+```python
+from datetime import date
+
+from object_mother_pattern import DateMother
+
+value = DateMother.out_of_range(
+    start_date=date(year=2025, month=1, day=1),
+    end_date=date(year=2025, month=1, day=31),
+)
+```
+
+<p align="right">
+    <a href="#readme-top">🔼 Back to top</a>
+</p><br><br>
+
+<a name="core-ideas"></a>
+
+## 🧩 Core Ideas
+
+Most mothers follow the same pattern:
+
+- `create(value=...)` validates and returns an explicit value.
+- `create(...)` without `value` generates a valid random value.
+- Dedicated helpers such as `empty()`, `of_length()`, `positive()`, `odd()`, or `out_of_range()` express common test
+  shapes.
+- `invalid_type()` generates a value with the wrong type for negative-path tests.
+- Collection mothers can compose other mothers with callables such as `item_mother`, `key_mother`, and `value_mother`.
+
+```python
+from object_mother_pattern.models import DictMother, ListMother
+from object_mother_pattern import IntegerMother, StringMother
+
+values = ListMother.of_length(length=3, item_mother=IntegerMother.positive)
+payload = DictMother.of_length(
+    length=2,
+    key_mother=lambda: StringMother.lowercase(min_length=4, max_length=8),
+    value_mother=IntegerMother.create,
+)
+```
+
+<p align="right">
+    <a href="#readme-top">🔼 Back to top</a>
+</p><br><br>
+
+<a name="why-object-mothers"></a>
+
+## 🤔 Why Object Mothers?
+
+Object mothers help tests say what kind of value they need instead of repeating how that value is built. A hardcoded
+literal such as `'john@example.com'`, `'550e8400-e29b-41d4-a716-446655440000'`, or `42` can be perfectly valid, but when
+every test invents its own literals the setup becomes duplicated, inconsistent, and harder to update when a validation
+rule changes.
+
+Use object mothers when the exact value does not matter and the test only needs a value that satisfies a shape:
+
+```python
+from object_mother_pattern import IntegerMother
+from object_mother_pattern.mothers.internet import EmailAddressMother
+
+email = EmailAddressMother.create()
+quantity = IntegerMother.positive()
+
+assert '@' in email
+assert quantity > 0
+```
+
+This keeps the test focused on the behavior under test. The mother owns the details of valid email generation, positive
+integer generation, invalid types, ranges, and special formats. If those rules evolve, tests that only need "a valid
+email" or "a positive integer" do not need to be rewritten.
+
+Hardcoded values are still the best choice when the value is the point of the test:
+
+- Use fixed literals for exact serialization, snapshots, URLs, JSON, SQL, error messages, and UI copy.
+- Use explicit boundary values for deliberate limits such as minimum length, maximum length, zero, one, empty strings,
+  first date, last date, or a known invalid format.
+- Use a known literal when reproducing a specific bug.
+- Use `create(value=...)` when you want an explicit value but still want the mother to validate that it belongs to the
+  expected shape.
+
+```python
+from object_mother_pattern import IntegerMother, StringMother
+
+assert StringMother.create(value='invoice-paid') == 'invoice-paid'
+assert IntegerMother.create(value=10) == 10
+```
+
+The practical rule is simple: generate values for invariant-based tests, hardcode values for exact examples and
+intentional limits.
 
 <p align="right">
     <a href="#readme-top">🔼 Back to top</a>
@@ -125,56 +212,59 @@ print(date)
 
 ## 📃 Available Mothers
 
-The package offers a wide collection of object mothers grouped by domain:
+The package includes mothers for:
 
-### Primitives
+| Category | Examples |
+| --- | --- |
+| Models | `BaseMother`, `EnumerationMother`, `ListMother`, `DictMother` |
+| Primitives | `BooleanMother`, `BytesMother`, `FloatMother`, `IntegerMother`, `StringMother` |
+| Dates | `DateMother`, `DatetimeMother`, `StringDateMother`, `StringDatetimeMother`, timezone mothers |
+| Identifiers | UUID mothers, Spanish identifiers, world/country code identifiers |
+| Internet | URLs, domains, hosts, ports, IP addresses, networks, MAC addresses, email addresses, user agents |
+| Money | IBANs, credit cards by brand, Bitcoin wallet values |
+| People | Full names, usernames, passwords |
+| Extra | Text snippets |
 
-- [`object_mother_pattern.BooleanMother`](https://github.com/adriamontoto/object-mother-pattern/blob/master/object_mother_pattern/mothers/primitives/boolean_mother.py) - Responsible for generating random boolean values.
-- [`object_mother_pattern.BytesMother`](https://github.com/adriamontoto/object-mother-pattern/blob/master/object_mother_pattern/mothers/primitives/bytes_mother.py) - Responsible for generating random bytes objects.
-- [`object_mother_pattern.FloatMother`](https://github.com/adriamontoto/object-mother-pattern/blob/master/object_mother_pattern/mothers/primitives/float_mother.py) - Responsible for generating random float values within a range.
-- [`object_mother_pattern.IntegerMother`](https://github.com/adriamontoto/object-mother-pattern/blob/master/object_mother_pattern/mothers/primitives/integer_mother.py) - Responsible for generating random integer numbers within a range.
-- [`object_mother_pattern.StringMother`](https://github.com/adriamontoto/object-mother-pattern/blob/master/object_mother_pattern/mothers/primitives/string_mother.py) - Responsible for generating random strings with configurable length and characters.
+See [`docs/catalog/README.md`](docs/catalog/README.md) for a deeper feature map and import guidance.
 
-### Dates
+<p align="right">
+    <a href="#readme-top">🔼 Back to top</a>
+</p><br><br>
 
-- [`object_mother_pattern.DateMother`](https://github.com/adriamontoto/object-mother-pattern/blob/master/object_mother_pattern/mothers/dates/date/date_mother.py) - Responsible for generating random date instances.
-- [`object_mother_pattern.DatetimeMother`](https://github.com/adriamontoto/object-mother-pattern/blob/master/object_mother_pattern/mothers/dates/datetime/datetime_mother.py) - Responsible for generating random datetime instances.
-- [`object_mother_pattern.StringDateMother`](https://github.com/adriamontoto/object-mother-pattern/blob/master/object_mother_pattern/mothers/dates/date/string_date_mother.py) - Responsible for generating ISO formatted date strings.
-- [`object_mother_pattern.StringDatetimeMother`](https://github.com/adriamontoto/object-mother-pattern/blob/master/object_mother_pattern/mothers/dates/datetime/string_datetime_mother.py) - Responsible for generating ISO 8601 formatted datetime strings.
-- [`object_mother_pattern.mothers.dates.TimezoneMother`](https://github.com/adriamontoto/object-mother-pattern/blob/master/object_mother_pattern/mothers/dates/timezone/timezone_mother.py) - Responsible for generating random timezone objects.
-- [`object_mother_pattern.mothers.dates.StringTimezoneMother`](https://github.com/adriamontoto/object-mother-pattern/blob/master/object_mother_pattern/mothers/dates/timezone/string_timezone_mother.py) - Responsible for generating timezone names as strings.
+<a name="testing-patterns"></a>
 
-### Identifiers
+## 🧪 Testing Patterns
 
-- [`object_mother_pattern.UuidMother`](https://github.com/adriamontoto/object-mother-pattern/blob/master/object_mother_pattern/mothers/identifiers/uuid_mother.py) - Responsible for generating random UUIDv4 values.
-- [`object_mother_pattern.StringUuidMother`](https://github.com/adriamontoto/object-mother-pattern/blob/master/object_mother_pattern/mothers/identifiers/string_uuid_mother.py) - Responsible for generating UUIDv4 as strings.
-- [`object_mother_pattern.mothers.identifiers.countries.spain.DniMother`](https://github.com/adriamontoto/object-mother-pattern/blob/master/object_mother_pattern/mothers/identifiers/countries/spain/dni_mother.py) - Responsible for generating valid Spanish DNI numbers.
-- [`object_mother_pattern.mothers.identifiers.countries.spain.NieMother`](https://github.com/adriamontoto/object-mother-pattern/blob/master/object_mother_pattern/mothers/identifiers/countries/spain/nie_mother.py) - Responsible for generating valid Spanish NIE numbers.
+Use explicit values when an assertion depends on exact output:
 
-### Internet
+```python
+from object_mother_pattern import StringMother
 
-- [`object_mother_pattern.mothers.internet.AwsCloudRegionMother`](https://github.com/adriamontoto/object-mother-pattern/blob/master/object_mother_pattern/mothers/internet/aws_cloud_region_mother.py) - Responsible for generating AWS region codes.
-- [`object_mother_pattern.mothers.internet.DomainMother`](https://github.com/adriamontoto/object-mother-pattern/blob/master/object_mother_pattern/mothers/internet/domain_mother.py) - Responsible for generating domain names with valid TLDs.
-- [`object_mother_pattern.mothers.internet.Ipv4AddressMother`](https://github.com/adriamontoto/object-mother-pattern/blob/master/object_mother_pattern/mothers/internet/ipv4_address_mother.py) - Responsible for generating IPv4 addresses.
-- [`object_mother_pattern.mothers.internet.Ipv4NetworkMother`](https://github.com/adriamontoto/object-mother-pattern/blob/master/object_mother_pattern/mothers/internet/ipv4_network_mother.py) - Responsible for generating IPv4 network ranges.
-- [`object_mother_pattern.mothers.internet.Ipv6AddressMother`](https://github.com/adriamontoto/object-mother-pattern/blob/master/object_mother_pattern/mothers/internet/ipv6_address_mother.py) - Responsible for generating IPv6 addresses.
-- [`object_mother_pattern.mothers.internet.Ipv6NetworkMother`](https://github.com/adriamontoto/object-mother-pattern/blob/master/object_mother_pattern/mothers/internet/ipv6_network_mother.py) - Responsible for generating IPv6 network ranges.
-- [`object_mother_pattern.mothers.internet.MacAddressMother`](https://github.com/adriamontoto/object-mother-pattern/blob/master/object_mother_pattern/mothers/internet/mac_address_mother.py) - Responsible for generating MAC addresses in various formats.
-- [`object_mother_pattern.mothers.internet.PortMother`](https://github.com/adriamontoto/object-mother-pattern/blob/master/object_mother_pattern/mothers/internet/port_mother.py) - Responsible for generating network port numbers.
+assert StringMother.create(value='known-value') == 'known-value'
+```
 
-### Money
+Use generated values when the test only cares about invariants:
 
-- [`object_mother_pattern.mothers.money.cryptocurrencies.BtcWalletMother`](https://github.com/adriamontoto/object-mother-pattern/blob/master/object_mother_pattern/mothers/money/cryptocurrencies/btc_wallet_mother.py) - Responsible for generating Bitcoin wallet addresses using BIP39 words list.
+```python
+from object_mother_pattern import IntegerMother
 
-### People
+value = IntegerMother.positive()
 
-- [`object_mother_pattern.mothers.people.FullNameMother`](https://github.com/adriamontoto/object-mother-pattern/blob/master/object_mother_pattern/mothers/people/full_name_mother.py) - Responsible for generating realistic full names.
-- [`object_mother_pattern.mothers.people.PasswordMother`](https://github.com/adriamontoto/object-mother-pattern/blob/master/object_mother_pattern/mothers/people/password_mother.py) - Responsible for generating password strings with strength options.
-- [`object_mother_pattern.mothers.people.UsernameMother`](https://github.com/adriamontoto/object-mother-pattern/blob/master/object_mother_pattern/mothers/people/username_mother.py) - Responsible for generating username strings.
+assert value > 0
+```
 
-### Extra
+Use invalid helpers for negative-path coverage:
 
-- [`object_mother_pattern.mothers.extra.TextMother`](https://github.com/adriamontoto/object-mother-pattern/blob/master/object_mother_pattern/mothers/extra/text_mother.py) - Responsible for generating random text snippets.
+```python
+from pytest import raises
+
+from object_mother_pattern import IntegerMother
+
+with raises(TypeError):
+    IntegerMother.create(value=IntegerMother.invalid_type())
+```
+
+More guidance is available in [`docs/testing/README.md`](docs/testing/README.md).
 
 <p align="right">
     <a href="#readme-top">🔼 Back to top</a>
@@ -182,9 +272,11 @@ The package offers a wide collection of object mothers grouped by domain:
 
 <a name="real-life-case-christmas-detector-service"></a>
 
-### 🎄 Real-Life Case: Christmas Detector Service
+## 🎄 Real-Life Case: Christmas Detector Service
 
-Below is an example of a real-life scenario where **Object Mother Pattern** can help simplify test date creation. We have a `ChristmasDetectorService` that checks if a given date falls within a specific Christmas holiday range. Using the [`DateMother`](https://github.com/adriamontoto/object-mother-pattern/blob/master/object_mother_pattern/mothers/dates/date/date_mother.py) class, we can easily generate dates both within and outside of this range for our tests, this ensuring that every possible scenario is covered.
+This service checks whether a date falls within a Christmas holiday range. Tests use
+[`DateMother`](https://github.com/adriamontoto/object-mother-pattern/blob/master/object_mother_pattern/mothers/dates/date/date_mother.py)
+to create dates inside and outside the accepted range without duplicating date-generation logic.
 
 ```python
 from datetime import date
@@ -193,32 +285,32 @@ from object_mother_pattern import DateMother
 
 class ChristmasDetectorService:
     def __init__(self) -> None:
-        self.christmas_start = date(year=2024, month=12, day=24)
-        self.christmas_end = date(year=2025, month=1, day=6)
+        self._christmas_start = date(year=2024, month=12, day=24)
+        self._christmas_end = date(year=2025, month=1, day=6)
 
     def is_christmas(self, today: date) -> bool:
-        return self.christmas_start <= today <= self.christmas_end
+        return self._christmas_start <= today <= self._christmas_end
 
 
 christmas_detector_service = ChristmasDetectorService()
 
 
 def test_christmas_detector_is_christmas() -> None:
-    date_mother = DateMother.create(
+    today = DateMother.create(
         start_date=date(year=2024, month=12, day=25),
         end_date=date(year=2025, month=1, day=6),
     )
 
-    assert christmas_detector_service.is_christmas(today=date_mother)
+    assert christmas_detector_service.is_christmas(today=today)
 
 
 def test_christmas_detector_is_not_christmas() -> None:
-    date_mother = DateMother.out_of_range(
+    today = DateMother.out_of_range(
         start_date=date(year=2024, month=12, day=24),
         end_date=date(year=2025, month=1, day=6),
     )
 
-    assert not christmas_detector_service.is_christmas(today=date_mother)
+    assert christmas_detector_service.is_christmas(today=today) is False
 ```
 
 <p align="right">
@@ -227,12 +319,11 @@ def test_christmas_detector_is_not_christmas() -> None:
 
 <a name="creating-your-own-object-mother"></a>
 
-### 🧑‍🔧 Creating your own Object Mother
+## 🧑‍🔧 Creating Your Own Object Mother
 
 You can extend the functionality of this library by subclassing the
 [`BaseMother`](https://github.com/adriamontoto/object-mother-pattern/blob/master/object_mother_pattern/models/base_mother.py)
-class. Your custom mother must implement the `create` method to generate the
-desired type.
+class. A custom mother should validate explicit values and generate valid values when no value is provided.
 
 ```python
 from random import randint
@@ -240,17 +331,22 @@ from random import randint
 from object_mother_pattern.models import BaseMother
 
 
-class IntegerMother(BaseMother[int]):
+class PositiveIntegerMother(BaseMother[int]):
     @classmethod
-    def create(cls, *, value: int | None = None, min: int = -100, max: int = 100) -> int:
+    def create(cls, *, value: int | None = None) -> int:
         if value is not None:
-            if not isinstance(value, int):
-                raise TypeError('IntegerMother value must be an integer.')
+            if type(value) is not int:
+                raise TypeError('PositiveIntegerMother value must be an integer.')
+
+            if value <= 0:
+                raise ValueError('PositiveIntegerMother value must be positive.')
 
             return value
 
-        return randint(a=min, b=max)
+        return randint(a=1, b=100)
 ```
+
+More detail is available in [`docs/usage/README.md`](docs/usage/README.md).
 
 <p align="right">
     <a href="#readme-top">🔼 Back to top</a>

@@ -202,6 +202,12 @@ class EmailAddressMother(BaseMother[str]):
     def of_length(cls, *, length: int) -> str:
         """
         Create a random email address value of a specific length.
+
+        Args:
+            length (int): Required total email-address length.
+
+        Returns:
+            str: Generated email address with exactly `length` characters.
         """
         return cls.create(min_length=length, max_length=length)
 
@@ -209,6 +215,11 @@ class EmailAddressMother(BaseMother[str]):
     def rfc_create(cls) -> str:
         """
         Create a random syntactically valid email address value based on RFC length constraints.
+
+        The generated value keeps the local part within 64 characters and the complete address within 254 characters.
+
+        Returns:
+            str: RFC-length-compatible email address value.
         """
         for _ in range(1000):
             try:
@@ -234,6 +245,9 @@ class EmailAddressMother(BaseMother[str]):
     @classmethod
     def invalid_value(cls) -> str:
         """
-        Create an invalid email address value.
+        Create an invalid email address value for negative-path tests.
+
+        Returns:
+            str: Invalid email-address value.
         """
         return StringMother.invalid_value()

@@ -1,5 +1,5 @@
 """
-UuidMother module.
+Object mother for UUID values.
 """
 
 from sys import version_info
@@ -26,7 +26,10 @@ from .uuid_v8_mother import UuidV8Mother
 
 class UuidMother(BaseMother[UUID]):
     """
-    UuidMother class is responsible for creating random universally unique identifier values.
+    Generate UUID values across supported UUID versions.
+
+    `UuidMother.create()` can return an explicit `UUID` after validation, or choose one of the supported
+    version-specific mothers. Use `exclude_versions` when a test must avoid a specific UUID version.
 
     Example:
     ```python

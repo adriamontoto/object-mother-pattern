@@ -20,7 +20,10 @@ from .utils import generate_luhn_number
 
 class DiscoverCreditCardMother(BaseMother[str]):
     """
-    DiscoverCreditCardMother generates Discover card numbers.
+    Generate Discover-like card numbers for tests.
+
+    Generated values use Discover prefixes and lengths, then compute a Luhn-valid number. Passing `value` returns the
+    explicit value after type validation for deterministic tests.
     """
 
     _PREFIXES: tuple[str, ...] = ('6011', '65', *(str(prefix) for prefix in range(644, 650)))
@@ -31,6 +34,15 @@ class DiscoverCreditCardMother(BaseMother[str]):
     def create(cls, *, value: str | None = None) -> str:
         """
         Create a random Discover card number or return the provided value.
+
+        Args:
+            value (str | None): Explicit card number to validate and return.
+
+        Raises:
+            TypeError: If `value` is not a string.
+
+        Returns:
+            str: Explicit or generated Discover-like card number.
         """
         if value is not None:
             if type(value) is not str:
@@ -43,6 +55,9 @@ class DiscoverCreditCardMother(BaseMother[str]):
     @classmethod
     def invalid_value(cls) -> str:
         """
-        Create an invalid Discover card number.
+        Create an invalid Discover card number for negative-path tests.
+
+        Returns:
+            str: Invalid card-number value.
         """
         return StringMother.invalid_value()

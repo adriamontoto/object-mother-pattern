@@ -20,7 +20,11 @@ from object_mother_pattern.mothers.primitives.string_mother import StringMother
 
 class IbanMother(BaseMother[str]):
     """
-    IbanMother generates IBAN numbers with correct check digits.
+    Generate IBAN strings for tests.
+
+    Generated values use one of the supported country lengths and compute the IBAN check digits with the mod-97
+    algorithm. Passing `value` returns the explicit value after type validation, which is useful when a test needs a
+    stable fixture. Passing `country_code` restricts generated values to that country.
     """
 
     _COUNTRY_LENGTHS: ClassVar[dict[str, int]] = {
@@ -79,6 +83,18 @@ class IbanMother(BaseMother[str]):
     def create(cls, *, value: str | None = None, country_code: str | None = None) -> str:
         """
         Create a random IBAN or return the provided value.
+
+        Args:
+            value (str | None): Explicit IBAN value to validate and return.
+            country_code (str | None): Optional supported country code for generated IBANs.
+
+        Raises:
+            TypeError: If `value` is not a string.
+            TypeError: If `country_code` is not a string.
+            ValueError: If `country_code` is not supported.
+
+        Returns:
+            str: Explicit or generated IBAN value.
         """
         if value is not None:
             if type(value) is not str:
@@ -97,7 +113,10 @@ class IbanMother(BaseMother[str]):
     @classmethod
     def invalid_value(cls) -> str:
         """
-        Create an invalid IBAN value.
+        Create an invalid IBAN value for negative-path tests.
+
+        Returns:
+            str: Invalid IBAN-shaped value.
         """
         return StringMother.invalid_value()
 

@@ -1,5 +1,5 @@
 """
-EnumerationMother module.
+Base class for enum object mothers.
 """
 
 from sys import version_info
@@ -25,7 +25,10 @@ E = TypeVar('E', bound=Enum)
 
 class EnumerationMother(ABC, Generic[E]):  # noqa: UP046
     """
-    EnumerationMother class is responsible for creating random enum values.
+    Generate valid values from a concrete `Enum` type.
+
+    Subclasses declare the enum they create through `EnumerationMother[MyEnum]`. `create()` can return a provided enum
+    value after validation, select a random enum member, or select a random member while excluding specific values.
 
     ***This class is supposed to be subclassed and not instantiated directly***.
 
@@ -60,14 +63,14 @@ class EnumerationMother(ABC, Generic[E]):  # noqa: UP046
     @override
     def __init_subclass__(cls, **kwargs: Any) -> None:
         """
-        Initializes the class.
+        Capture and validate the enum type declared by a concrete mother.
 
         Args:
-            **kwargs (Any): Keyword arguments.
+            **kwargs: Keyword arguments forwarded to the parent class hook.
 
         Raises:
-            TypeError: If the class parameter is not an Enum subclass.
-            TypeError: If the class is not parameterized.
+            TypeError: If the class parameter is not an `Enum` subclass.
+            TypeError: If the subclass is not parameterized with `EnumerationMother[E]`.
         """
         super().__init_subclass__(**kwargs)
 
@@ -86,13 +89,14 @@ class EnumerationMother(ABC, Generic[E]):  # noqa: UP046
     @classmethod
     def create(cls, *, value: E | None = None, exclude: Iterable[E] | None = None) -> E:
         """
-        Create a random enumeration value from the enumeration class. If a specific
-        value is provided, it is returned after ensuring it is a member of the enumeration.
+        Create an enum member from the configured enum class.
+
+        If `value` is provided, it is validated and returned. Otherwise, a random enum member is selected from the
+        configured enumeration after removing any values passed through `exclude`.
 
         Args:
-            value (E | None, optional): Specific enumeration value to return. Defaults to None.
-            exclude (Iterable[E] | None, optional): Enumeration values to exclude from random selection. Defaults to
-            None.
+            value: Specific enum value to return.
+            exclude: Enum values to exclude from random selection.
 
         Raises:
             TypeError: If the provided `value` is not an instance of the enumeration class.
@@ -100,7 +104,7 @@ class EnumerationMother(ABC, Generic[E]):  # noqa: UP046
             ValueError: If all enumeration values are excluded.
 
         Returns:
-            E: A randomly generated enumeration value from the enumeration class.
+            E: Valid enum member from the configured enum.
 
         Example:
         ```python
@@ -153,13 +157,15 @@ class EnumerationMother(ABC, Generic[E]):  # noqa: UP046
     @staticmethod
     def invalid_type(remove_types: Iterable[type[Any]] | None = None) -> Any:  # noqa: C901
         """
-        Create an invalid type.
+        Generate a value with a type that should be invalid for enum mothers.
+
+        This helper is intended for negative-path tests that verify enum validation rejects non-enum inputs.
 
         Args:
-            remove_types (Iterable[type[Any]] | None, optional): Iterable of types to remove. Defaults to None.
+            remove_types: Candidate types to exclude from the generated invalid values.
 
         Returns:
-            Any: Invalid type.
+            Any: Value whose type differs from the excluded types.
         """
         faker = Faker()
 

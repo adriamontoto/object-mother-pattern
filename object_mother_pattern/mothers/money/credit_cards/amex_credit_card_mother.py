@@ -20,7 +20,10 @@ from .utils import generate_luhn_number
 
 class AmexCreditCardMother(BaseMother[str]):
     """
-    AmexCreditCardMother generates American Express card numbers.
+    Generate American Express-like card numbers for tests.
+
+    Generated values use American Express prefixes and lengths, then compute a Luhn-valid number. Passing `value`
+    returns the explicit value after type validation for deterministic tests.
     """
 
     _PREFIXES: tuple[str, ...] = ('34', '37')
@@ -31,6 +34,15 @@ class AmexCreditCardMother(BaseMother[str]):
     def create(cls, *, value: str | None = None) -> str:
         """
         Create a random American Express card number or return the provided value.
+
+        Args:
+            value (str | None): Explicit card number to validate and return.
+
+        Raises:
+            TypeError: If `value` is not a string.
+
+        Returns:
+            str: Explicit or generated American Express-like card number.
         """
         if value is not None:
             if type(value) is not str:
@@ -43,6 +55,9 @@ class AmexCreditCardMother(BaseMother[str]):
     @classmethod
     def invalid_value(cls) -> str:
         """
-        Create an invalid American Express card number.
+        Create an invalid American Express card number for negative-path tests.
+
+        Returns:
+            str: Invalid card-number value.
         """
         return StringMother.invalid_value()

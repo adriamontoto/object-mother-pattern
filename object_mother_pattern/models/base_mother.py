@@ -1,5 +1,5 @@
 """
-BaseMother module.
+Abstract base class for typed object mothers.
 """
 
 from sys import version_info
@@ -34,9 +34,35 @@ T = TypeVar('T')
 
 class BaseMother(ABC, Generic[T]):  # noqa: UP046
     """
-    BaseMother class.
+    Define the common contract for object mother classes.
+
+    Concrete mothers subclass `BaseMother[T]`, implement `create()`, and usually support two paths: return an explicit
+    `value` after validation, or generate a random value that satisfies the mother invariants. The base class records
+    the declared target type so test suites can ask a mother for a value of a different type through `invalid_type()`.
 
     ***This class is abstract and should not be instantiated directly***.
+
+    Example:
+    ```python
+    from random import randint
+
+    from object_mother_pattern.models import BaseMother
+
+
+    class PositiveIntegerMother(BaseMother[int]):
+        @classmethod
+        def create(cls, *, value: int | None = None) -> int:
+            if value is not None:
+                if type(value) is not int:
+                    raise TypeError('PositiveIntegerMother value must be an integer.')
+
+                if value <= 0:
+                    raise ValueError('PositiveIntegerMother value must be positive.')
+
+                return value
+
+            return randint(a=1, b=100)
+    ```
     """
 
     _type: type
@@ -44,14 +70,18 @@ class BaseMother(ABC, Generic[T]):  # noqa: UP046
     @override
     def __init_subclass__(cls, **kwargs: Any) -> None:
         """
-        Initializes the class.
+        Capture and validate the target type declared by a concrete mother.
+
+        Subclasses must be parameterized as `BaseMother[T]`. If `T` is a `value_object_pattern.ValueObject` subclass,
+        the inner value-object type is recorded so invalid-type generation excludes the value type rather than the
+        wrapper class.
 
         Args:
-            **kwargs (Any): Keyword arguments.
+            **kwargs: Keyword arguments forwarded to the parent class hook.
 
         Raises:
-            TypeError: If the class parameter is not a type.
-            TypeError: If the class is not parameterized.
+            TypeError: If the class parameter is not a type-like value.
+            TypeError: If the subclass is not parameterized with `BaseMother[T]`.
         """
         super().__init_subclass__(**kwargs)
 
@@ -73,10 +103,10 @@ class BaseMother(ABC, Generic[T]):  # noqa: UP046
     @classmethod
     def _random(cls) -> Faker:
         """
-        Get a Faker instance.
+        Build a Faker instance configured for this package.
 
         Returns:
-            Faker: Faker instance.
+            Faker: Faker instance with the package's additional providers.
         """
         faker = Faker(use_weighting=False)
         faker.add_provider(user_agent)
@@ -87,26 +117,31 @@ class BaseMother(ABC, Generic[T]):  # noqa: UP046
     @abstractmethod
     def create(cls, *, value: Any | None = None) -> T:
         """
-        Create a random T value. If a specific value is provided via `value`, it is returned after validation.
-        Otherwise, a random T value is generated.
+        Create a value of the mother's target type.
+
+        Concrete mothers should validate and return a provided `value` when supplied. Without `value`, they should
+        generate a random value that satisfies the same invariants.
 
         Args:
-            value (Any | None, optional): A specific value to return. Defaults to None.
+            value: Optional explicit value to validate and return.
 
         Returns:
-            T: A randomly generated T value.
+            T: Valid value for the concrete mother.
         """
 
     @classmethod
     def invalid_type(cls, *, remove_types: Iterable[type[Any]] | None = None) -> Any:  # noqa: C901
         """
-        Create an invalid type.
+        Generate a value with a type that should be invalid for this mother.
+
+        This helper is intended for negative-path tests. It automatically removes the concrete mother's target type when
+        available, then randomly selects from common primitive, collection, date, and UUID types.
 
         Args:
-            remove_types (Iterable[type[Any]] | None, optional): Iterable of types to remove. Defaults to None.
+            remove_types: Additional candidate types to exclude from the generated invalid values.
 
         Returns:
-            Any: Invalid type.
+            Any: Value whose type differs from the excluded types.
         """
         faker = Faker()
 

@@ -15,9 +15,9 @@ from re import Pattern, compile as re_compile
 from typing import Final
 
 from object_mother_pattern.models import BaseMother
-from object_mother_pattern.mothers import StringCase, StringMother
+from object_mother_pattern.mothers import StringMother
 
-from .domain_mother import DomainMother
+from .host_mother import HostMother
 from .ipv4_address_mother import Ipv4AddressMother
 from .ipv6_address_mother import Ipv6AddressMother
 from .key_mother import KeyMother
@@ -122,14 +122,14 @@ class UrlMother(BaseMother[str]):
         if host_type is None:
             host = choice(  # noqa: S311
                 seq=(
-                    DomainMother.create(string_case=StringCase.LOWERCASE),
+                    HostMother.domain(),
                     Ipv4AddressMother.create(),
                     Ipv6AddressMother.create(),
                 ),
             )
 
         elif host_type == 'domain':
-            host = DomainMother.create(string_case=StringCase.LOWERCASE)
+            host = HostMother.domain()
 
         elif host_type == 'ip':
             host = choice(seq=(Ipv4AddressMother.create(), Ipv6AddressMother.create()))  # noqa: S311

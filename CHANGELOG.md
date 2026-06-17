@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v3.14.0 (2026-06-17)
+
+### ✨ Features
+
+- Implement object mother pattern skill for AI agents
+  ([`9ab18f8`](https://github.com/adriamontoto/object-mother-pattern/commit/9ab18f8401af8efcbb01dc1a6093bc9ed99a12fc))
+
+
 ## v3.13.1 (2026-06-17)
 
 ### 🐛 Bug Fixes

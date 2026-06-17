@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v3.13.1 (2026-06-17)
+
+### 🐛 Bug Fixes
+
+- Use importlib.resources to read resource files
+  ([`3f39c5a`](https://github.com/adriamontoto/object-mother-pattern/commit/3f39c5ae6a9cdd6b2021e166cceb32aa0bccb2df))
+
+
 ## v3.13.0 (2026-05-21)
 
 ### 📦 Build System

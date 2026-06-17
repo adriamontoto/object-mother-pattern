@@ -12,6 +12,7 @@ Key paths:
 - `object_mother_pattern/__init__.py` and package `__init__.py` files: public exports.
 - `object_mother_pattern/py.typed`: marker that advertises package typing.
 - `tests/`: pytest suite organized to mirror `object_mother_pattern/`.
+- `skills/object-mother-pattern/`: installable agent skill that teaches AI/LLM agents how to use this package.
 - `update_lists.py`: utility used by the scheduled content-list workflow.
 - `pyproject.toml`: package metadata and tool configuration.
 - `Makefile`: canonical local workflow.
@@ -55,6 +56,8 @@ There is no database or application server to start.
 - Keep changes scoped to the requested behavior; avoid unrelated cleanup.
 - Add or update tests for behavior changes.
 - For public API changes, update exports in `object_mother_pattern/__init__.py` or package `__init__.py` files as needed.
+- For public mother/API changes, update `skills/object-mother-pattern/` and regenerate `skills/object-mother-pattern.skill`
+  so downstream agents can install current package guidance.
 - Keep `object_mother_pattern/py.typed` present so package typing remains advertised.
 - This repository currently has no lockfile; avoid introducing dependency lockfile churn unless the task is explicitly about dependency management.
 

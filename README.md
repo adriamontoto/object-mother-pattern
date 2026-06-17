@@ -56,6 +56,15 @@ You can install **Object Mother Pattern** using `pip`:
 pip install object-mother-pattern
 ```
 
+You can install the companion AI-agent skill from [skills.sh](https://www.skills.sh/) with Vercel's `skills` CLI:
+
+```bash
+npx skills add adriamontoto/object-mother-pattern
+```
+
+Review the skill source in [`skills/object-mother-pattern`](skills/object-mother-pattern) before installing it in
+sensitive environments.
+
 <p align="right">
     <a href="#readme-top">🔼 Back to top</a>
 </p><br><br>
@@ -72,7 +81,9 @@ The root README is the entry point. Deeper guides live in this repository and ar
 - Catalog details: [`primitives`](docs/catalog/primitives/README.md), [`dates`](docs/catalog/dates/README.md),
   [`identifiers`](docs/catalog/identifiers/README.md), [`internet`](docs/catalog/internet/README.md),
   [`money`](docs/catalog/money/README.md), and [`people/text`](docs/catalog/people/README.md).
-- [`docs/testing/README.md`](docs/testing/README.md): Testing patterns for valid, invalid, boundary, and deterministic data.
+- [`docs/testing/README.md`](docs/testing/README.md): Testing patterns for valid, invalid, boundary, and deterministic
+  data.
+- [`AI Skill`](skills/README.md): Installable skill package that teaches AI agents how to use Object Mother Pattern.
 
 This [project's DeepWiki documentation](https://deepwiki.com/adriamontoto/object-mother-pattern) is also available for
 generated repository navigation.

@@ -1,4 +1,5 @@
 from functools import lru_cache
+from importlib.resources import files
 
 
 @lru_cache(maxsize=1)
@@ -12,8 +13,12 @@ def get_bip39_words() -> tuple[str, ...]:
     References:
         BIP39 Words: https://github.com/bitcoin/bips/blob/master/bip-0039/english.txt
     """
-    with open(file='object_mother_pattern/mothers/money/cryptocurrencies/utils/bip39_words.txt') as file:
-        lines = file.read().splitlines()
-        filtered_lines = tuple(line for line in lines if line.strip() and not line.strip().startswith('#'))
+    lines = (
+        files('object_mother_pattern.mothers.money.cryptocurrencies.utils')
+        .joinpath('bip39_words.txt')
+        .read_text(encoding='utf-8')
+        .splitlines()
+    )
+    filtered_lines = tuple(line for line in lines if line.strip() and not line.strip().startswith('#'))
 
-        return filtered_lines
+    return filtered_lines

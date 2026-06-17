@@ -1,4 +1,5 @@
 from functools import lru_cache
+from importlib.resources import files
 
 
 @lru_cache(maxsize=1)
@@ -12,9 +13,13 @@ def get_aws_cloud_regions() -> tuple[str, ...]:
     References:
         AWS Cloud Regions: https://docs.aws.amazon.com/global-infrastructure/latest/regions/aws-regions.html#available-regions
     """
-    with open(file='object_mother_pattern/mothers/internet/utils/aws_regions.txt') as file:
-        lines = file.read().splitlines()
-        filtered_lines = tuple(line for line in lines if not line.startswith('#') and (_line := line.strip().lower()))
+    lines = (
+        files('object_mother_pattern.mothers.internet.utils')
+        .joinpath('aws_regions.txt')
+        .read_text(encoding='utf-8')
+        .splitlines()
+    )
+    filtered_lines = tuple(line for line in lines if not line.startswith('#') and (_line := line.strip().lower()))
 
     return filtered_lines
 
@@ -30,9 +35,12 @@ def get_tld_dict() -> dict[int, tuple[str, ...]]:
     References:
         TLD Domains: https://data.iana.org/TLD/tlds-alpha-by-domain.txt
     """
-    path = 'object_mother_pattern/mothers/internet/utils/tld_domains.txt'
-    with open(file=path) as file:
-        lines = file.read().splitlines()
+    lines = (
+        files('object_mother_pattern.mothers.internet.utils')
+        .joinpath('tld_domains.txt')
+        .read_text(encoding='utf-8')
+        .splitlines()
+    )
 
     temp: dict[int, list[str]] = {}
     tlds = tuple(line for line in lines if not line.startswith('#') and (_line := line.strip().lower()))
@@ -54,9 +62,12 @@ def get_label_dict() -> dict[int, tuple[str, ...]]:
     References:
         Words: https://www.mit.edu/~ecprice/wordlist.10000
     """
-    path = 'object_mother_pattern/mothers/internet/utils/words.txt'
-    with open(file=path) as file:
-        lines = file.read().splitlines()
+    lines = (
+        files('object_mother_pattern.mothers.internet.utils')
+        .joinpath('words.txt')
+        .read_text(encoding='utf-8')
+        .splitlines()
+    )
 
     temp: dict[int, list[str]] = {}
     labels = tuple(line for line in lines if not line.startswith('#') and (_line := line.strip().lower()))

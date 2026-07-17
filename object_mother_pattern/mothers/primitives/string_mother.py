@@ -2,6 +2,7 @@
 Object mother for string values.
 """
 
+from base64 import b64encode
 from sys import version_info
 
 if version_info >= (3, 12):
@@ -14,6 +15,7 @@ from random import choice, randint, sample
 
 from object_mother_pattern.models import BaseMother
 
+from .bytes_mother import BytesMother
 from .utils.alphabets import ALPHABET_BASIC, ALPHABET_LOWERCASE_BASIC, ALPHABET_UPPERCASE_BASIC, DIGITS_BASIC
 
 
@@ -347,6 +349,51 @@ class StringMother(BaseMother[str]):
         ```
         """
         return cls.create(min_length=min_length, max_length=max_length, characters=ALPHABET_BASIC)
+
+    @classmethod
+    def base64(cls, *, min_length: int = 4, max_length: int = 128) -> str:
+        """
+        Create a random padded Base64 string of length between `min_length` and `max_length`.
+
+        Args:
+            min_length (int, optional): Minimum encoded length. Must be >= 0. Defaults to 4.
+            max_length (int, optional): Maximum encoded length. Must be >= 0 and >= `min_length`. Defaults to 128.
+
+        Raises:
+            TypeError: If `min_length` is not an integer.
+            TypeError: If `max_length` is not an integer.
+            ValueError: If `min_length` is less than 0.
+            ValueError: If `max_length` is less than 0.
+            ValueError: If `min_length` is greater than `max_length`.
+            ValueError: If the requested range does not include a valid padded Base64 length.
+
+        Returns:
+            str: Random padded Base64 string with a length between `min_length` and `max_length`.
+
+        Example:
+        ```python
+        from object_mother_pattern import StringMother
+
+        string = StringMother.base64(min_length=8, max_length=32)
+        print(string)
+        # >>> 7a2e3f4b5c6d7e8
+        ```
+        """
+        cls.create(min_length=min_length, max_length=max_length)
+
+        minimum_blocks = (min_length + 3) // 4
+        maximum_blocks = max_length // 4
+        if minimum_blocks > maximum_blocks:
+            raise ValueError('StringMother Base64 length range must include a multiple of 4.')
+
+        encoded_length = randint(a=minimum_blocks, b=maximum_blocks) * 4  # noqa: S311
+        if encoded_length == 0:
+            return ''
+
+        maximum_byte_length = encoded_length * 3 // 4
+        byte_length = randint(a=maximum_byte_length - 2, b=maximum_byte_length)  # noqa: S311
+        value = BytesMother.create(min_length=byte_length, max_length=byte_length)
+        return b64encode(s=value).decode()
 
     @classmethod
     def numeric(cls, *, min_length: int = 1, max_length: int = 128) -> str:

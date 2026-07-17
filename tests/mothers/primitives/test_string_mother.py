@@ -2,6 +2,7 @@
 Test module for the StringMother class.
 """
 
+from base64 import b64decode
 from re import fullmatch
 
 from pytest import mark, raises as assert_raises
@@ -1134,6 +1135,50 @@ def test_string_mother_alphanumeric_method_min_length_greater_than_max_length() 
         match='StringMother min_length must be less than or equal to max_length.',
     ):
         StringMother.alphanumeric(min_length=max_length, max_length=min_length)
+
+
+@mark.unit_testing
+def test_string_mother_base64_method_happy_path() -> None:
+    """
+    Check that StringMother base64 method returns a valid padded Base64 string within the requested length range.
+    """
+    value = StringMother.base64()
+
+    assert type(value) is str
+    assert 4 <= len(value) <= 128
+    assert len(value) % 4 == 0
+    assert type(b64decode(s=value, validate=True)) is bytes
+
+
+@mark.unit_testing
+def test_string_mother_base64_method_exact_length() -> None:
+    """
+    Check that StringMother base64 method supports a valid exact encoded length.
+    """
+    value = StringMother.base64(min_length=8, max_length=8)
+
+    assert len(value) == 8
+    assert type(b64decode(s=value, validate=True)) is bytes
+
+
+@mark.unit_testing
+def test_string_mother_base64_method_empty_value() -> None:
+    """
+    Check that StringMother base64 method supports the valid Base64 encoding of empty bytes.
+    """
+    assert StringMother.base64(min_length=0, max_length=0) == ''
+
+
+@mark.unit_testing
+def test_string_mother_base64_method_range_without_valid_length() -> None:
+    """
+    Check that StringMother base64 method rejects a range without a valid padded Base64 length.
+    """
+    with assert_raises(
+        expected_exception=ValueError,
+        match='StringMother Base64 length range must include a multiple of 4.',
+    ):
+        StringMother.base64(min_length=1, max_length=3)
 
 
 @mark.unit_testing

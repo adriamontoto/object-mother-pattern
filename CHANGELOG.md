@@ -2,6 +2,19 @@
 
 <!-- version list -->
 
+## v3.15.0 (2026-07-17)
+
+### 🧹 Chores
+
+- Add project skills
+  ([`85aff51`](https://github.com/adriamontoto/object-mother-pattern/commit/85aff5112ef3f79dc73e385ad8afc30aa700de0d))
+
+### ✨ Features
+
+- Implement base64 method in StringMother for generating random padded Base64 strings
+  ([`f44bcbe`](https://github.com/adriamontoto/object-mother-pattern/commit/f44bcbea7d62d5c7fe21929737ad5b9952faf9ca))
+
+
 ## v3.14.0 (2026-06-17)
 
 ### ✨ Features

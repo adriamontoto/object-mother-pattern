@@ -67,9 +67,10 @@ def test_url_mother_create_method_with_ip_host_type() -> None:
     Check that UrlMother create method returns a URL with an IP host when host_type is ip.
     """
     value = UrlMother.create(host_type='ip')
-    host = urlsplit(url=value).netloc
+    host = urlsplit(url=value).hostname
 
     assert UrlValueObject(value=value).scheme
+    assert host is not None
     assert ip_address(address=host).version in (4, 6)
 
 
@@ -91,10 +92,12 @@ def test_url_mother_create_method_with_ipv6_host_type() -> None:
     Check that UrlMother create method returns a URL with an IPv6 host when host_type is ipv6.
     """
     value = UrlMother.create(host_type='ipv6')
-    host = urlsplit(url=value).netloc
+    parts = urlsplit(url=value)
 
     assert UrlValueObject(value=value).scheme
-    assert ip_address(address=host).version == 6
+    assert parts.hostname is not None
+    assert ip_address(address=parts.hostname).version == 6
+    assert parts.netloc == f'[{parts.hostname}]'
 
 
 @mark.unit_testing

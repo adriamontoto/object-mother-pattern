@@ -143,6 +143,9 @@ class UrlMother(BaseMother[str]):
         else:
             raise ValueError('UrlMother host_type must be one of domain, ip, ipv4, or ipv6.')
 
+        if ':' in host:
+            host = f'[{host}]'
+
         return (
             f'{scheme}://{host}'
             f'/{SlugMother.create(min_length=3, max_length=12)}/{SlugMother.create(min_length=3, max_length=12)}'
@@ -203,7 +206,7 @@ class UrlMother(BaseMother[str]):
 
         url = UrlMother.with_ipv6_address()
         print(url)
-        # >>> https://2001:db8::1/api/v1?version=v1&format=json#status
+        # >>> https://[2001:db8::1]/api/v1?version=v1&format=json#status
         ```
         """
         return cls.create(host_type='ipv6')

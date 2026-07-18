@@ -2,7 +2,7 @@
 Test module for the StringMother class.
 """
 
-from base64 import b64decode
+from base64 import b16decode, b32decode, b64decode
 from re import fullmatch
 
 from pytest import mark, raises as assert_raises
@@ -1138,6 +1138,235 @@ def test_string_mother_alphanumeric_method_min_length_greater_than_max_length() 
 
 
 @mark.unit_testing
+def test_string_mother_hexadecimal_method_happy_path() -> None:
+    """
+    Check that StringMother hexadecimal method returns a valid uppercase Base16 string.
+    """
+    value = StringMother.hexadecimal()
+
+    assert 2 <= len(value) <= 128
+    assert len(value) % 2 == 0
+    assert fullmatch(pattern=r'[0-9A-F]+', string=value)
+    assert type(b16decode(s=value)) is bytes
+
+
+@mark.unit_testing
+def test_string_mother_hexadecimal_method_empty_value() -> None:
+    """
+    Check that StringMother hexadecimal method supports the Base16 encoding of empty bytes.
+    """
+    assert StringMother.hexadecimal(min_length=0, max_length=0) == ''
+
+
+@mark.unit_testing
+def test_string_mother_hexadecimal_method_invalid_min_length_type() -> None:
+    """
+    Check that StringMother hexadecimal method rejects a non-integer min_length.
+    """
+    with assert_raises(
+        expected_exception=TypeError,
+        match='StringMother min_length must be an integer.',
+    ):
+        StringMother.hexadecimal(min_length=IntegerMother.invalid_type())
+
+
+@mark.unit_testing
+def test_string_mother_hexadecimal_method_invalid_max_length_type() -> None:
+    """
+    Check that StringMother hexadecimal method rejects a non-integer max_length.
+    """
+    with assert_raises(
+        expected_exception=TypeError,
+        match='StringMother max_length must be an integer.',
+    ):
+        StringMother.hexadecimal(max_length=IntegerMother.invalid_type())
+
+
+@mark.unit_testing
+def test_string_mother_hexadecimal_method_min_length_negative_value() -> None:
+    """
+    Check that StringMother hexadecimal method rejects a negative min_length.
+    """
+    with assert_raises(
+        expected_exception=ValueError,
+        match='StringMother min_length must be greater than or equal to 0.',
+    ):
+        StringMother.hexadecimal(min_length=-1)
+
+
+@mark.unit_testing
+def test_string_mother_hexadecimal_method_max_length_negative_value() -> None:
+    """
+    Check that StringMother hexadecimal method rejects a negative max_length.
+    """
+    with assert_raises(
+        expected_exception=ValueError,
+        match='StringMother max_length must be greater than or equal to 0.',
+    ):
+        StringMother.hexadecimal(min_length=0, max_length=-1)
+
+
+@mark.unit_testing
+def test_string_mother_hexadecimal_method_min_length_greater_than_max_length() -> None:
+    """
+    Check that StringMother hexadecimal method rejects min_length greater than max_length.
+    """
+    with assert_raises(
+        expected_exception=ValueError,
+        match='StringMother min_length must be less than or equal to max_length.',
+    ):
+        StringMother.hexadecimal(min_length=8, max_length=4)
+
+
+@mark.unit_testing
+def test_string_mother_hexadecimal_method_range_without_valid_length() -> None:
+    """
+    Check that StringMother hexadecimal method rejects a range without a valid Base16 length.
+    """
+    with assert_raises(
+        expected_exception=ValueError,
+        match='StringMother Base16 length range must include a multiple of 2.',
+    ):
+        StringMother.hexadecimal(min_length=1, max_length=1)
+
+
+@mark.unit_testing
+def test_string_mother_base16_method_alias() -> None:
+    """
+    Check that StringMother base16 method is a direct alias of hexadecimal.
+    """
+    assert StringMother.__dict__['base16'] is StringMother.__dict__['hexadecimal']
+
+
+@mark.unit_testing
+def test_string_mother_base32_method_happy_path() -> None:
+    """
+    Check that StringMother base32 method returns a valid padded Base32 string.
+    """
+    value = StringMother.base32()
+
+    assert 8 <= len(value) <= 128
+    assert len(value) % 8 == 0
+    assert fullmatch(pattern=r'[A-Z2-7]+=*', string=value)
+    assert type(b32decode(s=value)) is bytes
+
+
+@mark.unit_testing
+def test_string_mother_base32_method_empty_value() -> None:
+    """
+    Check that StringMother base32 method supports the Base32 encoding of empty bytes.
+    """
+    assert StringMother.base32(min_length=0, max_length=0) == ''
+
+
+@mark.unit_testing
+def test_string_mother_base32_method_invalid_min_length_type() -> None:
+    """
+    Check that StringMother base32 method rejects a non-integer min_length.
+    """
+    with assert_raises(
+        expected_exception=TypeError,
+        match='StringMother min_length must be an integer.',
+    ):
+        StringMother.base32(min_length=IntegerMother.invalid_type())
+
+
+@mark.unit_testing
+def test_string_mother_base32_method_invalid_max_length_type() -> None:
+    """
+    Check that StringMother base32 method rejects a non-integer max_length.
+    """
+    with assert_raises(
+        expected_exception=TypeError,
+        match='StringMother max_length must be an integer.',
+    ):
+        StringMother.base32(max_length=IntegerMother.invalid_type())
+
+
+@mark.unit_testing
+def test_string_mother_base32_method_min_length_negative_value() -> None:
+    """
+    Check that StringMother base32 method rejects a negative min_length.
+    """
+    with assert_raises(
+        expected_exception=ValueError,
+        match='StringMother min_length must be greater than or equal to 0.',
+    ):
+        StringMother.base32(min_length=-1)
+
+
+@mark.unit_testing
+def test_string_mother_base32_method_max_length_negative_value() -> None:
+    """
+    Check that StringMother base32 method rejects a negative max_length.
+    """
+    with assert_raises(
+        expected_exception=ValueError,
+        match='StringMother max_length must be greater than or equal to 0.',
+    ):
+        StringMother.base32(min_length=0, max_length=-1)
+
+
+@mark.unit_testing
+def test_string_mother_base32_method_min_length_greater_than_max_length() -> None:
+    """
+    Check that StringMother base32 method rejects min_length greater than max_length.
+    """
+    with assert_raises(
+        expected_exception=ValueError,
+        match='StringMother min_length must be less than or equal to max_length.',
+    ):
+        StringMother.base32(min_length=8, max_length=4)
+
+
+@mark.unit_testing
+def test_string_mother_base32_method_range_without_valid_length() -> None:
+    """
+    Check that StringMother base32 method rejects a range without a valid padded length.
+    """
+    with assert_raises(
+        expected_exception=ValueError,
+        match='StringMother Base32 length range must include a multiple of 8.',
+    ):
+        StringMother.base32(min_length=1, max_length=7)
+
+
+@mark.unit_testing
+def test_string_mother_base36_method_happy_path() -> None:
+    """
+    Check that StringMother base36 method uses the uppercase Base36 alphabet.
+    """
+    value = StringMother.base36(min_length=128, max_length=128)
+
+    assert len(value) == 128
+    assert set(value) <= set('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ')
+
+
+@mark.unit_testing
+def test_string_mother_base56_method_happy_path() -> None:
+    """
+    Check that StringMother base56 method uses the configured ambiguity-free alphabet.
+    """
+    value = StringMother.base56(min_length=128, max_length=128)
+    alphabet = 'abcdefghijkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789'
+
+    assert len(value) == 128
+    assert set(value) <= set(alphabet)
+
+
+@mark.unit_testing
+def test_string_mother_base58_method_happy_path() -> None:
+    """
+    Check that StringMother base58 method uses the Bitcoin alphabet.
+    """
+    value = StringMother.base58(min_length=128, max_length=128)
+    alphabet = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz'
+
+    assert len(value) == 128
+    assert set(value) <= set(alphabet)
+
+
+@mark.unit_testing
 def test_string_mother_base64_method_happy_path() -> None:
     """
     Check that StringMother base64 method returns a valid padded Base64 string within the requested length range.
@@ -1167,6 +1396,66 @@ def test_string_mother_base64_method_empty_value() -> None:
     Check that StringMother base64 method supports the valid Base64 encoding of empty bytes.
     """
     assert StringMother.base64(min_length=0, max_length=0) == ''
+
+
+@mark.unit_testing
+def test_string_mother_base64_method_invalid_min_length_type() -> None:
+    """
+    Check that StringMother base64 method rejects a non-integer min_length.
+    """
+    with assert_raises(
+        expected_exception=TypeError,
+        match='StringMother min_length must be an integer.',
+    ):
+        StringMother.base64(min_length=IntegerMother.invalid_type())
+
+
+@mark.unit_testing
+def test_string_mother_base64_method_invalid_max_length_type() -> None:
+    """
+    Check that StringMother base64 method rejects a non-integer max_length.
+    """
+    with assert_raises(
+        expected_exception=TypeError,
+        match='StringMother max_length must be an integer.',
+    ):
+        StringMother.base64(max_length=IntegerMother.invalid_type())
+
+
+@mark.unit_testing
+def test_string_mother_base64_method_min_length_negative_value() -> None:
+    """
+    Check that StringMother base64 method rejects a negative min_length.
+    """
+    with assert_raises(
+        expected_exception=ValueError,
+        match='StringMother min_length must be greater than or equal to 0.',
+    ):
+        StringMother.base64(min_length=-1)
+
+
+@mark.unit_testing
+def test_string_mother_base64_method_max_length_negative_value() -> None:
+    """
+    Check that StringMother base64 method rejects a negative max_length.
+    """
+    with assert_raises(
+        expected_exception=ValueError,
+        match='StringMother max_length must be greater than or equal to 0.',
+    ):
+        StringMother.base64(min_length=0, max_length=-1)
+
+
+@mark.unit_testing
+def test_string_mother_base64_method_min_length_greater_than_max_length() -> None:
+    """
+    Check that StringMother base64 method rejects min_length greater than max_length.
+    """
+    with assert_raises(
+        expected_exception=ValueError,
+        match='StringMother min_length must be less than or equal to max_length.',
+    ):
+        StringMother.base64(min_length=8, max_length=4)
 
 
 @mark.unit_testing

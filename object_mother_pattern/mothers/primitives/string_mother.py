@@ -2,7 +2,6 @@
 Object mother for string values.
 """
 
-from base64 import b64encode
 from sys import version_info
 
 if version_info >= (3, 12):
@@ -11,12 +10,21 @@ else:
     from typing_extensions import override  # pragma: no cover
 
 
+from base64 import b16encode, b32encode, b64encode
 from random import choice, randint, sample
 
 from object_mother_pattern.models import BaseMother
 
 from .bytes_mother import BytesMother
-from .utils.alphabets import ALPHABET_BASIC, ALPHABET_LOWERCASE_BASIC, ALPHABET_UPPERCASE_BASIC, DIGITS_BASIC
+from .utils.alphabets import (
+    ALPHABET_BASE36,
+    ALPHABET_BASE56,
+    ALPHABET_BASE58,
+    ALPHABET_BASIC,
+    ALPHABET_LOWERCASE_BASIC,
+    ALPHABET_UPPERCASE_BASIC,
+    DIGITS_BASIC,
+)
 
 
 class StringMother(BaseMother[str]):
@@ -351,6 +359,147 @@ class StringMother(BaseMother[str]):
         return cls.create(min_length=min_length, max_length=max_length, characters=ALPHABET_BASIC)
 
     @classmethod
+    def hexadecimal(cls, *, min_length: int = 2, max_length: int = 128) -> str:
+        """
+        Create a random uppercase hexadecimal string of length between `min_length` and `max_length`.
+
+        Args:
+            min_length (int, optional): Minimum encoded length. Must be >= 0. Defaults to 2.
+            max_length (int, optional): Maximum encoded length. Must be >= 0 and >= `min_length`. Defaults to 128.
+
+        Raises:
+            TypeError: If `min_length` is not an integer.
+            TypeError: If `max_length` is not an integer.
+            ValueError: If `min_length` is less than 0.
+            ValueError: If `max_length` is less than 0.
+            ValueError: If `min_length` is greater than `max_length`.
+            ValueError: If the requested range does not include a valid Base16 length.
+
+        Returns:
+            str: Random uppercase hexadecimal string with a length between `min_length` and `max_length`.
+        """
+        if type(min_length) is not int:
+            raise TypeError('StringMother min_length must be an integer.')
+
+        if type(max_length) is not int:
+            raise TypeError('StringMother max_length must be an integer.')
+
+        if min_length < 0:
+            raise ValueError('StringMother min_length must be greater than or equal to 0.')
+
+        if max_length < 0:
+            raise ValueError('StringMother max_length must be greater than or equal to 0.')
+
+        if min_length > max_length:
+            raise ValueError('StringMother min_length must be less than or equal to max_length.')
+
+        minimum_blocks = (min_length + 1) // 2
+        maximum_blocks = max_length // 2
+        if minimum_blocks > maximum_blocks:
+            raise ValueError('StringMother Base16 length range must include a multiple of 2.')
+
+        blocks = randint(a=minimum_blocks, b=maximum_blocks)  # noqa: S311
+        if blocks == 0:
+            return ''
+
+        value = BytesMother.create(min_length=blocks, max_length=blocks)
+        return b16encode(s=value).decode()
+
+    base16 = hexadecimal
+
+    @classmethod
+    def base32(cls, *, min_length: int = 8, max_length: int = 128) -> str:
+        """
+        Create a random padded Base32 string of length between `min_length` and `max_length`.
+
+        Args:
+            min_length (int, optional): Minimum encoded length. Must be >= 0. Defaults to 8.
+            max_length (int, optional): Maximum encoded length. Must be >= 0 and >= `min_length`. Defaults to 128.
+
+        Raises:
+            TypeError: If `min_length` is not an integer.
+            TypeError: If `max_length` is not an integer.
+            ValueError: If `min_length` is less than 0.
+            ValueError: If `max_length` is less than 0.
+            ValueError: If `min_length` is greater than `max_length`.
+            ValueError: If the requested range does not include a valid padded Base32 length.
+
+        Returns:
+            str: Random padded Base32 string with a length between `min_length` and `max_length`.
+        """
+        if type(min_length) is not int:
+            raise TypeError('StringMother min_length must be an integer.')
+
+        if type(max_length) is not int:
+            raise TypeError('StringMother max_length must be an integer.')
+
+        if min_length < 0:
+            raise ValueError('StringMother min_length must be greater than or equal to 0.')
+
+        if max_length < 0:
+            raise ValueError('StringMother max_length must be greater than or equal to 0.')
+
+        if min_length > max_length:
+            raise ValueError('StringMother min_length must be less than or equal to max_length.')
+
+        minimum_blocks = (min_length + 7) // 8
+        maximum_blocks = max_length // 8
+        if minimum_blocks > maximum_blocks:
+            raise ValueError('StringMother Base32 length range must include a multiple of 8.')
+
+        blocks = randint(a=minimum_blocks, b=maximum_blocks)  # noqa: S311
+        if blocks == 0:
+            return ''
+
+        minimum_byte_length = (blocks - 1) * 5 + 1
+        maximum_byte_length = blocks * 5
+        byte_length = randint(a=minimum_byte_length, b=maximum_byte_length)  # noqa: S311
+        value = BytesMother.create(min_length=byte_length, max_length=byte_length)
+        return b32encode(s=value).decode()
+
+    @classmethod
+    def base36(cls, *, min_length: int = 1, max_length: int = 128) -> str:
+        """
+        Create a random uppercase Base36 string of length between `min_length` and `max_length`.
+
+        Args:
+            min_length (int, optional): Minimum length. Must be >= 0. Defaults to 1.
+            max_length (int, optional): Maximum length. Must be >= 0 and >= `min_length`. Defaults to 128.
+
+        Returns:
+            str: Random Base36 string using digits and uppercase ASCII letters.
+        """
+        return cls.create(min_length=min_length, max_length=max_length, characters=ALPHABET_BASE36)
+
+    @classmethod
+    def base56(cls, *, min_length: int = 1, max_length: int = 128) -> str:
+        """
+        Create a random Base56 string without visually ambiguous characters.
+
+        Args:
+            min_length (int, optional): Minimum length. Must be >= 0. Defaults to 1.
+            max_length (int, optional): Maximum length. Must be >= 0 and >= `min_length`. Defaults to 128.
+
+        Returns:
+            str: Random Base56 string without `0`, `1`, `I`, `O`, `l`, or `o`.
+        """
+        return cls.create(min_length=min_length, max_length=max_length, characters=ALPHABET_BASE56)
+
+    @classmethod
+    def base58(cls, *, min_length: int = 1, max_length: int = 128) -> str:
+        """
+        Create a random Base58 string using the Bitcoin alphabet.
+
+        Args:
+            min_length (int, optional): Minimum length. Must be >= 0. Defaults to 1.
+            max_length (int, optional): Maximum length. Must be >= 0 and >= `min_length`. Defaults to 128.
+
+        Returns:
+            str: Random Base58 string using the Bitcoin alphabet.
+        """
+        return cls.create(min_length=min_length, max_length=max_length, characters=ALPHABET_BASE58)
+
+    @classmethod
     def base64(cls, *, min_length: int = 4, max_length: int = 128) -> str:
         """
         Create a random padded Base64 string of length between `min_length` and `max_length`.
@@ -376,22 +525,36 @@ class StringMother(BaseMother[str]):
 
         string = StringMother.base64(min_length=8, max_length=32)
         print(string)
-        # >>> 7a2e3f4b5c6d7e8
+        # >>> ZXhhbXBsZQ==
         ```
         """
-        cls.create(min_length=min_length, max_length=max_length)
+        if type(min_length) is not int:
+            raise TypeError('StringMother min_length must be an integer.')
+
+        if type(max_length) is not int:
+            raise TypeError('StringMother max_length must be an integer.')
+
+        if min_length < 0:
+            raise ValueError('StringMother min_length must be greater than or equal to 0.')
+
+        if max_length < 0:
+            raise ValueError('StringMother max_length must be greater than or equal to 0.')
+
+        if min_length > max_length:
+            raise ValueError('StringMother min_length must be less than or equal to max_length.')
 
         minimum_blocks = (min_length + 3) // 4
         maximum_blocks = max_length // 4
         if minimum_blocks > maximum_blocks:
             raise ValueError('StringMother Base64 length range must include a multiple of 4.')
 
-        encoded_length = randint(a=minimum_blocks, b=maximum_blocks) * 4  # noqa: S311
-        if encoded_length == 0:
+        blocks = randint(a=minimum_blocks, b=maximum_blocks)  # noqa: S311
+        if blocks == 0:
             return ''
 
-        maximum_byte_length = encoded_length * 3 // 4
-        byte_length = randint(a=maximum_byte_length - 2, b=maximum_byte_length)  # noqa: S311
+        minimum_byte_length = (blocks - 1) * 3 + 1
+        maximum_byte_length = blocks * 3
+        byte_length = randint(a=minimum_byte_length, b=maximum_byte_length)  # noqa: S311
         value = BytesMother.create(min_length=byte_length, max_length=byte_length)
         return b64encode(s=value).decode()
 

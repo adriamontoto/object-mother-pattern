@@ -119,6 +119,13 @@ from object_mother_pattern import BooleanMother, BytesMother, FloatMother, Integ
 - `of_length(*, length: int) -> str`
 - `alpha(*, min_length: int = 1, max_length: int = 128) -> str`
 - `alphanumeric(*, min_length: int = 1, max_length: int = 128) -> str`
+- `hexadecimal(*, min_length: int = 2, max_length: int = 128) -> str`
+- `base16(*, min_length: int = 2, max_length: int = 128) -> str`
+- `base32(*, min_length: int = 8, max_length: int = 128) -> str`
+- `base36(*, min_length: int = 1, max_length: int = 128) -> str`
+- `base56(*, min_length: int = 1, max_length: int = 128) -> str`
+- `base58(*, min_length: int = 1, max_length: int = 128) -> str`
+- `base64(*, min_length: int = 4, max_length: int = 128) -> str`
 - `numeric(*, min_length: int = 1, max_length: int = 128) -> str`
 - `kebab_case(*, min_length: int = 1, max_length: int = 128) -> str`
 - `camel_case(*, min_length: int = 1, max_length: int = 128) -> str`

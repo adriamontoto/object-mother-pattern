@@ -2,6 +2,19 @@
 
 <!-- version list -->
 
+## v3.16.0 (2026-07-18)
+
+### 🐛 Bug Fixes
+
+- Ensure IPv6 URLs are correctly formatted with brackets
+  ([`4159a06`](https://github.com/adriamontoto/object-mother-pattern/commit/4159a0686584847a49018ab2813d36334a497998))
+
+### ✨ Features
+
+- Implement StringMother hexadecimal, base16, base32, base36, base56, and base58 methods
+  ([`e630bad`](https://github.com/adriamontoto/object-mother-pattern/commit/e630bade21b762f8ebbca3a1f32b85239ecaf284))
+
+
 ## v3.15.0 (2026-07-17)
 
 ### 🧹 Chores

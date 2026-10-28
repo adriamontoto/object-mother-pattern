@@ -59,7 +59,7 @@ There is no database or application server to start.
 - For public mother/API changes, update `skills/object-mother-pattern/` and regenerate `skills/object-mother-pattern.skill`
   so downstream agents can install current package guidance.
 - Keep `object_mother_pattern/py.typed` present so package typing remains advertised.
-- This repository currently has no lockfile; avoid introducing dependency lockfile churn unless the task is explicitly about dependency management.
+- This repository includes `uv.lock`; keep it aligned with `pyproject.toml` and avoid unrelated lockfile churn.
 
 Use this local verification loop for code changes:
 
@@ -146,8 +146,8 @@ Architecture conventions:
 Semantic-release is configured for Conventional Commits:
 
 - Minor release tags: `feat`
-- Patch release tags: `fix`, `perf`, `build`
-- Allowed conventional tags in the local parser are `feat`, `fix`, `perf`, `build`, and `chore`.
+- Patch release tags: `fix`, `perf`
+- Allowed conventional tags are `feat`, `fix`, `perf`, `build`, `refactor`, `test`, `docs`, `ci`, and `chore`.
 - Other conventional types may be useful for commit hygiene, but they do not bump by default according to the local semantic-release config.
 
 ## Security

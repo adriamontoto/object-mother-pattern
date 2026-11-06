@@ -44,6 +44,7 @@ dependencies = [
     'Faker>=28.0.0',
     'python-dateutil>=2.9.0',
     'uuid6>=2025.0.1; python_version < "3.14"',
+    'typing-extensions>=4.4.0; python_version < "3.12"',
 ]
 dynamic = ['version']
 

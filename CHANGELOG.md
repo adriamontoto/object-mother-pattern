@@ -2,6 +2,42 @@
 
 <!-- version list -->
 
+## v3.16.1 (2026-11-06)
+
+### 🐛 Bug Fixes
+
+- Declare typing-extensions for Python 3.11
+  ([`43fb7ca`](https://github.com/adriamontoto/object-mother-pattern/commit/43fb7ca9cfca89db7c177a8eacbc26d542b36abf))
+
+### 📦 Build System
+
+- Bump to python3.15
+  ([`bc08ed1`](https://github.com/adriamontoto/object-mother-pattern/commit/bc08ed194c6cf1cade1ada6161d6842ebf98c7ac))
+
+- Harden uv execution
+  ([`253b610`](https://github.com/adriamontoto/object-mother-pattern/commit/253b6106d1b7b66bd0927938534e72d9e9e833d0))
+
+### 🧹 Chores
+
+- Update content lists ([#153](https://github.com/adriamontoto/object-mother-pattern/pull/153),
+  [`1cf8904`](https://github.com/adriamontoto/object-mother-pattern/commit/1cf8904cd51ee227294892ec0dd11f71b889654b))
+
+### 🤖 Continuous Integration
+
+- Harden dependabot configuration
+  ([`80db409`](https://github.com/adriamontoto/object-mother-pattern/commit/80db409fe6a7a4bf62efb934cbba8482e6383a98))
+
+- Improve make file install command
+  ([`b3fa32e`](https://github.com/adriamontoto/object-mother-pattern/commit/b3fa32ebe69b26876b6e00b5c75e93af77197d52))
+
+- Update those commit types that create a new version
+  ([`e988992`](https://github.com/adriamontoto/object-mother-pattern/commit/e988992563dfc03ee4980e13e848d06e3e016a89))
+
+### 📚 Documentation
+
+- **ci**: Correct generated changelog release spacing
+  ([`ca366fd`](https://github.com/adriamontoto/object-mother-pattern/commit/ca366fd4a2a2b44b765bfec5b9b544489337d422))
+
 ## v3.16.0 (2026-07-18)
 
 ### 🐛 Bug Fixes
